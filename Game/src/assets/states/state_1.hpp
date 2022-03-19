@@ -1,13 +1,9 @@
 #pragma once
 #include "engine/brown.hpp"
-extern int frame_passed;
+#include "assets/scripts/player_controller.hpp"
 
+int frame_passed = 0;
 extern int FPS;
-
-namespace brown
-{
-    size_t KEY_PRESSED;
-}
 
 namespace brown
 {
@@ -70,36 +66,6 @@ namespace brown
 
             auto pl = create_entity("player");
 
-            class player_controller : public scriptable_entity
-            {
-            public:
-                void on_create()
-                {
-                    health = 100;
-                    ts = &get_component<transform>();
-                }
-
-                void on_update()
-                {
-                    if (brown::KEY_PRESSED == 'a')
-                        ts->position.x--;
-                    else if (brown::KEY_PRESSED == 'd')
-                        ts->position.x++;
-
-                    if (brown::KEY_PRESSED == 'w')
-                        ts->position.y--;
-                    else if (brown::KEY_PRESSED == 's')
-                        ts->position.y++;
-
-                    if (brown::KEY_PRESSED == 't')
-                        m_entity.delete_entity();
-                }
-
-            private:
-                transform *ts = nullptr;
-                int health;
-            };
-
             pl.add_component<transform>({{4, 4}, 1});
             pl.add_component<sprite>({{2, 2}, "sprite2"});
             pl.add_component<animation>({5, false, 0, false, 10, {2, 2}, "animated1"});
@@ -112,7 +78,7 @@ namespace brown
 
         void handle_events(engine *game)
         {
-            brown::KEY_PRESSED = wgetch(win);
+            brown::get_keyboard_input(win);
             if (brown::KEY_PRESSED != ERR)
             {
                 switch (brown::KEY_PRESSED)

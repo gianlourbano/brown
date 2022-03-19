@@ -53,7 +53,7 @@ SUB_FOLDERS := $(filter-out src, $(patsubst src/%,%, $(shell find src -type d)))
 OBJ_FOLDERS := $(addprefix build/, $(SUB_FOLDERS)) $(addprefix build/test/, $(SUB_FOLDERS))
 .PHONY: test debug info clean format run $(TEST_TARGETS) static-darwin
 
-all: info $(TARGET)-Isrc/ -Isrc/engine/
+all: info $(TARGET)
 test: info $(TEST_TARGETS)
 debug: CXXFLAGS += -ggdb
 debug: clean all test

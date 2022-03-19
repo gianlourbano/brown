@@ -1,12 +1,9 @@
 #include "engine.hpp"
 #include "core/color/color.hpp"
 #include "core/ECS/entity/entity.hpp"
+#include <unistd.h>
 
-#include "core/ECS/components/animation.hpp"
-#include "core/ECS/components/sprite.hpp"
-#include "core/ECS/components/transform.hpp"
-#include "core/ECS/components/force.hpp"
-#include "core/ECS/components/rigid_body.hpp"
+extern const int FPS;
 
 namespace brown
 {
@@ -85,6 +82,18 @@ namespace brown
     }
 
     void change_state(engine *game, state *state) { game->change_state(state); }
+
+    void engine::run() {
+        while (this->running())
+    {
+        if (usleep(1000000 / FPS) == EINTR)
+            break;
+
+        this->handle_events();
+        this->update();
+        this->draw();
+    }
+    }
 
     entity state::create_entity(std::string name)
     {

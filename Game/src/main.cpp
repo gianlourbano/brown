@@ -1,7 +1,6 @@
 #include "engine/brown.hpp"
 #include "assets/states/state_1.hpp"
 
-int frame_passed = 0;
 int FPS = 60;
 
 brown::state_1 brown::state_1::m_state_1;
@@ -43,15 +42,7 @@ int main()
 
     engine.change_state(brown::state_1::instance());
 
-    while (engine.running())
-    {
-        if (usleep(1000000 / FPS) == EINTR)
-            break;
-
-        engine.handle_events();
-        engine.update();
-        engine.draw();
-    }
+    engine.run();
 
     endwin();
 

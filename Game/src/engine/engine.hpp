@@ -8,6 +8,8 @@
 #include "core/ECS/entity/entity.hpp"
 #include "core/ECS/entity/entity_controller.hpp"
 
+
+
 namespace brown
 {
     class engine;
@@ -43,12 +45,6 @@ namespace brown
         entity_id find_entity_id(std::string s);
         void delete_entity(std::string s);
 
-        // template <typename T>
-        // void remove_component(std::string s)
-        // {
-        //     brain.remove_component<T>(m_entities[s]);
-        // }
-
     protected:
         state(){};
         WINDOW *win;
@@ -71,6 +67,7 @@ namespace brown
         void update();
         void draw();
 
+        void run();
         bool running() { return m_running; }
         void quit();
 
