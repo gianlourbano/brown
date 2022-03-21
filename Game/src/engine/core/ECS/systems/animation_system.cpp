@@ -3,6 +3,15 @@
 
 namespace brown
 {
+    std::shared_ptr<animation_system> brown::animation_system::register_system(brown::brain *br)
+    {
+        std::shared_ptr<animation_system> sys = br->register_system<brown::animation_system>();
+        signature signature;
+        signature.set(br->get_component_type<animation>());
+        br->set_system_signature<brown::animation_system>(signature);
+        return sys;
+    }
+
     void animation_system::init()
     {
     }

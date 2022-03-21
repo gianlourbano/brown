@@ -1,6 +1,5 @@
 #pragma once
-
-#include "core/ECS/entity/entity.hpp"
+#include "core/ECS/entity/scriptable_entity.hpp"
 
 struct native_script
 {

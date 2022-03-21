@@ -51,17 +51,17 @@ namespace brown::graphics
                     if (color)
                     {
                         if (c == '#')
-                            id = 5;
+                            id = 1;
                         else if (c == '%')
-                            id = 4;
-                        else if (c == ' ' || c == '.')
-                            id = 6;
-                        else if (c == 'x')
                             id = 3;
+                        else if (c == ' ' || c == '.')
+                            id = 2;
+                        else if (c == 'x')
+                            id = 4;
                         else if (c == 'a')
-                            id = 10;
+                            id = 5;
                         else if( c == '6')
-                            id = 11;
+                            id = 6;
                     }
                     mvwaddchcolors(win, i + 1 + y, j + 1 + x, id, c != '.' ? c : ' ');
                 }

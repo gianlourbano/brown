@@ -41,33 +41,15 @@ namespace brown
         T &get_component() { return m_brain->get_component<T>(m_entity_id); }
 
         bool operator==(const entity& e) {
-            return this->name == e.name;
+            return this->m_entity_id == e.m_entity_id;
         }
 
-    private:
         std::string name;
+    private:
         entity_id m_entity_id;
         brain *m_brain = nullptr;
         Z_INDEX z_index = Z_1;
-    };
-
-    class scriptable_entity
-    {
-    public:
-        virtual ~scriptable_entity() {}
-
-        template <typename T>
-        T &get_component() { return m_entity.get_component<T>(); }
-
     protected:
-        virtual void on_create() {}
-        virtual void on_destroy() {}
-        virtual void on_update() {}
-        entity m_entity;
-
-    private:
-        friend class scene;
-        friend class scripts_system;
+        friend class scriptable_entity;
     };
-
 }

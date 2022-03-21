@@ -8,6 +8,8 @@ namespace brown
     class render_system : public brown::system
     {
     public:
+        static std::shared_ptr<render_system> register_system(brown::brain* br);
+
         void init();
         void draw(WINDOW *win, brain *br);
     };

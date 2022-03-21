@@ -9,13 +9,24 @@
 
 sprite_data GLOBAL_SPRITES_paths{};
 std::unordered_map<std::string, sprite_data> GLOBAL_SPRITES{};
-std::string sprites_path = "./sprites/";
+std::string sprites_path = "./src/assets/sprites/";
+
+std::shared_ptr<brown::render_system> brown::render_system::register_system(brown::brain *br)
+{
+    std::shared_ptr<brown::render_system> sys = br->register_system<brown::render_system>();
+    signature signature;
+    signature.set(br->get_component_type<transform>());
+    signature.set(br->get_component_type<animation>());
+    signature.set(br->get_component_type<sprite>());
+    br->set_system_signature<brown::render_system>(signature);
+    return sys;
+}
 
 void brown::render_system::init()
 {
     DIR *dir;
     struct dirent *ent;
-    ASSERT((dir = opendir("./sprites")) != NULL, "Could not open sprites folder!\n");
+    ASSERT((dir = opendir(sprites_path.c_str())) != NULL, "Could not open sprites folder!\n");
     while ((ent = readdir(dir)) != NULL)
     {
         if (strcmp(ent->d_name, ".") && strcmp(ent->d_name, ".."))
@@ -39,7 +50,8 @@ void brown::render_system::init()
             std::vector<sprite_data> m_data = brown::load_animated_sprite(spr);
             std::string temp = spr;
             int j = 0;
-            for(auto& d: m_data) {
+            for (auto &d : m_data)
+            {
                 GLOBAL_SPRITES.insert({temp.substr(0, temp.find(".aspr")).append(std::to_string(j)), d});
                 j++;
             }
@@ -56,7 +68,7 @@ void brown::render_system::draw(WINDOW *win, brown::brain *br)
         auto &anim = br->get_component<animation>(entity);
 
         if (anim.clips != 0 && anim.playing)
-            graphics::mvwprintvcolors(win, trans.position.y-anim.offset.y, trans.position.x-anim.offset.x, true, GLOBAL_SPRITES[anim.name + std::to_string(anim.current)]);
+            graphics::mvwprintvcolors(win, trans.position.y - anim.offset.y, trans.position.x - anim.offset.x, true, GLOBAL_SPRITES[anim.name + std::to_string(anim.current)]);
         else
             graphics::mvwprintvcolors(win, trans.position.y, trans.position.x, true, GLOBAL_SPRITES[spr.sprite_name]);
     }

@@ -8,94 +8,113 @@
 #include <unordered_map>
 #include <string>
 
-namespace brown {
-    class brain {
-        public:
-            void init() {
-                m_component_manager = std::make_unique<component_manager>();
-                m_entity_manager = std::make_unique<entity_manager>();
-                m_system_manager = std::make_unique<system_manager>();
-                m_event_manager = std::make_unique<event_manager>();
-            }
+namespace brown
+{
+    class brain
+    {
+    public:
+        void register_basic_components();
 
-            //entity methods
-            entity_id create_entity() {
-                return m_entity_manager->create_entity();
-            }
+        void init()
+        {
+            m_component_manager = std::make_unique<component_manager>();
+            m_entity_manager = std::make_unique<entity_manager>();
+            m_system_manager = std::make_unique<system_manager>();
+            m_event_manager = std::make_unique<event_manager>();
 
-            void destroy_entity(entity_id entity) {
-                m_entity_manager->destroy_entity(entity);
-                m_component_manager->entity_destroyed(entity);
-                m_system_manager->entity_destroyed(entity);
-            }
+            register_basic_components();
+        }
 
-            //components methods
-            template<typename T>
-            void register_component() {
-                m_component_manager->register_component<T>();
-            }
+        // entity methods
+        entity_id create_entity()
+        {
+            return m_entity_manager->create_entity();
+        }
 
-            template<typename T>
-            void add_component(entity_id entity, T component) {
-                m_component_manager->add_component<T>(entity, component);
+        void destroy_entity(entity_id entity)
+        {
+            m_entity_manager->destroy_entity(entity);
+            m_component_manager->entity_destroyed(entity);
+            m_system_manager->entity_destroyed(entity);
+        }
 
-                auto signature = m_entity_manager->get_signature(entity);
-                signature.set(m_component_manager->get_component_type<T>(), true);
-                m_entity_manager->set_signature(entity, signature);
+        // components methods
 
-                m_system_manager->entity_signature_changed(entity, signature);
-            }
+        template <typename T>
+        void register_component()
+        {
+            m_component_manager->register_component<T>();
+        }
 
-            template<typename T>
-            void remove_component(entity_id entity) {
-                m_component_manager->remove_component<T>(entity);
+        template <typename T>
+        void add_component(entity_id entity, T component)
+        {
+            m_component_manager->add_component<T>(entity, component);
 
-                auto signature = m_entity_manager->get_signature(entity);
-                signature.set(m_component_manager->get_component_type<T>(), false);
-                m_entity_manager->set_signature(entity, signature);
+            auto signature = m_entity_manager->get_signature(entity);
+            signature.set(m_component_manager->get_component_type<T>(), true);
+            m_entity_manager->set_signature(entity, signature);
 
-                m_system_manager->entity_signature_changed(entity, signature);
-            }
+            m_system_manager->entity_signature_changed(entity, signature);
+        }
 
-            template<typename T>
-            T& get_component(entity_id entity) {
-                return m_component_manager->get_component<T>(entity);
-            }
+        template <typename T>
+        void remove_component(entity_id entity)
+        {
+            m_component_manager->remove_component<T>(entity);
 
-            template<typename T>
-            component_type get_component_type() {
-                return m_component_manager->get_component_type<T>();
-            }
+            auto signature = m_entity_manager->get_signature(entity);
+            signature.set(m_component_manager->get_component_type<T>(), false);
+            m_entity_manager->set_signature(entity, signature);
 
-            //system methods
-            template<typename T>
-            std::shared_ptr<T> register_system() {
-                return m_system_manager->register_system<T>();
-            }
+            m_system_manager->entity_signature_changed(entity, signature);
+        }
 
-            template<typename T>
-            void set_system_signature(signature signature) {
-                m_system_manager->set_signature<T>(signature);
-            }
+        template <typename T>
+        T &get_component(entity_id entity)
+        {
+            return m_component_manager->get_component<T>(entity);
+        }
 
-            //event methods
-            void add_event_listener(event_id id, std::function<void(event&)> const& listener) {
-                m_event_manager->add_listener(id, listener);
-            }
+        template <typename T>
+        component_type get_component_type()
+        {
+            return m_component_manager->get_component_type<T>();
+        }
 
-            void send_event(event& ev) {
-                m_event_manager->send_event(ev);
-            }
+        // system methods
+        template <typename T>
+        std::shared_ptr<T> register_system()
+        {
+            return m_system_manager->register_system<T>();
+        }
 
-            void send_event(event_id id) {
-                m_event_manager->send_event(id);
-            }
+        template <typename T>
+        void set_system_signature(signature signature)
+        {
+            m_system_manager->set_signature<T>(signature);
+        }
 
-        private:
-            std::unique_ptr<component_manager> m_component_manager;
-            std::unique_ptr<entity_manager> m_entity_manager;
-            std::unique_ptr<system_manager> m_system_manager;
-            std::unique_ptr<event_manager> m_event_manager;
+        // event methods
+        void add_event_listener(event_id id, std::function<void(event &)> const &listener)
+        {
+            m_event_manager->add_listener(id, listener);
+        }
 
+        void send_event(event &ev)
+        {
+            m_event_manager->send_event(ev);
+        }
+
+        void send_event(event_id id)
+        {
+            m_event_manager->send_event(id);
+        }
+
+    private:
+        std::unique_ptr<component_manager> m_component_manager;
+        std::unique_ptr<entity_manager> m_entity_manager;
+        std::unique_ptr<system_manager> m_system_manager;
+        std::unique_ptr<event_manager> m_event_manager;
     };
 }

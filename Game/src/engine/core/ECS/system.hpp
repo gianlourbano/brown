@@ -1,5 +1,5 @@
 #pragma once
-#include "../types.hpp"
+#include "core/types.hpp"
 #include <set>
 
 namespace brown
