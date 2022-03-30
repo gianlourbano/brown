@@ -1,4 +1,7 @@
 #include "window.hpp"
+#include <unordered_map>
+
+extern std::unordered_map<char, int> char_map;
 
 namespace brown::graphics
 {
@@ -49,20 +52,8 @@ namespace brown::graphics
                 {
                     int id = 0;
                     if (color)
-                    {
-                        if (c == '#')
-                            id = 1;
-                        else if (c == '%')
-                            id = 3;
-                        else if (c == ' ' || c == '.')
-                            id = 2;
-                        else if (c == 'x')
-                            id = 4;
-                        else if (c == 'a')
-                            id = 5;
-                        else if( c == '6')
-                            id = 6;
-                    }
+                        id = char_map[c];
+                    
                     mvwaddchcolors(win, i + 1 + y, j + 1 + x, id, c != '.' ? c : ' ');
                 }
                 j++;

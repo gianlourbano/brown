@@ -12,6 +12,7 @@ public:
     {
         brown::engine::init(width, height);
         brown::colors::init_palette_from_file("palette");
+        brown::colors::init_color_map_from_file("color");
     }
 };
 

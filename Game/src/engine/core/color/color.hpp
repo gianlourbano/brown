@@ -9,4 +9,9 @@ namespace brown::colors {
     void make_pair(short pair_id, short color_A_id, short color_B_id);
 
     void init_palette_from_file(std::string palette);
+
+    void init_color_map_from_file(std::string map);
+
+    void add_custom_pair(short color_A_id, short color_B_id);
+    void add_custom_color(short r, short g, short b);
 }
