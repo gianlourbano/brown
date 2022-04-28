@@ -1,3 +1,5 @@
+#pragma once
+
 namespace brown::std
 {
     template <typename A, typename B>
@@ -30,5 +32,5 @@ namespace brown::std
         {
             return os << '(' << pair.first << ',' << pair.second << ')';
         }
-    }
+    };
 };
