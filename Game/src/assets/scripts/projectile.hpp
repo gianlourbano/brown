@@ -7,7 +7,7 @@ public:
     void on_create()
     {
         ts = &get_component<transform>();
-        anim = &get_component<animation>();
+        anim = &get_component<animator_controller>();
         lifetime = 10;
 
         switch (ts->direction)
@@ -35,21 +35,22 @@ public:
         {
             ts->position += force;
             lifetime--;
+        } else {
+            has_finished = true;
         }
-        else
+
+
+        if(has_finished)
         {
-            if (!anim->playing)
-                anim->playing = true;
-            if (anim->current == anim->clips -1)
-            {
-                delete_self();
-            }
+            anim->play("explode", [this](){this->delete_self();});
+            has_finished = false;
         }
     }
 
 private:
     int lifetime;
+    bool has_finished = false;
     vec2 force;
     transform *ts = nullptr;
-    animation *anim = nullptr;
+    animator_controller *anim = nullptr;
 };

@@ -2,6 +2,7 @@
 
 #include "../types.hpp"
 #include <array>
+#include "debug/debugger.hpp"
 #include <unordered_map>
 
 namespace brown
@@ -47,7 +48,7 @@ namespace brown
 
         T &get_data(entity_id entity)
         {
-
+            ASSERT(m_entity_to_index.find(entity) != m_entity_to_index.end(), "Entity doesn't have the component requested!");
             return m_component_array[m_entity_to_index[entity]];
         }
 

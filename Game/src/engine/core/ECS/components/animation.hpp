@@ -1,3 +1,4 @@
+#pragma once
 #include "../../../math/vec2.hpp"
 
 //clips, playing, current, cyclic, time_step, offset, name, final
@@ -10,4 +11,5 @@ struct animation {
     vec2 offset = 0;
     std::string name = "";
     bool final = false;
+    bool has_finished = false;
 };

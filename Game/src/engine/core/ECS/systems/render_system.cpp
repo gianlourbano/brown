@@ -16,7 +16,6 @@ std::shared_ptr<brown::render_system> brown::render_system::register_system(brow
     std::shared_ptr<brown::render_system> sys = br->register_system<brown::render_system>();
     signature signature;
     signature.set(br->get_component_type<transform>());
-    signature.set(br->get_component_type<animation>());
     signature.set(br->get_component_type<sprite>());
     br->set_system_signature<brown::render_system>(signature);
     return sys;
@@ -65,12 +64,8 @@ void brown::render_system::draw(WINDOW *win, brown::brain *br)
     {
         auto &trans = br->get_component<transform>(entity);
         auto &spr = br->get_component<sprite>(entity);
-        auto &anim = br->get_component<animation>(entity);
 
-        if (anim.clips != 0 && anim.playing)
-            graphics::mvwprintvcolors(win, trans.position.y - anim.offset.y, trans.position.x - anim.offset.x, true, GLOBAL_SPRITES[anim.name + std::to_string(anim.current)]);
-        else
-            graphics::mvwprintvcolors(win, trans.position.y, trans.position.x, true, GLOBAL_SPRITES[spr.sprite_name]);
+        graphics::mvwprintvcolors(win, trans.position.y-spr.offset.y, trans.position.x-spr.offset.x, true, GLOBAL_SPRITES[spr.sprite_name]);
     }
 }
 

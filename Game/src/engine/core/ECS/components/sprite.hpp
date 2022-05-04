@@ -9,4 +9,5 @@ struct sprite
 {
     vec2 size;
     std::string sprite_name;
+    vec2 offset = 0;
 };

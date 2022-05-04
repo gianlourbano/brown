@@ -19,6 +19,7 @@
 #include "debug/debug_state.hpp"
 //////
 #include "core/ECS/components/animation.hpp"
+#include "core/ECS/components/animator_controller.hpp"
 #include "core/ECS/components/transform.hpp"
 #include "core/ECS/components/sprite.hpp"
 #include "core/ECS/components/rigid_body.hpp"
