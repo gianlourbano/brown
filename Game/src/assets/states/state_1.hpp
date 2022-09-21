@@ -29,7 +29,6 @@ namespace brown
             brain.init();
 
             animation_system = animation_system::register_system(&brain);
-
             scripts_system = scripts_system::register_system(&brain);
 
             render_system = render_system::register_system(&brain);
