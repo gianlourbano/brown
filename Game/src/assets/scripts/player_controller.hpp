@@ -5,6 +5,28 @@
 class player_controller : public brown::scriptable_entity
 {
 public:
+    bool check_collision(int dir)
+    {
+        switch (dir)
+        {
+        case 1:
+            return mvwinch(m_state->get_win(), ts->position.y, ts->position.x+1) & A_CHARTEXT != ' ';
+            break;
+        case 2:
+            return mvwinch(m_state->get_win(), ts->position.y+1, ts->position.x+2) & A_CHARTEXT != ' ';
+            break;
+        case 3:
+            return mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x+1) & A_CHARTEXT != ' ';
+            break;
+        case 4:
+            return mvwinch(m_state->get_win(), ts->position.y+1, ts->position.x) & A_CHARTEXT != ' ';
+            break;
+        default:
+            return false;
+            break;
+        }
+    }
+
     void on_create()
     {
         health = 100;
@@ -18,23 +40,23 @@ public:
         if (brown::KEY_PRESSED == 'a')
         {
             ts->direction = 4;
-            ts->position.x--;
+            if (!check_collision(4)) ts->position.x--;
         }
         else if (brown::KEY_PRESSED == 'd')
         {
             ts->direction = 2;
-            ts->position.x++;
+            if (!check_collision(2)) ts->position.x++;
         }
-        
+
         if (brown::KEY_PRESSED == 'w')
         {
             ts->direction = 1;
-            ts->position.y--;
+            if (!check_collision(1)) ts->position.y--;
         }
         else if (brown::KEY_PRESSED == 's')
         {
             ts->direction = 3;
-            ts->position.y++;
+            if (!check_collision(3)) ts->position.y++;
         }
 
         if (brown::KEY_PRESSED == 'h')
