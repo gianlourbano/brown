@@ -96,6 +96,8 @@ namespace brown
                 box(win, 0, 0);
 
                 render_system->draw(win, &brain);
+            }else{
+                engine::push_state(m_state_2);
             }
         };
 
