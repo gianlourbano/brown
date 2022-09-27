@@ -42,7 +42,7 @@ namespace brown
 
             create_door({69, 5});
             create_door({20, 0}, false);
-
+            
             auto pl = create_entity("player");
             pl.add_component<transform>({{4, 4}, 1});
             pl.add_component<sprite>({{2, 2}, "sprite2"});
