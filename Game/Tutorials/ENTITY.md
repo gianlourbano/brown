@@ -78,7 +78,7 @@ L'implementazione di Brown include vari componenti, ovvero:
 - animator controller (gestisce le animazioni)
 - native script, su cui torneremo dopo.
 
-Nella cartella [components](/Game/src/engine/core/ECS/components/transform.hpp) sono presenti tutte le interfacce dei componenti. Facciamo ora particolare attenzione al native script.
+Nella cartella [components](/src/engine/core/ECS/components/transform.hpp) sono presenti tutte le interfacce dei componenti. Facciamo ora particolare attenzione al native script.
 
 ### Native Script
 

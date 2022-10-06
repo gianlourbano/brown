@@ -68,8 +68,9 @@ namespace brown
                     game->quit();
                     break;
                 case KEY_F(1):
-                    game->push_state(brown::debug::debug_state::instance());
+                    //game->push_state(brown::debug::debug_state::instance());
                     break;
+                    
                 }
             }
         };
@@ -96,8 +97,6 @@ namespace brown
                 box(win, 0, 0);
 
                 render_system->draw(win, &brain);
-            }else{
-                engine::push_state(m_state_2);
             }
         };
 

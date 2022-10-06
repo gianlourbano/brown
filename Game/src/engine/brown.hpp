@@ -16,7 +16,7 @@
 #include "core/ECS/system_manager.hpp"
 #include "core/brain.hpp"
 //////
-#include "debug/debug_state.hpp"
+//#include "debug/debug_state.hpp"
 //////
 #include "core/ECS/components/animation.hpp"
 #include "core/ECS/components/animator_controller.hpp"

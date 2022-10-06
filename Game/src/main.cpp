@@ -1,9 +1,9 @@
 #include "engine/brown.hpp"
-#include "assets/states/state_1.hpp"
+#include "assets/states/menu_state.hpp"
 
 int FPS = 60;
 
-brown::state_1 brown::state_1::m_state_1;
+menu_state menu_state::m_menu_state;
 
 class game : public brown::engine
 {
@@ -22,7 +22,7 @@ int main()
 
     engine.init(640, 480);
 
-    engine.change_state(brown::state_1::instance());
+    engine.change_state(menu_state::instance());
 
     engine.run();
 
