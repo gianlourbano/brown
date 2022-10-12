@@ -38,13 +38,12 @@ public:
         auto room = create_entity("menu");
         room.add_component<transform>({{0, 0}, 0});
         room.add_component<sprite>({{71, 17}, "menu"});
-
-        /*create_door({160, 0}, false);
-        create_door({320, 0}, false);
-        create_door({480, 0}, false);
-        */
+        create_door({15, 0}, false);
+        create_door({33, 0}, false);
+        create_door({52, 0}, false);
+        
         auto pl = create_entity("player");
-        pl.add_component<transform>({{4, 4}, 1});
+        pl.add_component<transform>({{3, 12}, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({}).add_anim("idle", {5, false, 0, false, 5, {2, 2}, "animated1"});
         pl.add_component<native_script>({}).bind<player_controller>();
