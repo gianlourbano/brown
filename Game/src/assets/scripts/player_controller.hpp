@@ -2,6 +2,8 @@
 #include "engine/brown.hpp"
 #include "assets/scripts/projectile.hpp"
 
+std::vector<int> v;
+                            
 class player_controller : public brown::scriptable_entity
 {
 public:
@@ -32,7 +34,14 @@ public:
         health = 100;
         ts = &get_component<transform>();
         anim = &get_component<animator_controller>();
-        anim->add_anim("play", {3, false, 0, false, 20, 3, "anim_3"});
+        proj_anim = {
+            "animated1",
+            2,
+            5,
+            5,
+            false,
+            true
+        };
     }
 
     void on_update()
@@ -74,7 +83,7 @@ public:
             brown::entity proj = m_state->create_entity();
             proj.add_component<transform>({ts->position, ts->direction});
             proj.add_component<sprite>({{2, 2}, "sprite2"});
-            proj.add_component<animator_controller>({}).add_anim("explode", {5, false, 0, false, 5, {2, 2}, "animated1", true});
+            proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
             proj.add_component<native_script>({}).bind<projectile>();
         }
     }
@@ -83,4 +92,5 @@ private:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
     int health;
+    animation proj_anim;
 };

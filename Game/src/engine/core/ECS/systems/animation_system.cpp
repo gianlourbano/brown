@@ -31,38 +31,79 @@ namespace brown
             auto &animator = br->get_component<animator_controller>(entity);
             auto &spr = br->get_component<sprite>(entity);
             auto &tr = br->get_component<transform>(entity);
-            auto anim = animator.current_anim;
+            animation* anim = animator.current_anim;
 
             if (anim != nullptr)
             {
-                if (anim->playing && dt % anim->time_step == 0)
+                switch (anim->is_reversed)
                 {
-                    animated.insert(std::make_pair(entity, spr));
+                case true:
+                    
+                    if (anim->playing && dt % anim->time_step == 0 && anim->current >= 0)
+                    {
+                        anim->has_finished = false;
+                        animated.insert(std::make_pair(entity, spr));
 
-                    spr.sprite_name = anim->name + std::to_string(anim->current);
-                    spr.offset = anim->offset;
-                    anim->current++;
-                }
-                if (anim->current == anim->clips)
-                {
-                    if (anim->cyclic)
-                    {
-                        anim->current = 0;
+                        spr.sprite_name = anim->name + std::to_string(anim->current);
+                        spr.offset = anim->offset;
+                        anim->current--;
                     }
-                    else if (anim->final)
+                    else if (anim->current == 0 && !anim->has_finished)
                     {
-                        anim->has_finished = true;
-                        anim->playing = false;
-                        animated.erase(entity);
+                        if (anim->cyclic)
+                        {
+                            anim->current = anim->clips;
+                        }
+                        else if (anim->final)
+                        {
+                            anim->has_finished = true;
+                            anim->playing = false;
+                            animated.erase(entity);
+                        }
+                        else
+                        {
+                            anim->has_finished = true;
+                            anim->playing = false;
+                            anim->current = anim->clips;
+                            spr = animated[entity];
+                            animated.erase(entity);
+                        }
                     }
-                    else
+                    break;
+                case false:
+
+                    if (anim->playing && dt % anim->time_step == 0)
                     {
-                        anim->has_finished = true;
-                        anim->playing = false;
-                        anim->current = 0;
-                        spr = animated[entity];
-                        animated.erase(entity);
+                        anim->has_finished = false;
+                        animated.insert(std::make_pair(entity, spr));
+
+                        spr.sprite_name = anim->name + std::to_string(anim->current);
+                        spr.offset = anim->offset;
+                        anim->current++;
                     }
+                    else if (anim->current == anim->clips)
+                    {
+                        LOG("ANIM FINISHED");
+                        if (anim->cyclic)
+                        {
+                            anim->current = 0;
+                        }
+                        else if (anim->final)
+                        {
+                            anim->has_finished = true;
+                            anim->playing = false;
+                            animated.erase(entity);
+                        }
+                        else
+                        {
+                            anim->has_finished = true;
+                            anim->playing = false;
+                            anim->current = 0;
+                            spr = animated[entity];
+                            animated.erase(entity);
+                        }
+                    }
+                    break;
                 }
             }
         }

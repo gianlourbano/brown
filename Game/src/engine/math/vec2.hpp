@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 /*
     Very simple implementation of a 2D vector,
@@ -32,3 +33,7 @@ struct vec2
         return *this;
     }
 };
+
+inline float distance(vec2 v1, vec2 v2) {
+    return sqrt(pow(v1.x-v2.x, 2)+pow(v1.y-v2.y, 2));
+}

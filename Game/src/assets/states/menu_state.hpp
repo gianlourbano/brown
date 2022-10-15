@@ -9,14 +9,28 @@ class menu_state : public brown::state
 {
 
 public:
- void create_door(vec2 pos, bool vertical = true)
-        {
-            auto door = create_entity("door1");
-            door.add_component<transform>({pos});
-            door.add_component<sprite>({{3, 2}, vertical ? "door1" : "door2"});
-            door.add_component<animator_controller>({}).add_anim("open", {vertical ? 4 : 6, false, 0, false, vertical ? 20 : 10, {0, 0}, vertical ? "animated_vertical_door" : "animated_horizontal_door", true});
-            door.add_component<native_script>({}).bind<door_controller>();
-        }
+    void create_door(vec2 pos, bool vertical = true, std::string name = "1")
+    {
+        animation opened = {
+            vertical ? "animated_vertical_door" : "animated_horizontal_door",
+            {0, 0},
+            vertical ? 4 : 5,
+            vertical ? 20 : 10,
+            false,
+            true
+        };
+
+        auto door = create_entity("door_" + name);
+        door.add_component<transform>({pos});
+        door.add_component<sprite>({{3, 2}, vertical ? "door1" : "door2"});
+        door.add_component<animator_controller>({});
+
+        animator_controller *anim = &door.get_component<animator_controller>(); 
+        // anim->add_anim("close", closed);
+        anim->add_anim("open", opened);
+
+        door.add_component<native_script>({}).bind<door_controller>();
+    }
     void init(brown::engine *game)
     {
         // state window initialization
@@ -38,14 +52,15 @@ public:
         auto room = create_entity("menu");
         room.add_component<transform>({{0, 0}, 0});
         room.add_component<sprite>({{71, 17}, "menu"});
-        create_door({15, 0}, false);
-        create_door({33, 0}, false);
-        create_door({52, 0}, false);
-        
+
+        create_door({33, 0}, false, "1");
+        // create_door({52, 0}, false, "2");
+        // create_door({15, 0}, false, "3");
+
         auto pl = create_entity("player");
         pl.add_component<transform>({{3, 12}, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
-        pl.add_component<animator_controller>({}).add_anim("idle", {5, false, 0, false, 5, {2, 2}, "animated1"});
+        pl.add_component<animator_controller>({});
         pl.add_component<native_script>({}).bind<player_controller>();
     }
 
@@ -62,6 +77,12 @@ public:
         {
             switch (brown::KEY_PRESSED)
             {
+            case 'u':
+                find_entity("door_1").get_component<animator_controller>().play_reversed("open");
+                break;
+            case 'i':
+                find_entity("door_1").get_component<animator_controller>().play("open");
+                break;
             case 'p':
                 game->change_state(brown::state_1::instance());
                 break;
@@ -71,14 +92,14 @@ public:
             }
         }
     }
-    void update(brown::engine *game) {
-                frame_passed++;
-                animation_system->update(&brain, frame_passed);
-                if (frame_passed > FPS)
-                    frame_passed = 0;
-                scripts_system->update(this);
-                m_controller.empty_to_be_deleted();
-            
+    void update(brown::engine *game)
+    {
+        frame_passed++;
+        animation_system->update(&brain, frame_passed);
+        if (frame_passed > FPS)
+            frame_passed = 0;
+        scripts_system->update(this);
+        m_controller.empty_to_be_deleted();
     }
     void draw(brown::engine *game)
     {

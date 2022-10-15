@@ -42,7 +42,7 @@ public:
 
         if(has_finished)
         {
-            anim->play("explode", [this](){this->delete_self();});
+            anim->play("explode", [this](){LOG("projectile deleted");this->delete_self();});
             has_finished = false;
         }
     }

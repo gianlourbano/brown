@@ -3,8 +3,14 @@
 #include <vector>
 #include "../../../math/vec2.hpp"
 
-using sprite_data = std::vector<std::string>;
-
+/**
+ * @brief Sprite component.
+ * 
+ * @param size the size of the sprite.
+ * @param sprite_name the name of the sprite.
+ * @param offset the offset of the sprite in relation to the entity position.
+ * 
+ */
 struct sprite
 {
     vec2 size;

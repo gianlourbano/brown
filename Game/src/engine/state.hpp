@@ -13,6 +13,7 @@ namespace brown
         whenever he creates custom states.
     */
 
+    
     class state
     {
     public:

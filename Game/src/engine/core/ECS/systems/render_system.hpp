@@ -3,6 +3,8 @@
 #include "../components/sprite.hpp"
 #include <ncurses.h>
 
+using sprite_data = std::vector<std::string>;
+
 namespace brown
 {
     class render_system : public brown::system

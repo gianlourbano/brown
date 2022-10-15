@@ -15,10 +15,18 @@ namespace brown
     public:
         void create_door(vec2 pos, bool vertical = true)
         {
+            animation opened = {
+            vertical ? "animated_vertical_door" : "animated_horizontal_door",
+            {0, 0},
+            vertical ? 4 : 6,
+            vertical ? 20 : 10,
+            false,
+            false
+        };
             auto door = create_entity("door1");
             door.add_component<transform>({pos});
             door.add_component<sprite>({{3, 2}, vertical ? "door1" : "door2"});
-            door.add_component<animator_controller>({}).add_anim("open", {vertical ? 4 : 6, false, 0, false, vertical ? 20 : 10, {0, 0}, vertical ? "animated_vertical_door" : "animated_horizontal_door", true});
+            door.add_component<animator_controller>({}).add_anim("open", opened);
             door.add_component<native_script>({}).bind<door_controller>();
         }
 
@@ -48,7 +56,7 @@ namespace brown
             auto pl = create_entity("player");
             pl.add_component<transform>({{4, 4}, 1});
             pl.add_component<sprite>({{2, 2}, "sprite2"});
-            pl.add_component<animator_controller>({}).add_anim("idle", {5, false, 0, false, 5, {2, 2}, "animated1"});
+            pl.add_component<animator_controller>({});
             pl.add_component<native_script>({}).bind<player_controller>();
         };
 
