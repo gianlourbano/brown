@@ -40,6 +40,14 @@ namespace brown
             to_be_deleted.push_back(e);
         }
 
+        void LOG_ENTITIES()
+        {
+            for (auto &e : m_entities)
+            {
+                LOG(e.name + " :" + std::to_string(e.m_entity_id));
+            }
+        }
+
         void empty_to_be_deleted()
         {
             for (auto &e : to_be_deleted)

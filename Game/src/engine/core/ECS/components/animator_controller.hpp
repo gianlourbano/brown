@@ -44,7 +44,6 @@ struct animator_controller
         if (!anims[anim_name].playing)
         {
             set_anim(anim_name);
-            current_anim->is_reversed = false;
             play_current();
         }
         else if (anims[anim_name].has_finished)

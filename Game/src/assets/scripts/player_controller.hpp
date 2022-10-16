@@ -2,31 +2,19 @@
 #include "engine/brown.hpp"
 #include "assets/scripts/projectile.hpp"
 
-std::vector<int> v;
-                            
 class player_controller : public brown::scriptable_entity
 {
 public:
     bool check_collision(int dir)
     {
-        switch (dir)
-        {
-        case 1:
-            return mvwinch(m_state->get_win(), ts->position.y, ts->position.x+1) & A_CHARTEXT != ' ';
-            break;
-        case 2:
-            return mvwinch(m_state->get_win(), ts->position.y+1, ts->position.x+2) & A_CHARTEXT != ' ';
-            break;
-        case 3:
-            return mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x+1) & A_CHARTEXT != ' ';
-            break;
-        case 4:
-            return mvwinch(m_state->get_win(), ts->position.y+1, ts->position.x) & A_CHARTEXT != ' ';
-            break;
-        default:
-            return false;
-            break;
-        }
+        chtype chars[4] = {
+            mvwinch(m_state->get_win(), ts->position.y, ts->position.x+1) & A_CHARTEXT,
+            mvwinch(m_state->get_win(), ts->position.y+1, ts->position.x+2) & A_CHARTEXT,
+            mvwinch(m_state->get_win(), ts->position.y+2, ts->position.x+1) & A_CHARTEXT,
+            mvwinch(m_state->get_win(), ts->position.y+1, ts->position.x) & A_CHARTEXT
+        };
+
+       return chars[dir-1] != ' ';
     }
 
     void on_create()
@@ -36,7 +24,7 @@ public:
         anim = &get_component<animator_controller>();
         proj_anim = {
             "animated1",
-            2,
+            2, 
             5,
             5,
             false,

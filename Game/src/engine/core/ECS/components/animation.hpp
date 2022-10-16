@@ -21,9 +21,9 @@ struct animation {
     bool final = false;
 
     //flags for animation system
-    int current = 0;
+    bool is_reversed = false;
     bool playing = false;
     bool has_finished = false;
-    bool is_reversed = false;
+    int current = 0;
 };
 

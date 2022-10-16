@@ -25,6 +25,8 @@
 #include "core/ECS/components/rigid_body.hpp"
 #include "core/ECS/components/tag.hpp"
 #include "core/ECS/components/native_script.hpp"
+#include "core/ECS/components/ui.hpp"
 #include "core/ECS/systems/scripts_system.hpp"
 #include "core/ECS/systems/animation_system.hpp"
 #include "core/ECS/systems/render_system.hpp"
+#include "core/ECS/systems/UI_system.hpp"
