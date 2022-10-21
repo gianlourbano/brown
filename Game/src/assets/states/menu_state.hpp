@@ -53,15 +53,20 @@ public:
         room.add_component<transform>({{0, 0}, 0});
         room.add_component<sprite>({{71, 17}, "menu"});
 
-        create_door({33, 0}, false, "1");
-        // create_door({52, 0}, false, "2");
-        // create_door({15, 0}, false, "3");
+        create_door({15, 1}, false, "1");
+        create_door({33, 1}, false, "2");
+        create_door({52, 1}, false, "3");
+        
 
         auto pl = create_entity("player");
-        pl.add_component<transform>({{3, 12}, 1});
+        pl.add_component<transform>({{35, 7}, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({});
         pl.add_component<native_script>({}).bind<player_controller>();
+
+        this->d1 =find_entity("door_1").get_component<transform>().position;
+        this->d2 =find_entity("door_2").get_component<transform>().position;
+        this->d3 =find_entity("door_3").get_component<transform>().position;
     }
 
     void resume() {}
@@ -94,6 +99,7 @@ public:
     }
     void update(brown::engine *game)
     {
+        this->pp = find_entity("player").get_component<transform>().position;
         frame_passed++;
         animation_system->update(&brain, frame_passed);
         if (frame_passed > FPS)
@@ -103,10 +109,20 @@ public:
     }
     void draw(brown::engine *game)
     {
+        if(pp.x>=d1.x&&pp.x<=d1.x+4&&pp.y==d1.y){
+            game->push_state(brown::state_1::instance());
+        }else if(pp.x>=d2.x&&pp.x<=d2.x+4&&pp.y==d2.y)
+        {
+            
+        }else if(pp.x>=d3.x&&pp.x<=d3.x+4&&pp.y==d3.y)
+        {
+            game->quit();
+        }else{
         werase(win);
         werase(game->get_std_screen());
         box(win, 0, 0);
         render_system->draw(win, &brain);
+        }
     }
 
     static menu_state *instance()
@@ -122,4 +138,5 @@ private:
     std::shared_ptr<brown::animation_system> animation_system;
     std::shared_ptr<brown::render_system> render_system;
     std::shared_ptr<brown::scripts_system> scripts_system;
+    vec2 pp, d1,d2,d3;
 };
