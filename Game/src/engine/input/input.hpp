@@ -9,6 +9,4 @@ namespace brown
     {
         KEY_PRESSED = wgetch(win);
     }
-
-
 }

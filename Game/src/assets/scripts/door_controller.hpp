@@ -9,6 +9,8 @@ class door_controller : public brown::scriptable_entity
     {
         anim = &get_component<animator_controller>();
         ts = &get_component<transform>();
+
+        anim->set_anim("close");
     }
 
     // This function is called every frame
@@ -23,8 +25,7 @@ class door_controller : public brown::scriptable_entity
         }
         if (range > 5.0 && is_open)
         {
-            anim->play_reversed("open");
-            LOG("DISTANT");
+            anim->play("close");
         }
 
         if(anim->current_anim->has_finished) {is_open != is_open;}

@@ -6,6 +6,7 @@
 #include "core/ECS/components/transform.hpp"
 #include "core/ECS/components/rigid_body.hpp"
 #include "core/ECS/components/animator_controller.hpp"
+#include "core/ECS/components/ui.hpp"
 
 namespace brown {
     void brain::register_basic_components()
@@ -16,5 +17,6 @@ namespace brown {
             this->register_component<sprite>();
             this->register_component<rigid_body>();
             this->register_component<native_script>();
+            this->register_component<ui>();
         }
 }

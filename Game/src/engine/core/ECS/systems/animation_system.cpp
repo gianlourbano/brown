@@ -64,7 +64,6 @@ namespace brown
                         {
                             anim->has_finished = true;
                             anim->playing = false;
-                            anim->current = anim->clips;
                             spr = animated[entity];
                             animated.erase(entity);
                         }
@@ -72,7 +71,7 @@ namespace brown
                     break;
                 case false:
 
-                    if (anim->playing && dt % anim->time_step == 0)
+                    if (anim->playing && dt % anim->time_step == 0 && anim->current < anim->clips+1)
                     {
                         anim->has_finished = false;
                         animated.insert(std::make_pair(entity, spr));
@@ -81,9 +80,8 @@ namespace brown
                         spr.offset = anim->offset;
                         anim->current++;
                     }
-                    else if (anim->current == anim->clips)
+                    else if (anim->current == anim->clips && !anim->has_finished)
                     {
-                        LOG("ANIM FINISHED");
                         if (anim->cyclic)
                         {
                             anim->current = 0;
@@ -98,7 +96,6 @@ namespace brown
                         {
                             anim->has_finished = true;
                             anim->playing = false;
-                            anim->current = 0;
                             spr = animated[entity];
                             animated.erase(entity);
                         }

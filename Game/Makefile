@@ -59,6 +59,8 @@ debug: CXXFLAGS += -ggdb
 debug: clean all test
 static-linux: LDFLAGS += -static -static-libstdc++ -static-libgcc
 static-linux: info all
+docs: doxygen docfile
+rm-docs: rm -rf docs
 
 static-lib: static-linux
 static-lib: ${CPP_OBJ_FILES}
@@ -71,7 +73,7 @@ info:
 	@echo "LDFLAGS = $(LDFLAGS)"
 	@echo
 
-clean:
+clean: rm-docs
 	@echo -e "RMRF\tbuild $(TARGET)"
 	@rm -rf build $(TARGET)
 

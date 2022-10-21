@@ -3,6 +3,8 @@
 #include "state_1.hpp"
 #include "assets/scripts/player_controller.hpp"
 #include "assets/scripts/door_controller.hpp"
+#include <random>
+#include <time.h>
 brown::state_1 brown::state_1::m_state_1;
 
 class menu_state : public brown::state
@@ -14,19 +16,26 @@ public:
         animation opened = {
             vertical ? "animated_vertical_door" : "animated_horizontal_door",
             {0, 0},
-            vertical ? 4 : 5,
+            vertical ? 4 : 6,
             vertical ? 20 : 10,
             false,
-            true
-        };
+            true};
+
+        animation closed = {
+            vertical ? "animated_vertical_door_c" : "animated_horizontal_door_c",
+            {0, 0},
+            vertical ? 4 : 6,
+            vertical ? 20 : 10,
+            false,
+            true};
 
         auto door = create_entity("door_" + name);
         door.add_component<transform>({pos});
         door.add_component<sprite>({{3, 2}, vertical ? "door1" : "door2"});
         door.add_component<animator_controller>({});
 
-        animator_controller *anim = &door.get_component<animator_controller>(); 
-        // anim->add_anim("close", closed);
+        animator_controller *anim = &door.get_component<animator_controller>();
+        anim->add_anim("close", closed);
         anim->add_anim("open", opened);
 
         door.add_component<native_script>({}).bind<door_controller>();
@@ -34,7 +43,7 @@ public:
     void init(brown::engine *game)
     {
         // state window initialization
-
+        srand(time(NULL));
         set_win(brown::graphics::create_newwin(LINES - 2, COLS - 2, 2, 2));
         brown::graphics::start_curses_flags(win);
         game->set_current_screen(win);
@@ -43,15 +52,20 @@ public:
 
         animation_system = brown::animation_system::register_system(&brain);
         scripts_system = brown::scripts_system::register_system(&brain);
-
+        UI_system = brown::UI_system::register_system(&brain);
         render_system = brown::render_system::register_system(&brain);
         render_system->init();
 
         m_controller.init(&brain);
 
         auto room = create_entity("menu");
-        room.add_component<transform>({{0, 0}, 0});
-        room.add_component<sprite>({{71, 17}, "menu"});
+        auto room_spr = room.add_component<sprite>({{71, 17}, "menu"});
+        
+        int row, col;
+        getmaxyx(win, row, col);
+        vec2 offset = {(col - room_spr.size.x)/2, (row - room_spr.size.y)/2};
+        
+        room.add_component<transform>({offset, 0});
 
         create_door({15, 1}, false, "1");
         create_door({33, 1}, false, "2");
@@ -67,6 +81,9 @@ public:
         this->d1 =find_entity("door_1").get_component<transform>().position;
         this->d2 =find_entity("door_2").get_component<transform>().position;
         this->d3 =find_entity("door_3").get_component<transform>().position;
+        auto text1 = create_entity("text1");
+        text1.add_component<transform>({{3, 3}, 1});
+        text1.add_component<ui>({"this is text"});
     }
 
     void resume() {}
@@ -82,6 +99,9 @@ public:
         {
             switch (brown::KEY_PRESSED)
             {
+            case 'm':
+                m_controller.LOG_ENTITIES();
+                break;
             case 'u':
                 find_entity("door_1").get_component<animator_controller>().play_reversed("open");
                 break;
@@ -122,7 +142,10 @@ public:
         werase(game->get_std_screen());
         box(win, 0, 0);
         render_system->draw(win, &brain);
+        UI_system->draw(win, &brain);
         }
+
+        
     }
 
     static menu_state *instance()
@@ -139,4 +162,5 @@ private:
     std::shared_ptr<brown::render_system> render_system;
     std::shared_ptr<brown::scripts_system> scripts_system;
     vec2 pp, d1,d2,d3;
+    std::shared_ptr<brown::UI_system> UI_system;
 };
