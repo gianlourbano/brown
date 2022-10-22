@@ -67,9 +67,9 @@ public:
         
         room.add_component<transform>({offset, 0});
 
-        create_door({offset.x+15, offset.y+1}, false, "1");
-        create_door({offset.x+33, offset.y+1}, false, "2");
-        create_door({offset.x+52, offset.y+1}, false, "3");
+        create_door({offset.x+15, offset.y}, false, "1");
+        create_door({offset.x+33, offset.y}, false, "2");
+        create_door({offset.x+52, offset.y}, false, "3");
         
 
         auto pl = create_entity("player");
@@ -82,9 +82,15 @@ public:
         this->d2 =find_entity("door_2").get_component<transform>().position;
         this->d3 =find_entity("door_3").get_component<transform>().position;
 
-        auto text1 = create_entity("text1");
-        text1.add_component<transform>({{3, 3}, 1});
-        text1.add_component<ui>({"this is text"});
+        auto text1 = create_entity("text_d1");
+        text1.add_component<transform>({{d1.x+2, d1.y}, 1});
+        text1.add_component<ui>({"PLAY"});
+        auto text2 = create_entity("text_d2");
+        text2.add_component<transform>({{d2.x+2, d2.y}, 2});
+        text2.add_component<ui>({"BOH"});
+        auto text3 = create_entity("text_d1");
+        text3.add_component<transform>({{d3.x+2, d3.y}, 3});
+        text3.add_component<ui>({"QUIT"});
     }
 
     void resume() {}
