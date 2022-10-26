@@ -3,9 +3,16 @@
 #include "state_1.hpp"
 #include "assets/scripts/player_controller.hpp"
 #include "assets/scripts/door_controller.hpp"
+#include "assets/scripts/healthbar_controller.hpp"
+#include "assets/scripts/AI.hpp"
 #include <random>
-#include <time.h>
+
+#include "assets/test/tile_system.hpp"
+
+#define TILES 14
+
 brown::state_1 brown::state_1::m_state_1;
+game_state game_state::m_game_state;
 
 class menu_state : public brown::state
 {
@@ -44,11 +51,15 @@ public:
     {
         // state window initialization
         srand(time(NULL));
-        set_win(brown::graphics::create_newwin(LINES - 2, COLS - 2, 2, 2));
+        set_win(brown::graphics::create_newwin(LINES, COLS, 0, 0));
         brown::graphics::start_curses_flags(win);
         game->set_current_screen(win);
 
         brain.init();
+
+        brain.register_component<tilemap>();
+
+        tiles_system = tile_system::register_system(&brain);
 
         animation_system = brown::animation_system::register_system(&brain);
         scripts_system = brown::scripts_system::register_system(&brain);
@@ -58,44 +69,75 @@ public:
 
         m_controller.init(&brain);
 
-        auto room = create_entity("menu");
-        auto room_spr = room.add_component<sprite>({{71, 17}, "menu"});
-        
+        std::string tilenames[TILES];
+        for (int i = 0; i < TILES; i++)
+        {
+            tilenames[i] = "tile_" + std::to_string(i + 1);
+        }
+        ts = new tileset(TILES, tilenames);
+
+        auto map = create_entity("map");
+        vec2 map_size = {17, 8};
         int row, col;
         getmaxyx(win, row, col);
-        vec2 offset = {(col - room_spr.size.x)/2, (row - room_spr.size.y)/2};
-        
-        room.add_component<transform>({offset, 0});
 
-        create_door({offset.x+15, offset.y}, false, "1");
-        create_door({offset.x+33, offset.y}, false, "2");
-        create_door({offset.x+52, offset.y}, false, "3");
-        
+        offset.x = (col - map_size.x * TILE_SIZE) / 2;
+        offset.y = (row - map_size.y * TILE_SIZE) / 2;
+        if (offset.y < 7)
+            offset.y = 7;
+        map.add_component<transform>({offset, 0});
+        tilemap &tm = map.add_component<tilemap>({ts, map_size.x, map_size.y});
+        tm.load_from_file("tilemap_1");
+
+        create_door(offset + vec2{5*TILE_SIZE, 0}, false, "1");
+        create_door(offset + vec2{13*TILE_SIZE, 2*TILE_SIZE+2}, false, "2");
+        // create_door({offset.x + 52, offset.y }, false, "3");
 
         auto pl = create_entity("player");
-        pl.add_component<transform>({{offset.x+35, offset.y+ 7}, 1});
+        pl.add_component<transform>({{offset.x + 35, offset.y + 7}, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({});
+
+        auto bot1 = create_entity();
+        bot1.add_component<transform>({offset + vec2{rand() % (map_size.x*TILE_SIZE), rand() % (map_size.y*TILE_SIZE)}, 1});
+        
+        brown::add_sprite({"4"}, "bot1");
+        bot1.add_component<sprite>({{1, 1}, "bot1"});
+        bot1.add_component<native_script>({}).bind<AI>();
+        bot1.add_component<ui>({"Hello stranger!", 0, false, true});
+
+        auto bot2 = create_entity();
+        bot2.add_component<transform>({offset + vec2{rand() % (map_size.x*TILE_SIZE), rand() % (map_size.y*TILE_SIZE)}, 1});
+        brown::add_sprite({"3"}, "bot2");
+        bot2.add_component<sprite>({{1, 1}, "bot2"});
+        bot2.add_component<native_script>({}).bind<AI>();
+        bot2.add_component<ui>({"I see you!", 0, false, true});
+
         pl.add_component<native_script>({}).bind<player_controller>();
 
-        this->d1 =find_entity("door_1").get_component<transform>().position;
-        this->d2 =find_entity("door_2").get_component<transform>().position;
-        this->d3 =find_entity("door_3").get_component<transform>().position;
+        auto hb = create_entity("healtbar");
+        hb.add_component<transform>({{1, 2}, 1});
+        hb.add_component<ui>({""});
+        hb.add_component<native_script>({}).bind<healtbar_controller>();
 
-        auto text1 = create_entity("text_d1");
-        text1.add_component<transform>({{d1.x+2, d1.y}, 1});
-        text1.add_component<ui>({"PLAY"});
-        auto text2 = create_entity("text_d2");
-        text2.add_component<transform>({{d2.x+2, d2.y}, 2});
-        text2.add_component<ui>({"BOH"});
-        auto text3 = create_entity("text_d1");
-        text3.add_component<transform>({{d3.x+2, d3.y}, 3});
-        text3.add_component<ui>({"QUIT"});
+        auto pl_bar = create_entity("power_level_bar");
+        pl_bar.add_component<transform>({{1, 3}, 1});
+        pl_bar.add_component<ui>({"Power level: ★ ★ ★ ★ ★"});
+
+        auto key_c = create_entity("key_counter");
+        key_c.add_component<transform>({{1, 4}, 1});
+        key_c.add_component<ui>({"Keys: 🔑🗝"});
+
+        brown::colors::add_custom_pair(COLOR_WHITE, 8);
+
+        auto h_text = create_entity("h_text");
+        h_text.add_component<transform>({0, 1});
+        h_text.add_component<ui>({"Press 'h' to open the help menu"});
     }
 
     void resume() {}
     void pause() {}
-    void cleanup() {}
+    void cleanup() { delete ts; }
 
     // queste tre vengono eseguite in ordine e
     // fanno esattamente quello che c'è scritto
@@ -110,13 +152,10 @@ public:
                 m_controller.LOG_ENTITIES();
                 break;
             case 'u':
-                find_entity("door_1").get_component<animator_controller>().play_reversed("open");
-                break;
-            case 'i':
-                find_entity("door_1").get_component<animator_controller>().play("open");
+
                 break;
             case 'p':
-                game->change_state(brown::state_1::instance());
+                game->change_state(game_state::instance());
                 break;
             case 'l':
                 game->quit();
@@ -126,7 +165,6 @@ public:
     }
     void update(brown::engine *game)
     {
-        this->pp = find_entity("player").get_component<transform>().position;
         frame_passed++;
         animation_system->update(&brain, frame_passed);
         if (frame_passed > FPS)
@@ -136,20 +174,14 @@ public:
     }
     void draw(brown::engine *game)
     {
-        if(pp.x>=d1.x&&pp.x<=d1.x+4&&pp.y==d1.y){
-            game->push_state(brown::state_1::instance());
-        }else if(pp.x>=d2.x&&pp.x<=d2.x+4&&pp.y==d2.y)
-        {
-            
-        }else if(pp.x>=d3.x&&pp.x<=d3.x+4&&pp.y==d3.y)
-        {
-            game->quit();
-        }
         werase(win);
-        werase(game->get_std_screen());
-        box(win, 0, 0);
+        wbkgdset(win, COLOR_PAIR(8));
+
+        render_system->draw(win, &brain, Z_INDEX::Z_1);
+        tiles_system->draw_tilemap(win, &brain);
         render_system->draw(win, &brain);
         UI_system->draw(win, &brain);
+        doupdate();
     }
 
     static menu_state *instance()
@@ -165,6 +197,12 @@ private:
     std::shared_ptr<brown::animation_system> animation_system;
     std::shared_ptr<brown::render_system> render_system;
     std::shared_ptr<brown::scripts_system> scripts_system;
-    vec2 pp, d1,d2,d3;
     std::shared_ptr<brown::UI_system> UI_system;
+
+    std::shared_ptr<tile_system> tiles_system;
+
+    tileset *ts;
+
+    vec2 offset;
+    vec2 room_sprite_size = {71, 17};
 };

@@ -58,14 +58,15 @@ void brown::render_system::init()
     }
 }
 
-void brown::render_system::draw(WINDOW *win, brown::brain *br)
+void brown::render_system::draw(WINDOW *win, brown::brain *br, Z_INDEX z)
 {
     for (auto &entity : m_entities)
     {
         auto &trans = br->get_component<transform>(entity);
         auto &spr = br->get_component<sprite>(entity);
 
-        graphics::mvwprintvcolors(win, trans.position.y-spr.offset.y, trans.position.x-spr.offset.x, true, GLOBAL_SPRITES[spr.sprite_name]);
+        if(spr.z_index & z)
+            graphics::mvwprintvcolors(win, trans.position.y-spr.offset.y, trans.position.x-spr.offset.x, true, GLOBAL_SPRITES[spr.sprite_name]);
     }
 }
 
@@ -104,4 +105,9 @@ sprite_data brown::load_sprite(std::string name)
 
     sprite_.close();
     return m_data;
+}
+
+void brown::add_sprite(sprite_data sd, std::string name)
+{
+    GLOBAL_SPRITES.insert({name, sd});
 }

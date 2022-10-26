@@ -4,7 +4,7 @@
 /**
  * @brief Native script component.
  * 
- * @
+ * 
  * This component is used to attach a native script to an entity.
  * Use <code>bind<T>()</code> to bind a script to an entity.
  */

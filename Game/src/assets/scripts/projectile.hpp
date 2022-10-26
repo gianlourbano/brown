@@ -46,17 +46,9 @@ public:
         tot--;
         if (lifetime != 0)
         {
-            if (!check_collision(ts->direction))
-            {
-                ts->position += force;
-                lifetime--;
-            }
-            else
-            {
-                tot -= lifetime;
-                lifetime = 0;
-                has_finished = true;
-            }
+
+            ts->position += force;
+            lifetime--;
         }
         else
         {

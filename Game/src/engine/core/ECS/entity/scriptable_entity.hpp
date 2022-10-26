@@ -1,5 +1,7 @@
 #pragma once
 #include "entity.hpp"
+#include "engine/math/vec2.hpp"
+#include "engine/core/ECS/components/transform.hpp"
 
 namespace brown
 {
@@ -8,10 +10,19 @@ namespace brown
     class scriptable_entity
     {
     public:
+        scriptable_entity() {}
         virtual ~scriptable_entity() {}
 
         template <typename T>
         T &get_component() { return m_entity.get_component<T>(); }
+
+        template <typename T>
+        T &add_component(T component) { return m_entity.add_component<T>(component); }
+
+        template <typename T>
+        void delete_component() { m_entity.remove_component<T>(); }
+
+        bool is_player_in_range(double range);
 
         void delete_self();
 

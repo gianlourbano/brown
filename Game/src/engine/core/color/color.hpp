@@ -12,6 +12,6 @@ namespace brown::colors {
 
     void init_color_map_from_file(std::string map);
 
-    void add_custom_pair(short color_A_id, short color_B_id);
-    void add_custom_color(short r, short g, short b);
+    int add_custom_pair(short color_A_id, short color_B_id);
+    int add_custom_color(short r, short g, short b);
 }

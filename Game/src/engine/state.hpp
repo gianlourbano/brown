@@ -7,13 +7,15 @@ namespace brown
 {
 
     class engine;
-    /*
-        state class for managing scenes basically.
-        the user needs to implement all the virtual functions
-        whenever he creates custom states.
-    */
-
     
+
+    /**
+     * @brief The state class 
+     * 
+     * This is the template for all the states of the game.
+     * All of the methods are pure virtual and are to be implemented by the child class.
+     * 
+     */
     class state
     {
     public:
@@ -23,8 +25,25 @@ namespace brown
         virtual void pause() = 0;
         virtual void resume() = 0;
 
+        /**
+         * @brief Handles the game logic.
+         * 
+         * @param game the pointer to the engine instance.
+         */
         virtual void handle_events(engine *game) = 0;
+
+        /**
+         * @brief Updates the game logic.
+         * 
+         * @param game the pointer to the engine instance.
+         */
         virtual void update(engine *game) = 0;
+
+        /**
+         * @brief Draws the drawables to the screen.
+         * 
+         * @param game the pointer to the engine instance.
+         */
         virtual void draw(engine *game) = 0;
 
         void change_state(engine *game, state *state);

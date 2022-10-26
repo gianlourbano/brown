@@ -9,7 +9,7 @@ namespace brown
 {
     void engine::init(int width = 640, int height = 480)
     {
-        // setlocale(LC_ALL, "");
+        setlocale(LC_ALL, "");
         stdscreen = initscr();         /* Start curses mode 		*/
         brown::colors::start_colors(); // starts color mode -from colors.hpp
         noecho();                      // prevents user-inputted charters to be displayed on the stdscreen

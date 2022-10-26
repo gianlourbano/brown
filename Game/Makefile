@@ -59,8 +59,15 @@ debug: CXXFLAGS += -ggdb
 debug: clean all test
 static-linux: LDFLAGS += -static -static-libstdc++ -static-libgcc
 static-linux: info all
-docs: doxygen docfile
-rm-docs: rm -rf docs
+docs: 
+	doxygen docfile
+rm-docs: 
+	rm -rf docs
+
+vg: 
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(TARGET)
+
+
 
 static-lib: static-linux
 static-lib: ${CPP_OBJ_FILES}

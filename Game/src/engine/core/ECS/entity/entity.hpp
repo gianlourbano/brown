@@ -5,19 +5,12 @@
 
 namespace brown
 {
-    enum Z_INDEX
-    {
-        Z_0,
-        Z_1,
-        Z_2
-    };
 
     class entity
     {
     public:
         entity(){};
-        entity(std::string name, entity_id id, brain *br, Z_INDEX z_index) :name(name), m_entity_id(id), m_brain(br), z_index(z_index){};
-        entity(std::string name, entity_id id, brain *br) : name(name), m_entity_id(id), m_brain(br), z_index(brown::Z_1){};
+        entity(std::string name, entity_id id, brain *br) :name(name), m_entity_id(id), m_brain(br){};
         entity(const entity &) = default;
 
         template <typename T>
@@ -48,7 +41,6 @@ namespace brown
     private:
         entity_id m_entity_id;
         brain *m_brain = nullptr;
-        Z_INDEX z_index = Z_1;
     protected:
         friend class scriptable_entity;
     };

@@ -4,6 +4,7 @@
 // This is a simple script that will open and close a door when the player
 class door_controller : public brown::scriptable_entity
 {
+
     // This function is called when the script is created
     void on_create()
     {

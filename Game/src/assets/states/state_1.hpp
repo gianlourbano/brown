@@ -4,7 +4,7 @@
 #include "assets/scripts/door_controller.hpp"
 #include "game_state.hpp"
 
-game_state game_state::m_game_state;
+//game_state game_state::m_game_state;
 int frame_passed = 0;
 extern int FPS;
 
@@ -95,8 +95,6 @@ namespace brown
                     frame_passed = 0;
                 scripts_system->update(this);
                 m_controller.empty_to_be_deleted();
-            }else{
-                game->push_state(game_state::instance());
             }
         };
 

@@ -7,7 +7,14 @@
 
 namespace brown
 {
-
+    /**
+     * @brief The engine class
+     *
+     * The main class of #Brown. It is responsible for the game loop and the state management.
+     * It acts like a stack, where the top state is the one that is currently running, always executing handle_events(),
+     * update() and draw() methods.
+     * 
+     */
     class engine
     {
     public:
@@ -35,9 +42,8 @@ namespace brown
         WINDOW *stdscreen;
         WINDOW *current_screen;
 
-        // the stack of states
     public:
-        std::vector<state *> states;
+        std::vector<state *> states; // the stack of states
         bool m_running;
     };
 }

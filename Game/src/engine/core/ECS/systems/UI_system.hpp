@@ -13,5 +13,8 @@ namespace brown
 
         void init();
         void draw(WINDOW *win, brain *br);
+        void cleanup(brain *br);
+
+        int CURRENT_PAIRS = 0;
     };
 }

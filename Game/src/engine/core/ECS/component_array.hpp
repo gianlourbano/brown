@@ -23,7 +23,7 @@ namespace brown
             size_t new_index = m_size;
             m_entity_to_index[entity] = new_index;
             m_index_to_entity[new_index] = entity;
-            m_component_array[new_index] = component;
+            m_component_array[new_index] = std::forward<T>(component);
             ++m_size;
         }
 
@@ -64,6 +64,6 @@ namespace brown
         std::array<T, MAX_ENTITIES> m_component_array{};
         std::unordered_map<entity_id, size_t> m_entity_to_index{};
         std::unordered_map<size_t, entity_id> m_index_to_entity{};
-        size_t m_size{};
+        size_t m_size;
     };
 }

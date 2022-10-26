@@ -22,7 +22,7 @@ namespace brown
             if (!script.instance)
             {
                 script.instance = script.instantiate_script();
-                script.instance->m_entity = entity{"", e, &(st->brain), brown::Z_1};
+                script.instance->m_entity = entity{"", e, &(st->brain)};
                 script.instance->m_state = st;
                 script.instance->on_create();
             }

@@ -67,11 +67,13 @@ namespace brown::colors
         }
     }
 
-    void add_custom_pair(short color_A_id, short color_B_id) {
+    int add_custom_pair(short color_A_id, short color_B_id) {
         init_pair(CURR_PAIR_ID++, color_A_id, color_B_id);
+        return CURR_PAIR_ID;
     }
 
-    void add_custom_color(short r, short g, short b) {
+    int add_custom_color(short r, short g, short b) {
         init_color(CURR_ID++, r, g, b);
+        return CURR_ID;
     }
 }

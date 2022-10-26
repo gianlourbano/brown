@@ -3,6 +3,13 @@
 #include <vector>
 #include "../../../math/vec2.hpp"
 
+enum Z_INDEX
+{
+    Z_1 = 1,
+    Z_2 = 2,
+    Z_3 = 4,
+};
+
 /**
  * @brief Sprite component.
  * 
@@ -16,4 +23,5 @@ struct sprite
     vec2 size;
     std::string sprite_name;
     vec2 offset = 0;
+    Z_INDEX z_index = Z_INDEX::Z_2;
 };

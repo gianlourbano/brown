@@ -39,7 +39,7 @@ namespace brown
         template <typename T>
         void add_component(entity_id entity, T component)
         {
-            get_component_array<T>()->insert_data(entity, component);
+            get_component_array<T>()->insert_data(entity, std::forward<T>(component));
         }
         template <typename T>
         void remove_component(entity_id entity)
@@ -62,8 +62,8 @@ namespace brown
         }
 
     private:
-        std::unordered_map<const char *, component_type> m_component_types{};
         std::unordered_map<const char *, std::shared_ptr<Vcomponent_array>> m_component_arrays{};
+        std::unordered_map<const char *, component_type> m_component_types{};
         component_type m_next_component_type;
 
         template <typename T>

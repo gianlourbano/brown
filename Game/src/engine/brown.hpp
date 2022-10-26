@@ -15,6 +15,7 @@
 #include "core/ECS/component_manager.hpp"
 #include "core/ECS/system_manager.hpp"
 #include "core/brain.hpp"
+#include "core/time/time.hpp"
 //////
 //#include "debug/debug_state.hpp"
 //////

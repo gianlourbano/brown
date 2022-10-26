@@ -11,7 +11,7 @@ namespace brown
     class entity_controller
     {
     public:
-        entity_controller() {};
+        entity_controller(){};
         void init(brown::brain *br) { m_brain = br; }
 
         brown::entity find(entity_id id)
@@ -25,7 +25,8 @@ namespace brown
             return {};
         }
 
-        brown::entity find(std::string name){
+        brown::entity find(std::string name)
+        {
             for (auto &e : m_entities)
             {
                 if (e.name == name)
@@ -53,11 +54,11 @@ namespace brown
             for (auto &e : to_be_deleted)
             {
                 auto &script = m_brain->get_component<native_script>(e.get_id());
-                
+
                 script.instance->on_destroy();
 
                 script.destroy_script(&script);
-            
+
                 m_brain->destroy_entity(e.m_entity_id);
                 m_entities.erase(std::find(m_entities.begin(), m_entities.end(), e));
             }
