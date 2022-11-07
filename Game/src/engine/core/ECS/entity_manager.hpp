@@ -25,7 +25,6 @@ namespace brown
 
         void destroy_entity(entity_id entity)
         {
-
             m_signatures[entity].reset();
             m_avaliable_entities.push(entity);
             --m_entity_count;

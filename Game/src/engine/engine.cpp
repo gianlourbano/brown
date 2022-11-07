@@ -11,7 +11,7 @@ namespace brown
     {
         setlocale(LC_ALL, "");
         stdscreen = initscr();         /* Start curses mode 		*/
-        brown::colors::start_colors(); // starts color mode -from colors.hpp
+        
         noecho();                      // prevents user-inputted charters to be displayed on the stdscreen
         nodelay(stdscreen, true);      // makes getch non-blocking
         raw();                         // ncurses will report any keystrokes with getch immediately
@@ -35,7 +35,6 @@ namespace brown
 
     void engine::update()
     {
-
         states.back()->update(this);
     }
 

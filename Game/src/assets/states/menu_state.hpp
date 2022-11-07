@@ -11,15 +11,19 @@
 
 #include "assets/test/tile_system.hpp"
 
-#define TILES 14
+#define TILES 15
 
 brown::state_1 brown::state_1::m_state_1;
 game_state game_state::m_game_state;
 help_state help_state::m_help_state;
 class menu_state : public brown::state
 {
-
 public:
+
+    void QuitHandler(brown::event& e) {
+        m_game->quit();
+    }
+
     void create_door(vec2 pos, bool vertical = true, std::string name = "1")
     {
         animation opened = {
@@ -51,6 +55,7 @@ public:
     }
     void init(brown::engine *game)
     {
+        m_game = game;
         // state window initialization
         srand(time(NULL));
         set_win(brown::graphics::create_newwin(LINES, COLS, 0, 0));
@@ -58,6 +63,8 @@ public:
         game->set_current_screen(win);
 
         brain.init();
+
+        add_event_listener(METHOD_LISTENER(Events::Window::QUIT, menu_state::QuitHandler));
 
         brain.register_component<tilemap>();
 
@@ -76,10 +83,10 @@ public:
         {
             tilenames[i] = "tile_" + std::to_string(i + 1);
         }
-        ts = new tileset(TILES, tilenames);
+        ts = new tileset(TILES, tilenames); 
 
         auto map = create_entity("map");
-        vec2 map_size = {17, 8};
+        vec2 map_size = {17,8};
         int row, col;
         getmaxyx(win, row, col);
 
@@ -110,7 +117,7 @@ public:
 
         auto bot2 = create_entity();
         bot2.add_component<transform>({offset + vec2{rand() % (map_size.x*TILE_SIZE), rand() % (map_size.y*TILE_SIZE)}, 1});
-        brown::add_sprite({"3"}, "bot2");
+        brown::add_sprite({"a"}, "bot2");
         bot2.add_component<sprite>({{1, 1}, "bot2"});
         bot2.add_component<native_script>({}).bind<AI>();
         bot2.add_component<ui>({"I see you!", 0, false, true});
@@ -145,6 +152,9 @@ public:
     // fanno esattamente quello che c'è scritto
     void handle_events(brown::engine *game)
     {
+        if(terminate)
+            game->quit();
+
         brown::get_keyboard_input(win);
         if (brown::KEY_PRESSED != ERR)
         {
@@ -183,7 +193,6 @@ public:
         tiles_system->draw_tilemap(win, &brain);
         render_system->draw(win, &brain);
         UI_system->draw(win, &brain);
-        doupdate();
     }
 
     static menu_state *instance()
@@ -203,8 +212,7 @@ private:
 
     std::shared_ptr<tile_system> tiles_system;
 
-    tileset *ts;
+    tileset *ts = nullptr;
 
     vec2 offset;
-    vec2 room_sprite_size = {71, 17};
 };

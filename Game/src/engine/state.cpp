@@ -1,7 +1,8 @@
 #include "state.hpp"
 
-namespace brown {
-     entity state::create_entity(std::string name)
+namespace brown
+{
+    entity state::create_entity(std::string name)
     {
         entity_id e = brain.create_entity();
         entity e_ = entity(name, e, &(this->brain));
@@ -12,7 +13,7 @@ namespace brown {
     entity state::create_entity()
     {
         entity_id e = brain.create_entity();
-        entity e_ = entity("entity_" + std::to_string(free_entities++),e, &(this->brain));
+        entity e_ = entity("entity_" + std::to_string(free_entities++), e, &(this->brain));
         m_controller.m_entities.push_back(e_);
         return e_;
     }

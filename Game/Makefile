@@ -63,6 +63,9 @@ docs:
 	doxygen docfile
 rm-docs: 
 	rm -rf docs
+open_docs:
+	xdg-open docs/html/index.html
+
 
 vg: 
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(TARGET)

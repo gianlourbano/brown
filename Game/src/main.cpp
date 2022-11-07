@@ -10,7 +10,8 @@ class game : public brown::engine
 public:
     void init(int width, int height)
     {
-        brown::engine::init(width, height);
+        engine::init(width, height);
+        brown::colors::start_colors();
         brown::colors::init_palette_from_file("palette");
         brown::colors::init_color_map_from_file("color");
     }

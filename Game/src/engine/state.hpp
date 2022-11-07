@@ -7,14 +7,13 @@ namespace brown
 {
 
     class engine;
-    
 
     /**
-     * @brief The state class 
-     * 
+     * @brief The state class
+     *
      * This is the template for all the states of the game.
      * All of the methods are pure virtual and are to be implemented by the child class.
-     * 
+     *
      */
     class state
     {
@@ -27,21 +26,21 @@ namespace brown
 
         /**
          * @brief Handles the game logic.
-         * 
+         *
          * @param game the pointer to the engine instance.
          */
         virtual void handle_events(engine *game) = 0;
 
         /**
          * @brief Updates the game logic.
-         * 
+         *
          * @param game the pointer to the engine instance.
          */
         virtual void update(engine *game) = 0;
 
         /**
          * @brief Draws the drawables to the screen.
-         * 
+         *
          * @param game the pointer to the engine instance.
          */
         virtual void draw(engine *game) = 0;
@@ -59,13 +58,17 @@ namespace brown
         entity_id find_entity_id(std::string s);
         void delete_entity(entity_id id);
 
-        inline void add_event_listener(event_id id, const std::function<void (brown::event &)> listener) {brain.add_event_listener(id, listener);}
-        inline void send_event(event_id id) {brain.send_event(id);}
-        inline void send_event(event e) {brain.send_event(e);}
+        inline void add_event_listener(event_id id, const std::function<void(brown::event &)> listener) { brain.add_event_listener(id, listener); }
+        inline void send_event(event_id id) { brain.send_event(id); }
+        inline void send_event(event e) { brain.send_event(e); }
+
+        inline void game_over() { terminate = true; }
 
     protected:
         state(){};
-        WINDOW *win;
+        bool terminate = false;
+        WINDOW *win = nullptr;
+        brown::engine *m_game = nullptr;
         brown::brain brain;
         unsigned int free_entities = 0;
         brown::entity_controller m_controller;

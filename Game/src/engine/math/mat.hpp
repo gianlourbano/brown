@@ -87,6 +87,14 @@ public:
         return os;
     }
 
+    ~mat()
+    {
+        for(auto& i : m_data) {
+            i.~T();
+        }
+        m_data.clear();
+    }
+
 private:
     int m_x;
     int m_y;

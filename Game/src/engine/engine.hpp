@@ -18,6 +18,14 @@ namespace brown
     class engine
     {
     public:
+        /**
+         * @brief Initializes the engine
+         * 
+         * Should be overloaded by the developer if he wants to add custom initialization code, like colors.
+         * 
+         * @param width The width of the window
+         * @param height The height of the window
+         */
         void init(int width, int height);
         void cleanup();
 

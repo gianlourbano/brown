@@ -1,5 +1,6 @@
 #pragma once
 #include "engine/brown.hpp"
+#include "assets/scripts/projectile.hpp"
 #include <random>
 #include <time.h>
 
@@ -64,10 +65,13 @@ public:
     {
         if (is_player_in_range(6))
         {
+            
             ui_->is_visible = true;
-        } else ui_->is_visible = false;
+        }
+        else
+            ui_->is_visible = false;
 
-        if (t.elapsed() >= rand() % (6 - 3 + 1) + 3)
+        if (t.elapsed() >= rand() % 4 + 3)
         {
             move((rand() % 4) + 1);
             t.start();
@@ -78,6 +82,6 @@ private:
     double speed = 3.0;
     brown::Timer t;
 
-    ui* ui_;
+    ui *ui_;
     transform *ts;
 };

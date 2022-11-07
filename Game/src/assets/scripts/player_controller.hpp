@@ -1,6 +1,7 @@
 #pragma once
 #include "engine/brown.hpp"
 #include "assets/scripts/projectile.hpp"
+#include "types.hpp"
 
 class player_controller : public brown::scriptable_entity
 {
@@ -13,13 +14,13 @@ public:
             mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x + 1) & A_CHARTEXT,
             mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
 
-        //return !(chars[dir - 1] == ' ' || (chars[dir - 1] <= 'z' && chars[dir - 1] >= 'a'));
-        return chars[dir-1] == '#' || chars[dir-1] == '%' || chars[dir-1] == 'x';
+        // return !(chars[dir - 1] == ' ' || (chars[dir - 1] <= 'z' && chars[dir - 1] >= 'a'));
+        return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x';
     }
 
     void on_create()
     {
-        health = 100;
+        health = 10;
         ts = &get_component<transform>();
         anim = &get_component<animator_controller>();
         proj_anim = {
@@ -33,6 +34,12 @@ public:
 
     void on_update()
     {
+        if (health <= 0)
+        {
+            m_state->send_event(Events::Window::QUIT);
+            return;
+        }
+
         if (brown::KEY_PRESSED == 'a')
         {
             ts->direction = 4;
@@ -61,13 +68,21 @@ public:
 
         if (brown::KEY_PRESSED == 'y')
         {
-            
+            set_health(--health);
         }
 
         else if (brown::KEY_PRESSED == 't')
         {
             create_proj(ts->direction);
         }
+    }
+
+    void set_health(int h)
+    {
+        health = h;
+        brown::event e(Events::Player::HEALTH);
+        e.set_param(Events::Player::Health::HEALTH, health);
+        m_state->send_event(e);
     }
 
     void create_proj(int dir)
@@ -79,9 +94,11 @@ public:
         proj.add_component<native_script>({}).bind<projectile>();
     }
 
-private:
+protected:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
     int health;
     animation proj_anim;
+
+    friend class healtbar_controller;
 };
