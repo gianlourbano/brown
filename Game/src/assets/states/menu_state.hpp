@@ -1,6 +1,8 @@
 #pragma once
 #include "engine/brown.hpp"
+#include "game_state.hpp"
 #include "state_1.hpp"
+#include "help_state.hpp"
 #include "assets/scripts/player_controller.hpp"
 #include "assets/scripts/door_controller.hpp"
 #include "assets/scripts/healthbar_controller.hpp"
@@ -13,7 +15,7 @@
 
 brown::state_1 brown::state_1::m_state_1;
 game_state game_state::m_game_state;
-
+help_state help_state::m_help_state;
 class menu_state : public brown::state
 {
 
@@ -151,8 +153,8 @@ public:
             case 'm':
                 m_controller.LOG_ENTITIES();
                 break;
-            case 'u':
-
+            case 'h':
+                game->push_state(help_state::instance());
                 break;
             case 'p':
                 game->change_state(game_state::instance());
