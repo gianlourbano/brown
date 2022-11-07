@@ -21,7 +21,7 @@ public:
         m_controller.init(&brain);
         
         auto line_1 = create_entity("line_1");
-        line_1.add_component<transform>({LINES/2 +1, COLS/2 +1});
+        line_1.add_component<transform>({vec2(0)});
         line_1.add_component<ui>({"Prova"});
     }
 
@@ -35,7 +35,6 @@ public:
         render_system->draw(win, &brain, Z_INDEX::Z_1);
         render_system->draw(win, &brain);
         UI_system->draw(win, &brain);
-        doupdate();
     }
     void handle_events(brown::engine *game)
     {
@@ -46,6 +45,11 @@ public:
             {
             case 'h':
                 game->pop_state();
+                break;
+            
+            case 'm':
+                m_controller.LOG_ENTITIES();
+                break;
             }
         }
     }
