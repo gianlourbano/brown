@@ -1,6 +1,12 @@
 #pragma once
 #include "brown.hpp"
 
+vec2 forces[4] = {
+    {0, -1},
+    {1, 0},
+    {0, 1},
+    {-1, 0}};
+
 class projectile : public brown::scriptable_entity
 {
 public:
@@ -20,25 +26,17 @@ public:
         anim = &get_component<animator_controller>();
         lifetime = 10;
 
-        tot = lifetime + anim->current_anim->clips * anim->current_anim->time_step;
+
+        force = forces[ts->direction - 1];
 
         switch (ts->direction)
         {
         case 1:
-            force = {0, -1};
-            lifetime /= 2;
-            break;
-        case 2:
-            force = {1, 0};
-            break;
         case 3:
-            force = {0, 1};
             lifetime /= 2;
-            break;
-        case 4:
-            force = {-1, 0};
             break;
         }
+        tot = lifetime + anim->current_anim->clips * anim->current_anim->time_step;
     }
 
     void on_update()
@@ -65,6 +63,11 @@ public:
         {
             this->delete_self();
         }
+    }
+
+    void on_destroy() {
+        ts = nullptr;
+        anim = nullptr;
     }
 
 private:

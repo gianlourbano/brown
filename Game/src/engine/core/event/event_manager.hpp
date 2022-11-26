@@ -15,6 +15,11 @@ namespace brown
             listeners[id].push_back(listener);
         }
 
+        void remove_event_listener(event_id id, std::function<void(event &)> const &listener)
+        {
+            //listeners[id].remove(listener);
+        }
+
         void send_event(event &ev)
         {
             uint32_t type_ = ev.get_type();

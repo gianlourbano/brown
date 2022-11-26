@@ -38,12 +38,20 @@ namespace brown
             m_system_manager->entity_destroyed(entity);
         }
 
+        signature get_signature(entity_id id) { return m_entity_manager->get_signature(id); }
+
         // components methods
 
         template <typename T>
         void register_component()
         {
             m_component_manager->register_component<T>();
+        }
+
+        template<typename T>
+        bool has_component(entity_id entity)
+        {
+            return get_signature(entity)[get_component_type<T>()];
         }
 
         template <typename T>
@@ -73,6 +81,7 @@ namespace brown
         template <typename T>
         T &get_component(entity_id entity)
         {
+            ASSERT(has_component<T>(entity), "Entity does not have component");
             return m_component_manager->get_component<T>(entity);
         }
 
@@ -99,6 +108,11 @@ namespace brown
         void add_event_listener(event_id id, std::function<void(event &)> const &listener)
         {
             m_event_manager->add_listener(id, listener);
+        }
+
+        void remove_event_listener(event_id id, std::function<void(event &)> const &listener)
+        {
+            m_event_manager->remove_event_listener(id, listener);
         }
 
         void send_event(event &ev)

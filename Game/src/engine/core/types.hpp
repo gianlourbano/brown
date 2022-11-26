@@ -48,3 +48,7 @@ namespace Events::Window::Input
 {
     const param_id INPUT = "Events::Window::Input::INPUT"_hash;
 }
+
+#define EVENT_ID(category, name) const event_id name = "Events::##category::##name"_hash;
+#define EVENT_PARAM_ID(category, name) const param_id name = "Events::##category::##name"_hash;
+

@@ -3,7 +3,7 @@
 #include "core/ECS/entity/entity.hpp"
 #include <unistd.h>
 
-extern const int FPS;
+extern int FPS;
 
 namespace brown
 {

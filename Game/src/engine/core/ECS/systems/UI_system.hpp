@@ -3,6 +3,7 @@
 #include "engine/core/brain.hpp"
 #include "engine/core/ECS/components/ui.hpp"
 #include <ncurses.h>
+#include <map>
 
 namespace brown
 {
@@ -15,6 +16,10 @@ namespace brown
         void draw(WINDOW *win, brain *br);
         void cleanup(brain *br);
 
-        int CURRENT_PAIRS = 0;
+        void LOG_COLORS();
+
+    private:
+        int m_step = 0;
+        std::map<short, short> m_pairs{};
     };
 }

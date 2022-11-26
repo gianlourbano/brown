@@ -6,7 +6,9 @@
 #include "assets/scripts/player_controller.hpp"
 #include "assets/scripts/door_controller.hpp"
 #include "assets/scripts/healthbar_controller.hpp"
-#include "assets/scripts/AI.hpp"
+#include "assets/scripts/NPC.hpp"
+#include "assets/scripts/Enemy.hpp"
+#include "assets/scripts/logo_controller.hpp"
 #include <random>
 
 #include "assets/test/tile_system.hpp"
@@ -19,8 +21,8 @@ help_state help_state::m_help_state;
 class menu_state : public brown::state
 {
 public:
-
-    void QuitHandler(brown::event& e) {
+    void QuitHandler(brown::event &e)
+    {
         m_game->quit();
     }
 
@@ -83,12 +85,17 @@ public:
         {
             tilenames[i] = "tile_" + std::to_string(i + 1);
         }
-        ts = new tileset(TILES, tilenames); 
+        ts = new tileset(TILES, tilenames);
 
         auto map = create_entity("map");
-        vec2 map_size = {17,8};
+        vec2 map_size = {17, 6};
         int row, col;
         getmaxyx(win, row, col);
+
+        auto logo = create_entity("logo");
+        logo.add_component<sprite>({0, "logo"});
+        logo.add_component<transform>({vec2((col / 2) - 29, -10)});
+        logo.add_component<native_script>({}).bind<logo_controller>();
 
         offset.x = (col - map_size.x * TILE_SIZE) / 2;
         offset.y = (row - map_size.y * TILE_SIZE) / 2;
@@ -98,8 +105,8 @@ public:
         tilemap &tm = map.add_component<tilemap>({ts, map_size.x, map_size.y});
         tm.load_from_file("tilemap_1");
 
-        create_door(offset + vec2{5*TILE_SIZE, 0}, false, "1");
-        create_door(offset + vec2{13*TILE_SIZE, 2*TILE_SIZE+2}, false, "2");
+        create_door(offset + vec2{5 * TILE_SIZE, 0}, false, "1");
+        create_door(offset + vec2{13 * TILE_SIZE, 2 * TILE_SIZE + 2}, false, "2");
         // create_door({offset.x + 52, offset.y }, false, "3");
 
         auto pl = create_entity("player");
@@ -108,19 +115,19 @@ public:
         pl.add_component<animator_controller>({});
 
         auto bot1 = create_entity();
-        bot1.add_component<transform>({offset + vec2{rand() % (map_size.x*TILE_SIZE), rand() % (map_size.y*TILE_SIZE)}, 1});
-        
+        bot1.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
+
         brown::add_sprite({"4"}, "bot1");
         bot1.add_component<sprite>({{1, 1}, "bot1"});
-        bot1.add_component<native_script>({}).bind<AI>();
-        bot1.add_component<ui>({"Hello stranger!", 0, false, true});
+        bot1.add_component<native_script>({}).bind<NPC>();
+        bot1.add_component<ui>({""});
 
         auto bot2 = create_entity();
-        bot2.add_component<transform>({offset + vec2{rand() % (map_size.x*TILE_SIZE), rand() % (map_size.y*TILE_SIZE)}, 1});
+        bot2.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
         brown::add_sprite({"a"}, "bot2");
         bot2.add_component<sprite>({{1, 1}, "bot2"});
-        bot2.add_component<native_script>({}).bind<AI>();
-        bot2.add_component<ui>({"I see you!", 0, false, true});
+        bot2.add_component<native_script>({}).bind<NPC>();
+        bot2.add_component<ui>({"", 0, false, true});
 
         pl.add_component<native_script>({}).bind<player_controller>();
 
@@ -137,62 +144,71 @@ public:
         key_c.add_component<transform>({{1, 4}, 1});
         key_c.add_component<ui>({"Keys: 🔑🗝"});
 
-        brown::colors::add_custom_pair(COLOR_WHITE, 8);
-
         auto h_text = create_entity("h_text");
         h_text.add_component<transform>({0, 1});
         h_text.add_component<ui>({"Press 'h' to open the help menu"});
     }
 
-    void resume() {}
-    void pause() {}
+    void resume() { m_pause = false; }
+    void pause() { m_pause = true; }
     void cleanup() { delete ts; }
 
     // queste tre vengono eseguite in ordine e
     // fanno esattamente quello che c'è scritto
     void handle_events(brown::engine *game)
     {
-        if(terminate)
+        if (terminate)
             game->quit();
-
-        brown::get_keyboard_input(win);
-        if (brown::KEY_PRESSED != ERR)
+        if (!m_pause)
         {
-            switch (brown::KEY_PRESSED)
+            brown::get_keyboard_input(win);
+            if (brown::KEY_PRESSED != ERR)
             {
-            case 'm':
-                m_controller.LOG_ENTITIES();
-                break;
-            case 'h':
-                game->push_state(help_state::instance());
-                break;
-            case 'p':
-                game->change_state(game_state::instance());
-                break;
-            case 'l':
-                game->quit();
-                break;
+                switch (brown::KEY_PRESSED)
+                {
+                case 'm':
+                    m_controller.LOG_ENTITIES();
+                    break;
+                case 'c':
+                    UI_system->LOG_COLORS();
+                    break;
+                case 'h':
+                    game->push_state(help_state::instance());
+                    break;
+                case 'p':
+                    game->change_state(game_state::instance());
+                    break;
+                case 'l':
+                    game->quit();
+                    break;
+                }
             }
         }
     }
     void update(brown::engine *game)
     {
-        frame_passed++;
-        animation_system->update(&brain, frame_passed);
-        if (frame_passed > FPS)
-            frame_passed = 0;
-        scripts_system->update(this);
-        m_controller.empty_to_be_deleted();
+        if (!m_pause)
+        {
+            frame_passed++;
+            animation_system->update(&brain, frame_passed);
+            if (frame_passed > FPS)
+                frame_passed = 0;
+            scripts_system->update(this);
+            m_controller.empty_to_be_deleted();
+        }
     }
     void draw(brown::engine *game)
     {
-        werase(win);
-        wbkgdset(win, COLOR_PAIR(8));
+        if (!m_pause)
+        {
+            werase(win);
+            wbkgdset(win, COLOR_PAIR(8));
 
-        render_system->draw(win, &brain, Z_INDEX::Z_1);
-        tiles_system->draw_tilemap(win, &brain);
-        render_system->draw(win, &brain);
-        UI_system->draw(win, &brain);
+            render_system->draw(win, &brain, Z_INDEX::Z_1);
+            tiles_system->draw_tilemap(win, &brain);
+            render_system->draw(win, &brain);
+            UI_system->draw(win, &brain);
+        }
     }
 
     static menu_state *instance()
@@ -215,4 +231,6 @@ private:
     tileset *ts = nullptr;
 
     vec2 offset;
+
+    bool m_pause = false;
 };

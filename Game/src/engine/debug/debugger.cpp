@@ -1,14 +1,8 @@
 #include "debugger.hpp"
+#include <ncurses.h>
 
 namespace brown::debug
 {
-    void log(const std::string &message, const char *file)
-    {
-        std::ofstream log_file("LOG.txt", std::ios::app);
-        log_file << "[LOG] FILE: " << file << ": " << message << std::endl;
-        log_file.close();
-    }
-
     void assert(bool check, const std::string &message, const char *file, int line, const char *assertion)
     {
         if (!check)
@@ -16,6 +10,7 @@ namespace brown::debug
             std::ofstream log_file("LOG.txt", std::ios::app);
             log_file << "[ASSERT] FILE: " << file << ", at line: " << line << ": " << message << " (" << assertion << ")" <<std::endl;
             log_file.close();
+            endwin();
             exit(1);
         }
     }
@@ -25,6 +20,7 @@ namespace brown::debug
         std::ofstream log_file("LOG.txt", std::ios::app);
         log_file << "[ERROR] FILE: " << file << ", at line: " << line << ": " << message << std::endl;
         log_file.close();
+        endwin();
         exit(1);
     }
 }

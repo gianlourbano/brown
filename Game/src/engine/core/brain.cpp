@@ -11,11 +11,9 @@
 namespace brown {
     void brain::register_basic_components()
         {
-            this->register_component<animation>();
-            this->register_component<animator_controller>();
             this->register_component<transform>();
             this->register_component<sprite>();
-            this->register_component<rigid_body>();
+            this->register_component<animator_controller>();
             this->register_component<native_script>();
             this->register_component<ui>();
         }

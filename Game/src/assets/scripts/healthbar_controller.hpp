@@ -24,6 +24,7 @@ public:
         for (int i = 0; i < m_health; i++)
             hearts += "❤ ";
         m_healthbar->text = "Health: " + hearts;
+        
     }
 
     void set_health(int health)

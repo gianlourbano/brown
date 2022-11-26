@@ -3,6 +3,9 @@
 #include "engine/math/vec2.hpp"
 #include "engine/core/ECS/components/transform.hpp"
 
+#define SCRIPT(name) class name : public brown::scriptable_entity {
+#define END_SCRIPT };
+
 namespace brown
 {
     class state;

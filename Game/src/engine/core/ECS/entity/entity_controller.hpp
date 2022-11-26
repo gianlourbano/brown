@@ -43,10 +43,15 @@ namespace brown
 
         void LOG_ENTITIES()
         {
+            std::string log = "";
+            int i = 0;
             for (auto &e : m_entities)
             {
-                LOG(e.name + " :" + std::to_string(e.m_entity_id));
+                log+=("\n"+e.name +": " + std::to_string(e.m_entity_id) + "\nwith signature: " + e.get_signature().to_string() + "\n");
+                i++;
             }
+
+            LOG("Total entities: " + i + log);
         }
 
         void empty_to_be_deleted()

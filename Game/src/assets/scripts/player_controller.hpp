@@ -18,6 +18,29 @@ public:
         return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x';
     }
 
+    entity_id get_closest_entity() {
+        entity_id closest = 0;
+        int closest_dist = 1000;
+        for (auto &e : m_state->get_entities()) {
+            if (e.get_id() != m_entity.get_id()) {
+                auto &ts = e.get_component<transform>();
+                int dist = std::abs(ts.position.x - this->ts->position.x) + std::abs(ts.position.y - this->ts->position.y);
+                if (dist < closest_dist) {
+                    closest_dist = dist;
+                    closest = e.get_id();
+                }
+            }
+        }
+        return closest;
+    }
+
+    void interact()
+    {
+        brown::event e(Events::Entity::Interact::ID);
+        e.set_param<entity_id>(Events::Entity::Interact::ID, get_closest_entity());
+        m_state->send_event(e);
+    }
+
     void on_create()
     {
         health = 10;
@@ -66,10 +89,13 @@ public:
                 ts->position.y++;
         }
 
-        if (brown::KEY_PRESSED == 'y')
+        if (brown::KEY_PRESSED == 'o')
         {
             set_health(--health);
         }
+
+        else if (brown::KEY_PRESSED == 'e')
+            interact();
 
         else if (brown::KEY_PRESSED == 't')
         {

@@ -24,6 +24,7 @@ namespace brown
         void remove_component() {}
 
         entity_id get_id() { return m_entity_id; }
+        signature get_signature() { return m_brain->get_signature(m_entity_id); }
 
         friend class state;
         friend class entity_controller;

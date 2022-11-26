@@ -15,6 +15,16 @@ std::shared_ptr<brown::UI_system> brown::UI_system::register_system(brown::brain
     return sys;
 }
 
+void brown::UI_system::LOG_COLORS()
+{
+    for (int i = 0; i < 60; i++)
+    {
+        short fg, bg;
+        pair_content(i, &fg, &bg);
+        LOG("Pair number " + std::to_string(i) + " has fg: " + std::to_string(fg) + " and bg: " + std::to_string(bg));
+    }
+}
+
 void brown::UI_system::init()
 {
 }
@@ -31,20 +41,25 @@ void brown::UI_system::draw(WINDOW *win, brown::brain *br)
             int b = PAIR_NUMBER((mvwinch(win, tr.position.y, tr.position.x) & A_ATTRIBUTES));
             short bg, fg;
             pair_content(b, &fg, &bg);
-            brown::colors::make_pair(TEXT, COLOR_WHITE, bg);
-            wattron(win, COLOR_PAIR(TEXT) | A_BOLD);
+
+            m_pairs.insert({bg, TEXT + m_step});
+
+            brown::colors::make_pair(TEXT + m_step, COLOR_WHITE, bg);
+
+            wattron(win, COLOR_PAIR(m_pairs[bg]) | A_BOLD);
 
             if (ui_.centered)
             {
                 int x = tr.position.x + 1 - ui_.text.size() / 2;
-                mvwprintw(win, tr.position.y, x - ui_.offset.x, ui_.text.c_str());
+                mvwprintw(win, tr.position.y, x - ui_.offset.x, "%s", ui_.text.c_str());
             }
             else
             {
-                mvwprintw(win, tr.position.y - ui_.offset.y, tr.position.x - ui_.offset.x, ui_.text.c_str());
+                mvwprintw(win, tr.position.y - ui_.offset.y, tr.position.x - ui_.offset.x, "%s", ui_.text.c_str());
             }
 
-            wattron(win, COLOR_PAIR(TEXT) | A_BOLD);
+            wattron(win, COLOR_PAIR(m_pairs[bg]) | A_BOLD);
+            m_step++;
         }
     }
 }

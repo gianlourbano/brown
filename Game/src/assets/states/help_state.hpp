@@ -1,6 +1,5 @@
 #pragma once
 #include "engine/brown.hpp"
-#include "assets/scripts/AI.hpp"
 #include "assets/test/tile_system.hpp"
 
 class help_state : public brown::state
@@ -22,7 +21,7 @@ public:
         
         auto line_1 = create_entity("line_1");
         line_1.add_component<transform>({vec2(0)});
-        line_1.add_component<ui>({"Prova"});
+        line_1.add_component<ui>({"Help Menu"});
     }
 
     void resume() {}
@@ -32,9 +31,10 @@ public:
     {
         werase(win);
         wbkgdset(win, COLOR_PAIR(8));
-        render_system->draw(win, &brain, Z_INDEX::Z_1);
+        box(win, 0, 0);
         render_system->draw(win, &brain);
         UI_system->draw(win, &brain);
+        wrefresh(win);
     }
     void handle_events(brown::engine *game)
     {
