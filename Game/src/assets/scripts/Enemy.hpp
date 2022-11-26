@@ -35,7 +35,7 @@ public:
     }
     void on_destroy()
     {
-        m_state->remove_event_listener(METHOD_LISTENER(Events::Entity::Interact::ID, scriptable_enemy::on_interact));
+        //m_state->remove_event_listener(METHOD_LISTENER(Events::Entity::Interact::ID, scriptable_enemy::on_interact));
     }
 
 private:
