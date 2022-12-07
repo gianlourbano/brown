@@ -21,7 +21,7 @@ public:
         
         auto line_1 = create_entity("line_1");
         line_1.add_component<transform>({vec2(0)});
-        line_1.add_component<ui>({"Help Menu"});
+        line_1.add_component<ui>({"Welcome,\nuse\n    W\n   A D to move\n    S\nF1/Ctrl+c to quit\nP to pause\nT to fire projectiles\n... "});
     }
 
     void resume() {}

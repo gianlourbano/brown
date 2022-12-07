@@ -37,7 +37,7 @@ public:
     {
         m_state->remove_event_listener(METHOD_LISTENER(Events::Entity::Interact::ID, scriptable_enemy::on_interact));
     }
-
+    
 private:
     int m_health;
     ui *m_healthbar;

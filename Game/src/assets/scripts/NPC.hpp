@@ -45,8 +45,7 @@ public:
 
     void on_update()
     {
-        
-
+        auto pl= m_state->find_entity("player").get_component<transform>();
         if (curr_dialog > 3)
         {
             curr_dialog = 0;
@@ -61,10 +60,26 @@ public:
         else
             ui_->is_visible = false;
 
-        if (t.elapsed() >= rand() % 4 + 3)
+        if (t.elapsed() >= rand() % 500 + 1)
         {
-            move((rand() % 4) + 1);
-            t.start();
+        if (ui_->is_visible){
+             if(ts->position.x!=pl.position.x)
+            {
+                if(ts->position.x>pl.position.x){
+                    ts->position.x--;
+                }else{
+                    ts->position.x++;
+                }
+            }
+            else if (ts->position.y!=pl.position.y)
+            {
+                if(ts->position.y>pl.position.y){
+                    ts->position.y--;
+                }else{
+                    ts->position.y++;
+                }
+            }
+        }
         }
 
         if (!is_player_in_range(6) && curr_dialog != 0)
@@ -82,6 +97,5 @@ private:
     std::array<std::string, 3> dialog;
 
     ui *ui_;
-    
     
 };
