@@ -53,40 +53,45 @@ public:
         ui_->text = dialog[curr_dialog];
 
         if (is_player_in_range(6))
-        {
-
             ui_->is_visible = true;
-        }
         else
             ui_->is_visible = false;
-
+        if (!is_player_in_range(6) && curr_dialog != 0)
+        {
+            curr_dialog = 0;
+        }
         if (t.elapsed() >= rand() % 500 + 1)
         {
         if (ui_->is_visible){
              if(ts->position.x!=pl.position.x)
             {
-                if(ts->position.x>pl.position.x){
-                    ts->position.x--;
-                }else{
-                    ts->position.x++;
-                }
+                if(ts->position.x>pl.position.x ){
+                    ts->direction = 1;
+                    if(!check_collision(1))
+                        ts->position.x--;              
+                }else {
+                    ts->direction = 3;
+                    if(!check_collision(3))
+                        ts->position.x++;
+                }  
             }
             else if (ts->position.y!=pl.position.y)
             {
                 if(ts->position.y>pl.position.y){
-                    ts->position.y--;
+                    ts->direction = 4;
+                    if (!check_collision(4)) 
+                        ts->position.y--;
+
                 }else{
-                    ts->position.y++;
+                    ts->direction = 2;
+                    if (!check_collision(2))
+                        ts->position.y++;
+                
+                    }
                 }
             }
         }
-        }
-
-        if (!is_player_in_range(6) && curr_dialog != 0)
-        {
-            curr_dialog = 0;
-        }
-    }
+}
 
 private:
     double speed = 3.0;

@@ -5,9 +5,13 @@ light_gray .
 yellow x
 green a
 light_yellow 6
+light_yellow L
 lighter_yellow 7
 red 5
+red R
 orange 4
+orange O
+brown B
 brown 3
 green_1 [
 green_2 ]

@@ -119,11 +119,12 @@ public:
         proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
         proj.add_component<native_script>({}).bind<projectile>();
     }
-
+    
+    int health;
 protected:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
-    int health;
+    
     animation proj_anim;
 
     friend class healtbar_controller;

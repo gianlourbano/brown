@@ -126,7 +126,7 @@ public:
         bot2.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
         brown::add_sprite({"a"}, "bot2");
         bot2.add_component<sprite>({{1, 1}, "bot2"});
-        bot2.add_component<native_script>({}).bind<NPC>();
+        bot2.add_component<native_script>({}).bind<scriptable_enemy>();
         bot2.add_component<ui>({"", 0, false, true});
 
         pl.add_component<native_script>({}).bind<player_controller>();
@@ -159,6 +159,7 @@ public:
     {
         if (terminate)
             game->quit();
+        
         if (!m_pause)
         {
             brown::get_keyboard_input(win);
@@ -175,14 +176,19 @@ public:
                 case 'h':
                     game->push_state(help_state::instance());
                     break;
-                case 'p':
-                    game->change_state(game_state::instance());
-                    break;
                 case 'l':
                     game->quit();
                     break;
+                case 'p':
+                    m_pause = true;
                 }
             }
+        }else{
+         brown::get_keyboard_input(win);  
+         if(brown::KEY_PRESSED != ERR &&brown::KEY_PRESSED =='p') 
+         {
+                m_pause = false;
+         }
         }
     }
     void update(brown::engine *game)
