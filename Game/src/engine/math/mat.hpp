@@ -25,6 +25,14 @@ public:
         }
     }
 
+    void set_all(std::vector<T>& data)
+    {
+        for(int i = 0; i < m_x * m_y; i++)
+        {
+            m_data[i] = data[i];
+        }
+    }
+
     void set(T t, size_t x, size_t y)
     {
         m_data[x * m_y + y] = t;

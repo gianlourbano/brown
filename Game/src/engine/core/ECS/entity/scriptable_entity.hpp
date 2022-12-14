@@ -29,10 +29,11 @@ namespace brown
 
         void delete_self();
 
-    protected:
+    public:
         virtual void on_create() {}
         virtual void on_destroy() {}
         virtual void on_update() {}
+    protected:
         entity m_entity;
         state *m_state;
 

@@ -34,6 +34,8 @@ public:
         damage_t.start();
         t_move.start();
         m_health = 3;
+
+        m_player = static_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
     };
     void on_update()
     {
@@ -99,4 +101,5 @@ private:
     brown::Timer t;
     brown::Timer damage_t;
     brown::Timer t_move;
+    player_controller *m_player;
 };

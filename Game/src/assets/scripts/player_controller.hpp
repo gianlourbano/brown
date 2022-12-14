@@ -18,14 +18,18 @@ public:
         return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x';
     }
 
-    entity_id get_closest_entity() {
+    entity_id get_closest_entity()
+    {
         entity_id closest = 0;
         int closest_dist = 1000;
-        for (auto &e : m_state->get_entities()) {
-            if (e.get_id() != m_entity.get_id()) {
+        for (auto &e : m_state->get_entities())
+        {
+            if (e.get_id() != m_entity.get_id())
+            {
                 auto &ts = e.get_component<transform>();
                 int dist = std::abs(ts.position.x - this->ts->position.x) + std::abs(ts.position.y - this->ts->position.y);
-                if (dist < closest_dist) {
+                if (dist < closest_dist)
+                {
                     closest_dist = dist;
                     closest = e.get_id();
                 }
@@ -99,8 +103,14 @@ public:
 
         else if (brown::KEY_PRESSED == 't')
         {
-            create_proj(ts->direction);
+            shoot(ts->direction);
         }
+
+        if (m_proj_lifespan == 0)
+            can_shoot = true;
+
+        if (m_proj_lifespan != 0)
+            m_proj_lifespan--;
     }
 
     void set_health(int h)
@@ -111,13 +121,30 @@ public:
         m_state->send_event(e);
     }
 
-    void create_proj(int dir)
+    void shoot(int dir)
     {
-        brown::entity proj = m_state->create_entity();
-        proj.add_component<transform>({ts->position, dir});
-        proj.add_component<sprite>({{2, 2}, "sprite2"});
-        proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-        proj.add_component<native_script>({}).bind<projectile>();
+
+        if (can_shoot)
+        {
+            brown::entity proj = m_state->create_entity();
+            proj.add_component<transform>({ts->position, dir});
+            proj.add_component<sprite>({{2, 2}, "sprite2"});
+            proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
+            proj.add_component<native_script>({}).bind<projectile>();
+
+            can_shoot = false;
+
+            int lifetime = 10;
+
+            switch (dir)
+            {
+            case 1:
+            case 3:
+                lifetime /= 2;
+                break;
+            }
+            m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
+        }
     }
     
     int health;
@@ -127,5 +154,8 @@ protected:
     
     animation proj_anim;
 
-    friend class healtbar_controller;
+    bool can_shoot = true;
+
+    int m_proj_lifespan = 0;
+    brown::Timer m_cooldown;
 };

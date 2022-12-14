@@ -70,6 +70,10 @@ public:
         anim = nullptr;
     }
 
+    int get_lifetime() {
+        return lifetime;
+    }
+
 private:
     int lifetime;
     bool has_finished = false;
@@ -77,4 +81,6 @@ private:
     int tot;
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
+
+    friend class player_controller;
 };
