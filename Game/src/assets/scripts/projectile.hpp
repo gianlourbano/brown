@@ -18,7 +18,7 @@ public:
             mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x + 1) & A_CHARTEXT,
             mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
 
-        return chars[dir - 1] != ' ';
+        return chars[dir - 1] == 'a'||chars[dir - 1] == '%'||chars[dir - 1] == '#';
     }
     void on_create()
     {
@@ -42,7 +42,7 @@ public:
     void on_update()
     {
         tot--;
-        if (lifetime != 0)
+        if (lifetime != 0&& !check_collision(ts->direction))
         {
 
             ts->position += force;
@@ -50,6 +50,7 @@ public:
         }
         else
         {
+            force = 0;
             has_finished = true;
         }
 

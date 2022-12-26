@@ -15,7 +15,7 @@ public:
             mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
 
         // return !(chars[dir - 1] == ' ' || (chars[dir - 1] <= 'z' && chars[dir - 1] >= 'a'));
-        return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x';
+        return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x'|| chars[dir - 1] == 'a';
     }
 
     entity_id get_closest_entity()

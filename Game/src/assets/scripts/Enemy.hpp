@@ -45,8 +45,12 @@ public:
         for (int i = 0; i < m_health; i++)
             hearts += "❤ ";
         m_healthbar->text = hearts;
-        
-        if (is_player_in_range(15)&& t_move.elapsed() >=0.5){
+         if(t.elapsed() >= rand() % 4 + 1 &&((pl.position.x+1==ts->position.x||pl.position.x-1==ts->position.x)&& pl.position.y==ts->position.y|| pl.position.x==ts->position.x&& (pl.position.y+1==ts->position.y||pl.position.y-1==ts->position.y))){
+            pl_h->set_health(--pl_h->health);
+            t.start();
+        }
+
+        if (is_player_in_range(10)&& t_move.elapsed() >=0.5 &&!((pl.position.x+1==ts->position.x||pl.position.x-1==ts->position.x)&& pl.position.y==ts->position.y|| pl.position.x==ts->position.x&& (pl.position.y+1==ts->position.y||pl.position.y-1==ts->position.y))){
             t_move.start();
             if (ts->position.x != pl.position.x)
             {
@@ -75,13 +79,9 @@ public:
                 }
             }
         }
-
-        if(t.elapsed() >= rand() % 4 + 1 && pl.position.x==ts->position.x&& pl.position.y==ts->position.y){
-            pl_h->set_health(--pl_h->health);
-            t.start();
-        }
+       
         char e_dmg = mvwinch(m_state->get_win(), ts->position.y,ts->position.x);
-        if((e_dmg=='R'||e_dmg=='O'||e_dmg=='L'||e_dmg=='x')&& damage_t.elapsed() >= 1){
+        if((e_dmg=='R'||e_dmg=='O'||e_dmg=='L')&& damage_t.elapsed() >= 1){
             m_health--;
             damage_t.start();
         }
