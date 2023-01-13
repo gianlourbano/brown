@@ -67,6 +67,8 @@ namespace brown
 
         inline void game_over() { terminate = true; }
 
+        inline bool is_initialized() { return initialized; }
+
     protected:
         state(){};
         bool terminate = false;
@@ -75,6 +77,8 @@ namespace brown
         brown::brain brain;
         unsigned int free_entities = 0;
         brown::entity_controller m_controller;
+
+        bool initialized = false;
 
     private:
         friend class scripts_system;
