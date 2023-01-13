@@ -6,7 +6,7 @@
 #include "assets/scripts/door_controller.hpp"
 #include "assets/scripts/healthbar_controller.hpp"
 #include "assets/scripts/NPC.hpp"
-#include "assets/scripts/Enemy.hpp"
+#include "assets/scripts/scriptable_enemy.hpp"
 #include "assets/scripts/logo_controller.hpp"
 #include <random>
 

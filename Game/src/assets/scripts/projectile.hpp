@@ -68,7 +68,7 @@ public:
             for (auto &e : m_state->get_entities())
             {
                 auto &ts_ = e.get_component<transform>();
-                if (distance(ts->position, ts_.position) <= 2)
+                if (distance(ts->position, ts_.position) <= 2 && e.get_id() != this->m_entity.get_id())
                 {
                     scriptable_AI *script = dynamic_cast<scriptable_AI *>(e.get_component<native_script>().instance);
                     if (script != nullptr)

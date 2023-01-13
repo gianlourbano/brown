@@ -46,6 +46,13 @@ public:
         m_state->send_event(e);
     }
 
+    void on_hit() {
+        if(m_damage_timer.elapsed() <= 0.7) {
+            health--;
+            m_damage_timer.start();
+        }
+    }
+
     player_controller(int health): health(health) {}
 
     void on_create()
@@ -174,6 +181,7 @@ protected:
     int m_proj_lifespan = 0;
     brown::Timer m_cooldown;
 
+    brown::Timer m_damage_timer;
 
     inventory m_inventory;
 };
