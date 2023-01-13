@@ -21,6 +21,8 @@ public:
     }
 
 public:
+    virtual void on_hit() {};
+
     void on_create()
     {
         ts = &get_component<transform>();
