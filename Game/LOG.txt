@@ -1,0 +1,453 @@
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[ERROR] FILE: src/engine/core/ECS/entity/entity_controller.hpp, at line: 34: Entity not found!
+[ERROR] FILE: src/engine/core/ECS/entity/entity_controller.hpp, at line: 34: Entity not found!
+[ERROR] FILE: src/engine/core/ECS/entity/entity_controller.hpp, at line: 34: Entity not found!
+[ERROR] FILE: src/engine/core/ECS/entity/entity_controller.hpp, at line: 34: Entity not found!
+[ERROR] FILE: src/engine/core/ECS/entity/entity_controller.hpp, at line: 34: Entity not found!
+[ERROR] FILE: src/engine/core/ECS/entity/entity_controller.hpp, at line: 34: Entity not found!
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[ERROR] FILE: src/engine/core/ECS/entity/entity_controller.hpp, at line: 34: Entity not found!
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[LOG] FILE: src/engine/core/ECS/systems/animation_system.cpp: ANIM FINISHED
+[ASSERT] FILE: src/engine/core/ECS/components/animator_controller.hpp, at line: 11: Invalid animation! (anims.find(anim_name) != anims.end())
+[ASSERT] FILE: src/engine/core/ECS/components/animator_controller.hpp, at line: 11: Invalid animation! (anims.find(anim_name) != anims.end())
+[ASSERT] FILE: src/engine/core/ECS/components/animator_controller.hpp, at line: 11: Invalid animation! (anims.find(anim_name) != anims.end())
+[ASSERT] FILE: src/engine/core/ECS/components/animator_controller.hpp, at line: 11: Invalid animation! (anims.find(anim_name) != anims.end())
+[ASSERT] FILE: src/engine/core/ECS/components/animator_controller.hpp, at line: 11: Invalid animation! (anims.find(anim_name) != anims.end())
+[ASSERT] FILE: src/engine/core/ECS/components/animator_controller.hpp, at line: 11: Invalid animation! (anims.find(anim_name) != anims.end())
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 0 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 1 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 2 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 3 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 4 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 5 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 6 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 7 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 8 has fg: 8 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 9 has fg: 9 and bg: 9
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 10 has fg: 10 and bg: 10
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 11 has fg: 11 and bg: 11
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 12 has fg: 12 and bg: 12
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 13 has fg: 13 and bg: 13
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 14 has fg: 14 and bg: 14
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 15 has fg: 15 and bg: 15
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 16 has fg: 16 and bg: 16
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 17 has fg: 17 and bg: 17
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 18 has fg: 18 and bg: 18
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 19 has fg: 19 and bg: 19
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 20 has fg: 20 and bg: 20
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 21 has fg: 21 and bg: 21
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 22 has fg: 22 and bg: 22
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 23 has fg: 23 and bg: 23
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 24 has fg: 24 and bg: 24
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 25 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 26 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 27 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 28 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 29 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 30 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 31 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 32 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 33 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 34 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 35 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 36 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 37 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 38 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 39 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 40 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 41 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 42 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 43 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 44 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 45 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 46 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 47 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 48 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 49 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 50 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 51 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 52 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 53 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 54 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 55 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 56 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 57 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 58 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 59 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 0 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 1 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 2 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 3 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 4 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 5 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 6 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 7 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 8 has fg: 8 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 9 has fg: 9 and bg: 9
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 10 has fg: 10 and bg: 10
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 11 has fg: 11 and bg: 11
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 12 has fg: 12 and bg: 12
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 13 has fg: 13 and bg: 13
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 14 has fg: 14 and bg: 14
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 15 has fg: 15 and bg: 15
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 16 has fg: 16 and bg: 16
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 17 has fg: 17 and bg: 17
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 18 has fg: 18 and bg: 18
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 19 has fg: 19 and bg: 19
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 20 has fg: 20 and bg: 20
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 21 has fg: 21 and bg: 21
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 22 has fg: 22 and bg: 22
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 23 has fg: 23 and bg: 23
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 24 has fg: 24 and bg: 24
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 25 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 26 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 27 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 28 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 29 has fg: 0 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 30 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 31 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 32 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 33 has fg: 7 and bg: 0
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 34 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 35 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 36 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 37 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 38 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 39 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 40 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 41 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 42 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 43 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 44 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 45 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 46 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 47 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 48 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 49 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 50 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 51 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 52 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 53 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 54 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 55 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 56 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 57 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 58 has fg: 7 and bg: 8
+[LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 59 has fg: 7 and bg: 8
