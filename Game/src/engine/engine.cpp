@@ -63,7 +63,9 @@ namespace brown
         }
 
         states.push_back(state);
-        states.back()->init(this);
+        
+        if(!state->is_initialized())
+            states.back()->init(this);
     }
 
     void engine::pop_state()
