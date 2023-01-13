@@ -19,9 +19,10 @@ namespace brown
         {
             auto &script = st->brain.get_component<native_script>(e);
 
-            if (!script.instance)
+            if (!script.created)
             {
-                script.instance = script.instantiate_script();
+                script.created = true;
+                //script.instance = script.instantiate_script();
                 script.instance->m_entity = entity{"", e, &(st->brain)};
                 script.instance->m_state = st;
                 script.instance->on_create();

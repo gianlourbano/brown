@@ -105,14 +105,14 @@ namespace brown
         }
 
         // event methods
-        void add_event_listener(event_id id, std::function<void(event &)> const &listener)
+        void add_event_listener(event_id id,std::string name, std::function<void(event &)> const &listener)
         {
-            m_event_manager->add_listener(id, listener);
+            m_event_manager->add_listener(id,name, listener);
         }
 
-        void remove_event_listener(event_id id, std::function<void(event &)> const &listener)
+        void remove_event_listener(event_id id, std::string name)
         {
-            m_event_manager->remove_event_listener(id, listener);
+            m_event_manager->remove_event_listener(id, name);
         }
 
         void send_event(event &ev)

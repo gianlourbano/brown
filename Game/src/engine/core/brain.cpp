@@ -4,7 +4,6 @@
 #include "core/ECS/components/sprite.hpp"
 #include "core/ECS/components/native_script.hpp"
 #include "core/ECS/components/transform.hpp"
-#include "core/ECS/components/rigid_body.hpp"
 #include "core/ECS/components/animator_controller.hpp"
 #include "core/ECS/components/ui.hpp"
 

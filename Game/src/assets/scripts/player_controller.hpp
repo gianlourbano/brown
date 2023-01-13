@@ -2,6 +2,7 @@
 #include "engine/brown.hpp"
 #include "assets/scripts/projectile.hpp"
 #include "types.hpp"
+#include "assets/inventory/inventory.hpp"
 
 class player_controller : public brown::scriptable_entity
 {
@@ -45,9 +46,10 @@ public:
         m_state->send_event(e);
     }
 
+    player_controller(int health): health(health) {}
+
     void on_create()
     {
-        health = 10;
         ts = &get_component<transform>();
         anim = &get_component<animator_controller>();
         proj_anim = {
@@ -93,17 +95,16 @@ public:
                 ts->position.y++;
         }
 
-        if (brown::KEY_PRESSED == 'o')
-        {
-            set_health(--health);
-        }
-
         else if (brown::KEY_PRESSED == 'e')
             interact();
 
         else if (brown::KEY_PRESSED == 't')
         {
             shoot(ts->direction);
+        }
+        
+        if (brown::KEY_PRESSED == 'i') {
+            LOG_INVENTORY();
         }
 
         if (m_proj_lifespan == 0)
@@ -146,16 +147,33 @@ public:
             m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
         }
     }
+
+    int get_health() {
+        return health;
+    }
+
+    void add_item(item* i) {
+        this->m_inventory.add_item(i);
+    }
+
+    void LOG_INVENTORY() {
+        for(auto& i: this->m_inventory.get_items()) {
+            LOG("ITEM: " + i.i->name + "," + std::to_string(i.count));
+        }
+    }
     
-    int health;
 protected:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
     
     animation proj_anim;
 
+    int health;
     bool can_shoot = true;
 
     int m_proj_lifespan = 0;
     brown::Timer m_cooldown;
+
+
+    inventory m_inventory;
 };

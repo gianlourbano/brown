@@ -60,8 +60,8 @@ namespace brown
 
         std::vector<entity> get_entities() { return m_controller.m_entities; }
 
-        inline void add_event_listener(event_id id, const std::function<void(brown::event &)> listener) { brain.add_event_listener(id, listener); }
-        inline void remove_event_listener(event_id id, const std::function<void(brown::event &)> listener) { brain.remove_event_listener(id, listener); }
+        inline void add_event_listener(event_id id, std::string name, const std::function<void(brown::event &)> listener) { brain.add_event_listener(id, name, listener); }
+        inline void remove_event_listener(event_id id, std::string name) { brain.remove_event_listener(id, name); }
         inline void send_event(event_id id) { brain.send_event(id); }
         inline void send_event(event e) { brain.send_event(e); }
 

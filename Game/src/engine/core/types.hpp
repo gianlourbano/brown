@@ -35,8 +35,8 @@ enum class input_buttons
 using event_id = std::uint32_t;
 using param_id = std::uint32_t;
 
-#define METHOD_LISTENER(EventType, Listener) EventType, std::bind(&Listener, this, std::placeholders::_1)
-#define FUNCTION_LISTENER(EventType, Listener) EventType, std::bind(&Listener, std::placeholders::_1)
+#define METHOD_LISTENER(EventType,name, Listener) EventType,name, std::bind(&Listener, this, std::placeholders::_1)
+#define FUNCTION_LISTENER(EventType,name, Listener) EventType,name, std::bind(&Listener, std::placeholders::_1)
 
 namespace Events::Window
 {

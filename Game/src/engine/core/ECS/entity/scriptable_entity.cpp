@@ -2,7 +2,6 @@
 #include "state.hpp"
 #include <vector>
 
-
 namespace brown
 {
     void scriptable_entity::delete_self()

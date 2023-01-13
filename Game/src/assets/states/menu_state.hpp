@@ -1,7 +1,6 @@
 #pragma once
 #include "engine/brown.hpp"
 #include "game_state.hpp"
-#include "state_1.hpp"
 #include "help_state.hpp"
 #include "assets/scripts/player_controller.hpp"
 #include "assets/scripts/door_controller.hpp"
@@ -12,10 +11,12 @@
 #include <random>
 
 #include "assets/test/tile_system.hpp"
+#include "assets/items/items.hpp"
 
 #define TILES 15
 
-brown::state_1 brown::state_1::m_state_1;
+int frame_passed = 0;
+
 game_state game_state::m_game_state;
 help_state help_state::m_help_state;
 class menu_state : public brown::state
@@ -55,6 +56,7 @@ public:
 
         door.add_component<native_script>({}).bind<door_controller>();
     }
+
     void init(brown::engine *game)
     {
         m_game = game;
@@ -66,7 +68,7 @@ public:
 
         brain.init();
 
-        add_event_listener(METHOD_LISTENER(Events::Window::QUIT, menu_state::QuitHandler));
+        add_event_listener(METHOD_LISTENER(Events::Window::QUIT, "Quit", menu_state::QuitHandler));
 
         brain.register_component<tilemap>();
 
@@ -105,14 +107,15 @@ public:
         tilemap &tm = map.add_component<tilemap>({ts, map_size.x, map_size.y});
         tm.load_from_file("tilemap_1");
 
-        create_door(offset + vec2{5 * TILE_SIZE, 0}, false, "1");
-        create_door(offset + vec2{13 * TILE_SIZE, 2 * TILE_SIZE + 2}, false, "2");
-        // create_door({offset.x + 52, offset.y }, false, "3");
-
         auto pl = create_entity("player");
         pl.add_component<transform>({{offset.x + 35, offset.y + 7}, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({});
+        pl.add_component<native_script>({}).bind<player_controller>(10);
+
+        create_door(offset + vec2{5 * TILE_SIZE, 0}, false, "1");
+        create_door(offset + vec2{13 * TILE_SIZE, 2 * TILE_SIZE + 2}, false, "2");
+        // create_door({offset.x + 52, offset.y }, false, "3");
 
         auto bot1 = create_entity();
         bot1.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
@@ -127,9 +130,12 @@ public:
         brown::add_sprite({"a"}, "bot2");
         bot2.add_component<sprite>({{1, 1}, "bot2"});
         bot2.add_component<native_script>({}).bind<scriptable_enemy>();
-        bot2.add_component<ui>({"", 0, false, true});
+        bot2.add_component<ui>({"", 0, true, true});
 
-        pl.add_component<native_script>({}).bind<player_controller>();
+        auto pot = create_entity("potion1");
+        pot.add_component<transform>({{40, 16}});
+        pot.add_component<sprite>({{1, 1}, "bot2"});
+        pot.add_component<native_script>({}).bind<potion>(4);
 
         auto hb = create_entity("healtbar");
         hb.add_component<transform>({{1, 2}, 1});
@@ -159,7 +165,7 @@ public:
     {
         if (terminate)
             game->quit();
-        
+
         if (!m_pause)
         {
             brown::get_keyboard_input(win);
@@ -183,12 +189,14 @@ public:
                     m_pause = true;
                 }
             }
-        }else{
-         brown::get_keyboard_input(win);  
-         if(brown::KEY_PRESSED != ERR &&brown::KEY_PRESSED =='p') 
-         {
+        }
+        else
+        {
+            brown::get_keyboard_input(win);
+            if (brown::KEY_PRESSED != ERR && brown::KEY_PRESSED == 'p')
+            {
                 m_pause = false;
-         }
+            }
         }
     }
     void update(brown::engine *game)

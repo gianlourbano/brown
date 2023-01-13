@@ -13,7 +13,7 @@ public:
 
     void on_create()
     {
-        m_state->add_event_listener(METHOD_LISTENER(Events::Player::HEALTH, healtbar_controller::health_changed));
+        m_state->add_event_listener(METHOD_LISTENER(Events::Player::HEALTH,"healthbar", healtbar_controller::health_changed));
         m_healthbar = &get_component<ui>();
         //pl = static_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
     }

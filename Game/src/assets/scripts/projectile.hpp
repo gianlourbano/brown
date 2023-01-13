@@ -26,7 +26,6 @@ public:
         anim = &get_component<animator_controller>();
         lifetime = 10;
 
-
         force = forces[ts->direction - 1];
 
         switch (ts->direction)
@@ -45,8 +44,17 @@ public:
         if (lifetime != 0&& !check_collision(ts->direction))
         {
 
-            ts->position += force;
-            lifetime--;
+            if (check_collision(ts->direction))
+            {
+                tot -= lifetime;
+                lifetime = 0;
+                has_finished = true;
+            }
+            else
+            {
+                ts->position += force;
+                lifetime--;
+            }
         }
         else
         {
@@ -66,12 +74,14 @@ public:
         }
     }
 
-    void on_destroy() {
+    void on_destroy()
+    {
         ts = nullptr;
         anim = nullptr;
     }
 
-    int get_lifetime() {
+    int get_lifetime()
+    {
         return lifetime;
     }
 

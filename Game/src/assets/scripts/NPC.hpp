@@ -36,7 +36,7 @@ public:
         ts = &get_component<transform>();
         ui_ = &get_component<ui>();
 
-        m_state->add_event_listener(METHOD_LISTENER(Events::Entity::Interact::ID, NPC::on_interact));
+        m_state->add_event_listener(METHOD_LISTENER(Events::Entity::Interact::ID,"NPC_"+std::to_string(m_entity.get_id()), NPC::on_interact));
 
         t.start();
         srand(time(NULL));

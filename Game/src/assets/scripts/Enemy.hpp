@@ -6,21 +6,14 @@
 class scriptable_enemy : public scriptable_AI
 {
 public:
-    /*void on_interact(brown::event &e)
-    {
-        if (e.get_param<entity_id>(Events::Entity::Interact::ID) == m_entity.get_id() && is_player_in_range(6))
-        {
-           m_health--;
-        }
-    }
-    */
+    
     bool check_collision(int dir)
     {
         chtype chars[4] = {
+            mvwinch(m_state->get_win(), ts->position.y-1, ts->position.x) & A_CHARTEXT,
             mvwinch(m_state->get_win(), ts->position.y, ts->position.x + 1) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x + 2) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x + 1) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
+            mvwinch(m_state->get_win(), ts->position.y +1, ts->position.x) & A_CHARTEXT,
+            mvwinch(m_state->get_win(), ts->position.y, ts->position.x-1) & A_CHARTEXT};
 
         // return !(chars[dir - 1] == ' ' || (chars[dir - 1] <= 'z' && chars[dir - 1] >= 'a'));
         return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x';
@@ -29,7 +22,7 @@ public:
     {
         ts = &get_component<transform>();
         m_healthbar = &get_component<ui>();
-        m_state->add_event_listener(METHOD_LISTENER(Events::Entity::Interact::ID, scriptable_enemy::on_interact));
+
         t.start();
         damage_t.start();
         t_move.start();
@@ -79,9 +72,14 @@ public:
                 }
             }
         }
-       
+
+        if(t.elapsed() >= rand() % 4 + 1 && pl.position.x==ts->position.x&& pl.position.y==ts->position.y){
+            pl_h->set_health(pl_h->get_health() - 1);
+            t.start();
+        }
+
         char e_dmg = mvwinch(m_state->get_win(), ts->position.y,ts->position.x);
-        if((e_dmg=='R'||e_dmg=='O'||e_dmg=='L')&& damage_t.elapsed() >= 1){
+        if((e_dmg=='R'||e_dmg=='O'||e_dmg=='L'||e_dmg=='x')){//&& damage_t.elapsed() >= 1){
             m_health--;
             damage_t.start();
         }
@@ -92,7 +90,7 @@ public:
     }
     void on_destroy()
     {
-        m_state->remove_event_listener(METHOD_LISTENER(Events::Entity::Interact::ID, scriptable_enemy::on_interact));
+        
     }
     
 private:

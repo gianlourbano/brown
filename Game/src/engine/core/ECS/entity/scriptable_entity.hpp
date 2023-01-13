@@ -3,9 +3,6 @@
 #include "engine/math/vec2.hpp"
 #include "engine/core/ECS/components/transform.hpp"
 
-#define SCRIPT(name) class name : public brown::scriptable_entity {
-#define END_SCRIPT };
-
 namespace brown
 {
     class state;
@@ -13,6 +10,7 @@ namespace brown
     class scriptable_entity
     {
     public:
+
         scriptable_entity() {}
         virtual ~scriptable_entity() {}
 
