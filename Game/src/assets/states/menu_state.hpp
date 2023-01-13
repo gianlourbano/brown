@@ -7,6 +7,7 @@
 #include "assets/scripts/healthbar_controller.hpp"
 #include "assets/scripts/NPC.hpp"
 #include "assets/scripts/scriptable_enemy.hpp"
+#include "assets/scripts/ranged_enemy.hpp"
 #include "assets/scripts/logo_controller.hpp"
 #include <random>
 
@@ -131,6 +132,13 @@ public:
         bot2.add_component<sprite>({{1, 1}, "bot2"});
         bot2.add_component<native_script>({}).bind<scriptable_enemy>();
         bot2.add_component<ui>({"", 0, true, true});
+
+        auto bot3 = create_entity();
+        bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
+        brown::add_sprite({"a"}, "bot3");
+        bot3.add_component<sprite>({{1, 1}, "bot3"});
+        bot3.add_component<native_script>({}).bind<ranged_enemy>();
+        bot3.add_component<ui>({"", 0, true, true});
 
         auto pot = create_entity("potion1");
         pot.add_component<transform>({{40, 16}});
