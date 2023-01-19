@@ -451,3 +451,4 @@
 [LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 57 has fg: 7 and bg: 8
 [LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 58 has fg: 7 and bg: 8
 [LOG] FILE: src/engine/core/ECS/systems/UI_system.cpp: Pair number 59 has fg: 7 and bg: 8
+[ASSERT] FILE: src/engine/core/brain.hpp, at line: 84: Entity does not have component (has_component<T>(entity))

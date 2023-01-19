@@ -1,6 +1,7 @@
 #pragma once
 #include "engine/brown.hpp"
 #include "assets/scripts/projectile.hpp"
+#include "assets/scripts/auto_attack.hpp"
 #include "types.hpp"
 #include "assets/inventory/inventory.hpp"
 
@@ -59,10 +60,18 @@ public:
     {
         ts = &get_component<transform>();
         anim = &get_component<animator_controller>();
+        attack_cooldown.start();
         proj_anim = {
             "animated1",
             2,
+            3,
             5,
+            false,
+            true};
+        attack_anim = {
+            "animated2",
+            3,
+            3,
             5,
             false,
             true};
@@ -113,12 +122,20 @@ public:
         if (brown::KEY_PRESSED == 'i') {
             LOG_INVENTORY();
         }
+        if (brown::KEY_PRESSED == '1') {
+            melee = true;
+        }
+        if (brown::KEY_PRESSED == '2') {
+            melee = false;
+        }
+        
 
         if (m_proj_lifespan == 0)
             can_shoot = true;
 
         if (m_proj_lifespan != 0)
             m_proj_lifespan--;
+        force = forces[ts->direction - 1];
     }
 
     void set_health(int h)
@@ -132,7 +149,7 @@ public:
     void shoot(int dir)
     {
 
-        if (can_shoot)
+        if (can_shoot&& !melee)
         {
             brown::entity proj = m_state->create_entity();
             proj.add_component<transform>({ts->position, dir});
@@ -153,6 +170,16 @@ public:
             }
             m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
         }
+        else if (can_shoot && melee && attack_cooldown.elapsed()>= 0.7)
+        {
+
+            brown::entity attack = m_state->create_entity();
+            attack.add_component<transform>({ts->position+force, dir});
+            attack.add_component<sprite>({{2, 2}, "sprite2"});
+            attack.add_component<animator_controller>({}).add_anim("attack", attack_anim);
+            attack.add_component<native_script>({}).bind<auto_attack>();
+            attack_cooldown.start();
+        }
     }
 
     int get_health() {
@@ -172,15 +199,15 @@ public:
 protected:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
-    
+    vec2 force;
     animation proj_anim;
-
+    animation attack_anim;
     int health;
     bool can_shoot = true;
-
+    bool melee=false;
     int m_proj_lifespan = 0;
     brown::Timer m_cooldown;
-
+    brown::Timer attack_cooldown;
     brown::Timer m_damage_timer;
 
     inventory m_inventory;
