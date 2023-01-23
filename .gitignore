@@ -3,4 +3,4 @@ game
 docs/
 build/
 .vscode
-src/assets/test
+build

@@ -4,8 +4,9 @@
 #include "assets/scripts/auto_attack.hpp"
 #include "types.hpp"
 #include "assets/inventory/inventory.hpp"
+#include "assets/scripts/scriptable_AI.hpp"
 
-class player_controller : public brown::scriptable_entity
+class player_controller : public scriptable_AI
 {
 public:
     bool check_collision(int dir)
@@ -17,7 +18,7 @@ public:
             mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
 
         // return !(chars[dir - 1] == ' ' || (chars[dir - 1] <= 'z' && chars[dir - 1] >= 'a'));
-        return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x'|| chars[dir - 1] == 'a';
+        return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x' || chars[dir - 1] == 'a';
     }
 
     entity_id get_closest_entity()
@@ -47,14 +48,16 @@ public:
         m_state->send_event(e);
     }
 
-    void on_hit() {
-        if(m_damage_timer.elapsed() <= 0.7) {
-            health--;
+    void on_hit()
+    {
+        if (m_damage_timer.elapsed() >= 0.7)
+        {
+            set_health(--health);
             m_damage_timer.start();
         }
     }
 
-    player_controller(int health): health(health) {}
+    player_controller(int health) : health(health) {}
 
     void on_create()
     {
@@ -118,8 +121,9 @@ public:
         {
             shoot(ts->direction);
         }
-        
-        if (brown::KEY_PRESSED == 'i') {
+
+        if (brown::KEY_PRESSED == 'i')
+        {
             LOG_INVENTORY();
         }
         if (brown::KEY_PRESSED == '1') {
@@ -155,7 +159,7 @@ public:
             proj.add_component<transform>({ts->position, dir});
             proj.add_component<sprite>({{2, 2}, "sprite2"});
             proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-            proj.add_component<native_script>({}).bind<projectile>();
+            proj.add_component<native_script>({}).bind<projectile>(m_entity.get_id());
 
             can_shoot = false;
 
@@ -182,20 +186,36 @@ public:
         }
     }
 
-    int get_health() {
+    int get_health()
+    {
         return health;
     }
 
-    void add_item(item* i) {
+    void add_item(item *i)
+    {
         this->m_inventory.add_item(i);
+
+        int count = this->m_inventory.get_item_count(i);
+
+        brown::event e(Events::Player::Inventory::ADD);
+        e.set_param<inventory_item>(Events::Player::Inventory::ADD, {i, count});
+        m_state->send_event(e);
+        
     }
 
-    void LOG_INVENTORY() {
-        for(auto& i: this->m_inventory.get_items()) {
+    void LOG_INVENTORY()
+    {
+        for (auto &i : this->m_inventory.get_items())
+        {
             LOG("ITEM: " + i.i->name + "," + std::to_string(i.count));
         }
     }
-    
+
+    inventory* get_inventory()
+    {
+        return &m_inventory;
+    }
+
 protected:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;

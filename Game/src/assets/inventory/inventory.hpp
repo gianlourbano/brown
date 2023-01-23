@@ -5,6 +5,8 @@
 struct inventory_item {
     item *i;
     int count;
+
+    inventory_item (item *i, int count) : i(i), count(count) {}
 };
 
 class inventory {
@@ -19,6 +21,18 @@ public:
             }
         }
         return false;
+    }
+
+    int get_item_count(item *i) {
+        int count = 0;
+
+        for(auto &item : m_items) {
+            if (*(item.i) == *i) {
+                count += item.count;
+            }
+        }
+
+        return count;
     }
 
     void add_item(item *i) { 

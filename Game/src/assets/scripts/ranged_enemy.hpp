@@ -74,13 +74,13 @@ public:
                 dir = 2;
             }
             }
-        if (can_shoot &&(ts->position.x==pl.position.x||ts->position.y==pl.position.y))
+        if (can_shoot &&(ts->position.x==pl.position.x||ts->position.y==pl.position.y) && is_player_in_range(8))
         {
             brown::entity proj = m_state->create_entity();
             proj.add_component<transform>({ts->position, dir});
             proj.add_component<sprite>({{2, 2}, "sprite2"});
             proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-            proj.add_component<native_script>({}).bind<projectile>();
+            proj.add_component<native_script>({}).bind<projectile>(m_entity.get_id());
 
             can_shoot = false;
 
@@ -130,11 +130,7 @@ public:
             }
         }
 
-        if (t.elapsed() >= rand() % 4 + 1 && pl.position.x == ts->position.x && pl.position.y == ts->position.y)
-        {
-            pl_h->set_health(pl_h->get_health() - 1);
-            t.start();
-        }
+        
 
         if (m_health <= 0)
         {
