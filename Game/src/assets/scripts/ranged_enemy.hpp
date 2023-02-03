@@ -95,41 +95,75 @@ public:
             }
             m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
         }
+        
         if (is_player_in_range(10) && t_move.elapsed() >= 0.5 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
         {
             t_move.start();
-            if (ts->position.x != pl.position.x)
-            {
-                if (ts->position.x > pl.position.x)
+            int r = rand()%2 +1;
+            auto prev_pos = ts->position;
+            if(r==1){
+                if (ts->position.x != pl.position.x)
                 {
-                    ts->direction = 3;
-                    if (!check_collision(3))
-                        ts->position.x--;
+                    if (ts->position.x > pl.position.x)
+                    {
+                        ts->direction = 3;
+                        if (!check_collision(3))
+                            ts->position.x--;
+                    }
+                    else
+                    {
+                        ts->direction = 1;
+                        if (!check_collision(1))
+                            ts->position.x++;
+                    }
                 }
-                else
+                else if (ts->position.y != pl.position.y)
                 {
-                    ts->direction = 1;
-                    if (!check_collision(1))
-                        ts->position.x++;
+                    if (ts->position.y > pl.position.y)
+                    {
+                        ts->direction = 4;
+                        if (!check_collision(4))
+                            ts->position.y--;
+                    }
+                    else
+                    {
+                        ts->direction = 2;
+                        if (!check_collision(2))
+                            ts->position.y++;
+                    }
                 }
-            }
-            else if (ts->position.y != pl.position.y)
-            {
-                if (ts->position.y > pl.position.y)
+            }else{
+                if (ts->position.y != pl.position.y)
                 {
-                    ts->direction = 4;
-                    if (!check_collision(4))
-                        ts->position.y--;
-                }
-                else
+                    if (ts->position.y > pl.position.y)
+                    {
+                        ts->direction = 4;
+                        if (!check_collision(4))
+                            ts->position.y--;
+                    }
+                    else
+                    {
+                        ts->direction = 2;
+                        if (!check_collision(2))
+                            ts->position.y++;
+                    }
+                }else if (ts->position.x != pl.position.x)
                 {
-                    ts->direction = 2;
-                    if (!check_collision(2))
-                        ts->position.y++;
+                    if (ts->position.x > pl.position.x)
+                    {
+                        ts->direction = 3;
+                        if (!check_collision(3))
+                            ts->position.x--;
+                    }
+                    else
+                    {
+                        ts->direction = 1;
+                        if (!check_collision(1))
+                            ts->position.x++;
+                    }
                 }
             }
         }
-
         if (t.elapsed() >= rand() % 4 + 1 && pl.position.x == ts->position.x && pl.position.y == ts->position.y)
         {
             pl_h->set_health(pl_h->get_health() - 1);
