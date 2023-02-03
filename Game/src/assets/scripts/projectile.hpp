@@ -19,7 +19,7 @@ public:
             mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x + 1) & A_CHARTEXT,
             mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
 
-        return chars[dir - 1] == 'a' || chars[dir - 1] == '%' || chars[dir - 1] == '#' ||chars[dir - 1] == 'x';
+        return chars[dir - 1] == 'a' || chars[dir - 1] == '%' || chars[dir - 1] == '#' || chars[dir - 1] == 'x';
     }
     void on_create()
     {
@@ -67,14 +67,17 @@ public:
         {
             for (auto &e : m_state->get_entities())
             {
-                auto &ts_ = e.get_component<transform>();
-                float dist = distance(ts->position, ts_.position);
-                if (dist <= 2 && dist > 0 && e.get_id() != this->m_entity.get_id())
+                if (m_creator_id != e.get_id())
                 {
-                    scriptable_AI *script = dynamic_cast<scriptable_AI *>(e.get_component<native_script>().instance);
-                    if (script != nullptr)
+                    auto &ts_ = e.get_component<transform>();
+                    float dist = distance(ts->position, ts_.position);
+                    if (dist <= 2 && dist > 0)
                     {
-                        script->on_hit();
+                        scriptable_AI *script = dynamic_cast<scriptable_AI *>(e.get_component<native_script>().instance);
+                        if (script != nullptr)
+                        {
+                            script->on_hit();
+                        }
                     }
                 }
             }
@@ -100,6 +103,8 @@ public:
         return lifetime;
     }
 
+    projectile(entity_id creator) : m_creator_id(creator) {}
+
 private:
     int lifetime;
     bool has_finished = false;
@@ -108,5 +113,5 @@ private:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
 
-    friend class player_controller;
+    entity_id m_creator_id;
 };

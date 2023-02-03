@@ -10,6 +10,7 @@
 #include "assets/scripts/ranged_enemy.hpp"
 #include "assets/scripts/logo_controller.hpp"
 #include <random>
+#include "assets/scripts/inventory_renderer.hpp"
 
 #include "assets/test/tile_system.hpp"
 #include "assets/items/items.hpp"
@@ -56,6 +57,11 @@ public:
         anim->add_anim("open", opened);
 
         door.add_component<native_script>({}).bind<door_controller>();
+    }
+
+    void plain_text(std::string text, int x, int y)
+    {
+        mvwprintw(win, y, x, text.c_str());
     }
 
     void init(brown::engine *game)
@@ -145,6 +151,14 @@ public:
         pot.add_component<sprite>({{1, 1}, "bot2"});
         pot.add_component<native_script>({}).bind<potion>(4);
 
+        auto pot1 = create_entity("potion2");
+        pot1.add_component<transform>({{50, 16}});
+        pot1.add_component<sprite>({{1, 1}, "bot2"});
+        pot1.add_component<native_script>({}).bind<potion>(4);
+
+        auto inventory = create_entity("inventory_manager");
+        inventory.add_component<native_script>({}).bind<inventory_renderer>();
+
         auto hb = create_entity("healtbar");
         hb.add_component<transform>({{1, 2}, 1});
         hb.add_component<ui>({""});
@@ -161,6 +175,10 @@ public:
         auto h_text = create_entity("h_text");
         h_text.add_component<transform>({0, 1});
         h_text.add_component<ui>({"Press 'h' to open the help menu"});
+
+        auto inv = create_entity("inv");
+        inv.add_component<transform>({{1,7}});
+        inv.add_component<ui>({"Inventory"});
     }
 
     void resume() { m_pause = false; }
