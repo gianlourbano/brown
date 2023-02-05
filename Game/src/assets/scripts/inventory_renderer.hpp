@@ -19,10 +19,11 @@ public:
 
     void on_create()
     {
+        inventory_renderer::add_component<transform>({0, 0});
         m_player = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
         m_state->add_event_listener(METHOD_LISTENER(Events::Player::Inventory::ADD,"inventory", inventory_renderer::on_item_added));
-
         inventory* items = m_player->get_inventory();
+        
     }
 
     void on_update()
