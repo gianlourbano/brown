@@ -174,7 +174,7 @@ public:
             }
             m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
         }
-        else if (can_shoot && melee && attack_cooldown.elapsed()>= 1)
+        else if (can_shoot && melee && attack_cooldown.elapsed()>= 20)
         {
             brown::entity attack = m_state->create_entity();
             attack.add_component<transform>({ts->position});
@@ -182,6 +182,7 @@ public:
             attack.add_component<animator_controller>({}).add_anim("attack", attack_anim);
             attack.add_component<native_script>({}).bind<auto_attack>();
             attack_cooldown.start();
+            melee = false;
         }
     }
 
