@@ -34,8 +34,8 @@ void level_generator::start() {
     this->placed_special = false;
     this->m_room_count = 0;
 
-    this->m_endrooms = std::queue<int>();
-    this->m_rooms = std::queue<int>();
+    this->m_endrooms = brown::dt::queue<int>();
+    this->m_rooms = brown::dt::queue<int>();
 
     this->visit(45);
 }

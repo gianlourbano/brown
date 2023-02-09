@@ -1,153 +1,335 @@
 #pragma once
-#include <utility>
-#include <iterator>
+
 #include <algorithm>
+#include <iterator>
 
-template <typename T>
-class list_node
+namespace brown::dt
 {
-public:
-    list_node() {}
-
-    list_node(T &data, list_node<T> *prev)
+    template <typename T>
+    class node
     {
-        m_data = data;
-        m_prev = prev;
-    }
+    public:
+        T data;
+        node<T> *next;
+        node<T> *prev;
 
-    list_node(T &&data, list_node<T> *prev)
-    {
-        m_data = std::move(data);
-        m_prev = prev;
-    }
-
-    template<typename ...Args>
-    list_node(list_node<T> prev, Args... args) {
-        m_data = std::forward<T>(args...);
-        m_prev = prev;
-    }
-
-    list_node<T> *add_node(list_node<T> *next)
-    {
-        m_next = next;
-        return m_next;
-    }
-
-    list_node<T> *add_node(T &data)
-    {
-        m_next = new list_node<T>(data, this);
-        return m_next;
-    }
-
-    T get_data() {
-        return m_data;
-    }
-
-public:
-    T m_data;
-    list_node<T> *m_next = nullptr;
-    list_node<T> *m_prev = nullptr;
-
-    friend class Iterator;
-};
-
-template <typename T>
-class list
-{
-
-public:
-    void insert(T &data)
-    {
-        if (root == nullptr)
-            root = new list_node<T>(data, nullptr);
-        else
+        node() : data(), next(nullptr), prev(nullptr) {}
+        node(const T &data) : data(data), next(nullptr), prev(nullptr) {}
+        node(T &&data) : data(std::move(data)), next(nullptr), prev(nullptr) {}
+        node(const node<T> &other) : data(other.data), next(other.next), prev(other.prev) {}
+        node(node<T> &&other) noexcept : data(std::move(other.data)), next(other.next), prev(other.prev) {}
+        node<T> &operator=(const node<T> &other)
         {
-            list_node<T> *temp = root;
-            root = new list_node<T>(data, nullptr);
-            root->m_next = temp;
-        }
-    }
-
-    void insert(T&& data) {
-        if (root == nullptr)
-            root = new list_node<T>(data, nullptr);
-        else
-        {
-            list_node<T> *temp = root;
-            root = new list_node<T>(data, nullptr);
-            root->m_next = temp;
-        }
-    }
-
-    template<typename ...Args>
-    void insert(Args... args) {
-        if (root == nullptr)
-            root = new list_node<T>(nullptr, std::forward<T>(args)...);
-        else
-        {
-            list_node<T> *temp = root;
-            root = new list_node<T>(nullptr, std::forward<T>(args)...);
-            root->m_next = temp;
-        }
-    }
-
-    
-
-    struct Iterator
-    {
-        using iterator_category = std::forward_iterator_tag;
-        using difference_type = std::ptrdiff_t;
-        using value_type = list_node<T>;
-        using pointer = value_type *;
-        using reference = value_type &;
-
-        Iterator(pointer ptr) : m_ptr(ptr) {}
-
-        reference operator*() const { return *m_ptr; }
-        pointer operator->() { return m_ptr; }
-
-        // Prefix increment
-        Iterator &operator++()
-        {
-            m_ptr = m_ptr->m_next;
+            if (this == &other)
+            {
+                return *this;
+            }
+            data = other.data;
+            next = other.next;
+            prev = other.prev;
             return *this;
         }
-
-        // Postfix increment
-        Iterator operator++(int)
+        node<T> &operator=(node<T> &&other) noexcept
         {
-            Iterator tmp = *this;
-            ++(*this);
-            return tmp;
+            if (this == &other)
+            {
+                return *this;
+            }
+            data = std::move(other.data);
+            next = other.next;
+            prev = other.prev;
+            return *this;
+        }
+        ~node() {}
+
+        const T &get_data() const
+        {
+            return data;
         }
 
-        friend bool operator==(const Iterator &a, const Iterator &b) { return a.m_ptr == b.m_ptr; };
-        friend bool operator!=(const Iterator &a, const Iterator &b) { return a.m_ptr != b.m_ptr; };
-
-    private:
-        pointer m_ptr;
+        T &get_data()
+        {
+            return data;
+        }
     };
 
-    Iterator begin()
+    template <typename T>
+    class list
     {
-        return Iterator(root);
-    }
 
-    Iterator end()
-    {
-        list_node<T> *iter = new list_node<T>();
-        iter = this->root;
-        while (iter->m_next != nullptr)
+    private:
+        node<T> *m_head;
+        node<T> *m_tail;
+        size_t m_size;
+
+    public:
+        list() : m_head(nullptr), m_tail(nullptr), m_size(0) {}
+        list(const list<T> &other) : m_head(other.m_head), m_tail(other.m_tail), m_size(other.m_size) {}
+        list(list<T> &&other) noexcept : m_head(other.m_head), m_tail(other.m_tail), m_size(other.m_size) {}
+        list<T> &operator=(const list<T> &other)
         {
-            iter = iter->m_next;
+            if (this == &other)
+            {
+                return *this;
+            }
+            m_head = other.m_head;
+            m_tail = other.m_tail;
+            m_size = other.m_size;
+            return *this;
         }
-        return Iterator(iter);
-    }
+        list<T> &operator=(list<T> &&other) noexcept
+        {
+            if (this == &other)
+            {
+                return *this;
+            }
+            m_head = other.m_head;
+            m_tail = other.m_tail;
+            m_size = other.m_size;
+            return *this;
+        }
+        ~list() {}
 
-    
+        void push_back(const T &data)
+        {
+            node<T> *new_node = new node<T>(data);
+            if (m_head == nullptr)
+            {
+                m_head = new_node;
+                m_tail = new_node;
+            }
+            else
+            {
+                m_tail->next = new_node;
+                new_node->prev = m_tail;
+                m_tail = new_node;
+            }
+            ++m_size;
+        }
 
-private:
-    list_node<T> *root;
+        void push_back(T &&data)
+        {
+            node<T> *new_node = new node<T>(std::move(data));
+            if (m_head == nullptr)
+            {
+                m_head = new_node;
+                m_tail = new_node;
+            }
+            else
+            {
+                m_tail->next = new_node;
+                new_node->prev = m_tail;
+                m_tail = new_node;
+            }
+            ++m_size;
+        }
 
-    friend class list_node<T>;
-};
+        void push_front(const T &data)
+        {
+            node<T> *new_node = new node<T>(data);
+            if (m_head == nullptr)
+            {
+                m_head = new_node;
+                m_tail = new_node;
+            }
+            else
+            {
+                m_head->prev = new_node;
+                new_node->next = m_head;
+                m_head = new_node;
+            }
+            ++m_size;
+        }
+
+        void push_front(T &&data)
+        {
+            node<T> *new_node = new node<T>(std::move(data));
+            if (m_head == nullptr)
+            {
+                m_head = new_node;
+                m_tail = new_node;
+            }
+            else
+            {
+                m_head->prev = new_node;
+                new_node->next = m_head;
+                m_head = new_node;
+            }
+            ++m_size;
+        }
+
+        void pop_back()
+        {
+            if (m_tail == nullptr)
+            {
+                return;
+            }
+            node<T> *temp = m_tail;
+            m_tail = m_tail->prev;
+            if (m_tail != nullptr)
+            {
+                m_tail->next = nullptr;
+            }
+            delete temp;
+            --m_size;
+        }
+
+        void pop_front()
+        {
+            if (m_head == nullptr)
+            {
+                return;
+            }
+            node<T> *temp = m_head;
+            m_head = m_head->next;
+            if (m_head != nullptr)
+            {
+                m_head->prev = nullptr;
+            }
+            delete temp;
+            --m_size;
+        }
+
+        void clear()
+        {
+            while (m_head != nullptr)
+            {
+                node<T> *temp = m_head;
+                m_head = m_head->next;
+                delete temp;
+            }
+            m_tail = nullptr;
+            m_size = 0;
+        }
+
+        void remove(const T &data)
+        {
+            node<T> *temp = m_head;
+            while (temp != nullptr)
+            {
+                if (temp->data == data)
+                {
+                    if (temp->prev != nullptr)
+                    {
+                        temp->prev->next = temp->next;
+                    }
+                    else
+                    {
+                        m_head = temp->next;
+                    }
+                    if (temp->next != nullptr)
+                    {
+                        temp->next->prev = temp->prev;
+                    }
+                    else
+                    {
+                        m_tail = temp->prev;
+                    }
+                    delete temp;
+                    --m_size;
+                    return;
+                }
+                temp = temp->next;
+            }
+        }
+
+        void remove(T &&data)
+        {
+            node<T> *temp = m_head;
+            while (temp != nullptr)
+            {
+                if (temp->data == data)
+                {
+                    if (temp->prev != nullptr)
+                    {
+                        temp->prev->next = temp->next;
+                    }
+                    else
+                    {
+                        m_head = temp->next;
+                    }
+                    if (temp->next != nullptr)
+                    {
+                        temp->next->prev = temp->prev;
+                    }
+                    else
+                    {
+                        m_tail = temp->prev;
+                    }
+                    delete temp;
+                    --m_size;
+                    return;
+                }
+                temp = temp->next;
+            }
+        }
+
+        void remove_if(std::function<bool(const T &)> predicate)
+        {
+            node<T> *temp = m_head;
+            while (temp != nullptr)
+            {
+                if (predicate(temp->data))
+                {
+                    if (temp->prev != nullptr)
+                    {
+                        temp->prev->next = temp->next;
+                    }
+                    else
+                    {
+                        m_head = temp->next;
+                    }
+                    if (temp->next != nullptr)
+                    {
+                        temp->next->prev = temp->prev;
+                    }
+                    else
+                    {
+                        m_tail = temp->prev;
+                    }
+                    node<T> *temp2 = temp;
+                    temp = temp->next;
+                    delete temp2;
+                    --m_size;
+                }
+                else
+                {
+                    temp = temp->next;
+                }
+            }
+
+        }
+
+        node<T> *begin() const
+        {
+            return m_head;
+        }
+
+        node<T> *end() const
+        {
+            return nullptr;
+        }
+
+        node<T> *rbegin() const
+        {
+            return m_tail;
+        }
+
+        node<T> *rend() const
+        {
+            return nullptr;
+        }
+
+        size_t size() const
+        {
+            return m_size;
+        }
+
+        bool empty() const
+        {
+            return m_size == 0;
+        }
+
+
+    };
+}

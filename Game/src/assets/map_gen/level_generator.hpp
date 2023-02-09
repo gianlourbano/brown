@@ -1,14 +1,14 @@
 #pragma once
-#include <queue>
-#include <vector>
 #include <random>
+#include "engine/std/queue.hpp"
+#include "engine/std/vector.hpp"
 
 class level_generator{
     private:
-        std::queue<int> m_endrooms;     // Stack con l'ultima stanza visitata
-        std::queue<int> m_rooms;        // Stack con tutte le stanze
+        brown::dt::queue<int> m_endrooms;     // Stack con l'ultima stanza visitata
+        brown::dt::queue<int> m_rooms;        // Stack con tutte le stanze
 
-        std::vector<int> m_floorplan;   // Vettore con le stanze
+        brown::dt::vector<int> m_floorplan;   // Vettore con le stanze
 
         int m_room_count = 0;           
 
@@ -42,7 +42,7 @@ class level_generator{
 
         void generate();
 
-        std::vector<int> get_floorplan()
+        brown::dt::vector<int> get_floorplan()
         {
             return this->m_floorplan;
         }

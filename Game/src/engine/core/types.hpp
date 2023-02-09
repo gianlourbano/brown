@@ -1,6 +1,6 @@
 #pragma once
-#include <bitset>
 #include <cstdint>
+#include "engine/std/bitset.hpp"
 
 // Source: https://gist.github.com/Lee-R/3839813
 inline constexpr std::uint32_t fnv1a_32(char const *s, std::size_t count)
@@ -17,7 +17,7 @@ using entity_id = std::uint32_t;
 const entity_id MAX_ENTITIES = 5000;
 using component_type = std::uint8_t;
 const component_type MAX_COMPONENTS = 32;
-using signature = std::bitset<MAX_COMPONENTS>;
+using signature = brown::dt::bitset<MAX_COMPONENTS>;
 
 enum class input_buttons
 {

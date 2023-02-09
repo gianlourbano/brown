@@ -3,10 +3,7 @@
 
 namespace brown
 {
-    static size_t KEY_PRESSED;
+    extern size_t KEY_PRESSED;
 
-    void get_keyboard_input(WINDOW *win)
-    {
-        KEY_PRESSED = wgetch(win);
-    }
+    void get_keyboard_input(WINDOW *win);
 }

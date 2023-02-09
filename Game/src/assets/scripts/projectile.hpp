@@ -2,7 +2,7 @@
 #include "brown.hpp"
 #include "scriptable_AI.hpp"
 
-vec2 forces[4] = {
+static vec2 forces[4] = {
     {0, -1},
     {1, 0},
     {0, 1},

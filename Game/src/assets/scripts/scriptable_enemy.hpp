@@ -2,7 +2,6 @@
 #include "scriptable_AI.hpp"
 #include "types.hpp"
 #include "assets/scripts/player_controller.hpp"
-
 class scriptable_enemy : public scriptable_AI
 {
 public:
@@ -47,79 +46,84 @@ public:
         for (int i = 0; i < m_health; i++)
             hearts += "❤ ";
         m_healthbar->text = hearts;
-        if (t.elapsed() >= rand() % 4 + 1 && ((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
-        {
-            pl_h->set_health(pl_h->get_health() - 1);
-            t.start();
-        }
-
         if (is_player_in_range(10) && t_move.elapsed() >= 0.5 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
         {
             t_move.start();
             int r = rand()%2 +1;
-            auto prev_pos = ts->position;
+            
             if(r==1){
                 if (ts->position.x != pl.position.x)
                 {
                     if (ts->position.x > pl.position.x)
                     {
-                        ts->direction = 3;
-                        if (!check_collision(3))
+                        ts->direction = 4;
+                        if (!check_collision(4))
                             ts->position.x--;
                     }
                     else
                     {
-                        ts->direction = 1;
-                        if (!check_collision(1))
+                        ts->direction = 2;
+                        if (!check_collision(2)){
+                        LOG(mvwinch(m_state->get_win(),ts->position.x+1, ts->position.y)& A_CHARTEXT);
                             ts->position.x++;
+                        }
                     }
                 }
                 else if (ts->position.y != pl.position.y)
                 {
                     if (ts->position.y > pl.position.y)
                     {
-                        ts->direction = 4;
-                        if (!check_collision(4))
+                        ts->direction = 1;
+                        if (!check_collision(1))
                             ts->position.y--;
                     }
                     else
                     {
-                        ts->direction = 2;
-                        if (!check_collision(2))
+                        ts->direction = 3;
+                        if (!check_collision(3))
                             ts->position.y++;
                     }
                 }
+            
             }else{
                 if (ts->position.y != pl.position.y)
                 {
                     if (ts->position.y > pl.position.y)
                     {
-                        ts->direction = 4;
-                        if (!check_collision(4))
+                        ts->direction = 1;
+                        if (!check_collision(1))
                             ts->position.y--;
                     }
                     else
                     {
-                        ts->direction = 2;
-                        if (!check_collision(2))
+                        ts->direction = 3;
+                        if (!check_collision(3))
                             ts->position.y++;
                     }
                 }else if (ts->position.x != pl.position.x)
                 {
                     if (ts->position.x > pl.position.x)
                     {
-                        ts->direction = 3;
-                        if (!check_collision(3))
+                        ts->direction =4;
+                        if (!check_collision(4))
                             ts->position.x--;
                     }
                     else
                     {
-                        ts->direction = 1;
-                        if (!check_collision(1))
-                            ts->position.x++;
+                        ts->direction = 2;
+                        if (!check_collision(2))
+                        {LOG(mvwinch(m_state->get_win(),ts->position.x+1, ts->position.y)& A_CHARTEXT);
+                            ts->position.x++;}
                     }
                 }
             }
+        }
+
+        
+        if (t.elapsed() >= rand() % 4 + 1 && ((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
+        {
+            pl_h->set_health(pl_h->get_health() - 1);
+            t.start();
         }
 
         if (t.elapsed() >= rand() % 4 + 1 && pl.position.x == ts->position.x && pl.position.y == ts->position.y)
@@ -130,6 +134,8 @@ public:
 
         if (m_health <= 0)
         {
+            player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
+            pl_h->kill();
             delete_self();
         }
     }

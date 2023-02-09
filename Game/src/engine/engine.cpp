@@ -72,7 +72,7 @@ namespace brown
     {
         if (!states.empty())
         {
-            states.back()->cleanup();
+            //states.back()->cleanup();
             states.pop_back();
         }
 

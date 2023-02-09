@@ -9,11 +9,18 @@
 #include "assets/scripts/scriptable_enemy.hpp"
 #include "assets/scripts/ranged_enemy.hpp"
 #include "assets/scripts/logo_controller.hpp"
+#include "assets/scripts/score_controller.hpp"
 #include <random>
 #include "assets/scripts/inventory_renderer.hpp"
 
 #include "assets/test/tile_system.hpp"
 #include "assets/items/items.hpp"
+
+#include "room_state.hpp"
+#include "assets/map_gen/level_generator.hpp"
+#include "assets/map_gen/world_generator.hpp"
+
+#include "engine/std/vector.hpp"
 
 #define TILES 15
 
@@ -21,6 +28,7 @@ int frame_passed = 0;
 
 game_state game_state::m_game_state;
 help_state help_state::m_help_state;
+
 class menu_state : public brown::state
 {
 public:
@@ -29,7 +37,7 @@ public:
         m_game->quit();
     }
 
-    void create_door(vec2 pos, bool vertical = true, std::string name = "1")
+    void create_door(vec2 pos,door_data data, bool vertical = true, std::string name = "1")
     {
         animation opened = {
             vertical ? "animated_vertical_door" : "animated_horizontal_door",
@@ -56,7 +64,7 @@ public:
         anim->add_anim("close", closed);
         anim->add_anim("open", opened);
 
-        door.add_component<native_script>({}).bind<door_controller>();
+        door.add_component<native_script>({}).bind<door_controller>(data);
     }
 
     void plain_text(std::string text, int x, int y)
@@ -120,70 +128,59 @@ public:
         pl.add_component<animator_controller>({});
         pl.add_component<native_script>({}).bind<player_controller>(10);
 
-        create_door(offset + vec2{5 * TILE_SIZE, 0}, false, "1");
-        create_door(offset + vec2{13 * TILE_SIZE, 2 * TILE_SIZE + 2}, false, "2");
-        // create_door({offset.x + 52, offset.y }, false, "3");
+        // world generation
+        m_world_generator.generate_new_world();
+        create_door(offset + vec2{8 * TILE_SIZE, 0},door_data( m_world_generator.get_room_for_current_world(45), 45, false, false) ,false, "1");
+        tm.set_tile(3, 0, 8);
 
-        auto bot1 = create_entity();
-        bot1.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
+        // room generation
+        // auto bot1 = create_entity();
+        // bot1.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
 
-        brown::add_sprite({"4"}, "bot1");
-        bot1.add_component<sprite>({{1, 1}, "bot1"});
-        bot1.add_component<native_script>({}).bind<NPC>();
-        bot1.add_component<ui>({""});
+        // brown::add_sprite({"4"}, "bot1");
+        // bot1.add_component<sprite>({{1, 1}, "bot1"});
+        // bot1.add_component<native_script>({}).bind<NPC>();
+        // bot1.add_component<ui>({""});
 
-        auto bot2 = create_entity();
-        bot2.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
-        brown::add_sprite({"a"}, "bot2");
-        bot2.add_component<sprite>({{1, 1}, "bot2"});
-        bot2.add_component<native_script>({}).bind<scriptable_enemy>();
-        bot2.add_component<ui>({"", 0, true, true});
+        // auto bot2 = create_entity();
+        // bot2.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
+        // brown::add_sprite({"a"}, "bot2");
+        // bot2.add_component<sprite>({{1, 1}, "bot2"});
+        // bot2.add_component<native_script>({}).bind<scriptable_enemy>();
+        // bot2.add_component<ui>({"", 0, true, true});
 
-        auto bot3 = create_entity();
-        bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
-        brown::add_sprite({"a"}, "bot3");
-        bot3.add_component<sprite>({{1, 1}, "bot3"});
-        bot3.add_component<native_script>({}).bind<ranged_enemy>();
-        bot3.add_component<ui>({"", 0, true, true});
+        // auto bot3 = create_entity();
+        // bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
+        // brown::add_sprite({"a"}, "bot3");
+        // bot3.add_component<sprite>({{1, 1}, "bot3"});
+        // bot3.add_component<native_script>({}).bind<ranged_enemy>();
+        // bot3.add_component<ui>({"", 0, true, true});
 
-        auto pot = create_entity("potion1");
-        pot.add_component<transform>({{40, 16}});
-        pot.add_component<sprite>({{1, 1}, "bot2"});
-        pot.add_component<native_script>({}).bind<potion>(4);
+        // auto pot = create_entity("potion1");
+        // pot.add_component<transform>({{40, 16}});
+        // pot.add_component<sprite>({{1, 1}, "bot2"});
+        // pot.add_component<native_script>({}).bind<potion>(4);
 
-        auto pot1 = create_entity("potion2");
-        pot1.add_component<transform>({{50, 16}});
-        pot1.add_component<sprite>({{1, 1}, "bot2"});
-        pot1.add_component<native_script>({}).bind<potion>(4);
+        // auto pot1 = create_entity("potion2");
+        // pot1.add_component<transform>({{50, 16}});
+        // pot1.add_component<sprite>({{1, 1}, "bot2"});
+        // pot1.add_component<native_script>({}).bind<potion>(4);
 
-        auto inventory = create_entity("inventory_manager");
-        inventory.add_component<native_script>({}).bind<inventory_renderer>();
-
-        auto hb = create_entity("healtbar");
-        hb.add_component<transform>({{1, 2}, 1});
-        hb.add_component<ui>({""});
-        hb.add_component<native_script>({}).bind<healtbar_controller>();
-
-        auto pl_bar = create_entity("power_level_bar");
-        pl_bar.add_component<transform>({{1, 3}, 1});
-        pl_bar.add_component<ui>({"Power level: ★ ★ ★ ★ ★"});
-
-        auto key_c = create_entity("key_counter");
-        key_c.add_component<transform>({{1, 4}, 1});
-        key_c.add_component<ui>({"Keys: 🔑🗝"});
-
-        auto h_text = create_entity("h_text");
-        h_text.add_component<transform>({0, 1});
-        h_text.add_component<ui>({"Press 'h' to open the help menu"});
-
-        auto inv = create_entity("inv");
-        inv.add_component<transform>({{1,7}});
-        inv.add_component<ui>({"Inventory"});
+        // auto h_text = create_entity("h_text");
+        // h_text.add_component<transform>({0, 1});
+        // h_text.add_component<ui>({"Press 'h' to open the help menu"});
     }
 
     void resume() { m_pause = false; }
     void pause() { m_pause = true; }
-    void cleanup() { delete ts; }
+    void cleanup()
+    {
+        delete ts;
+
+        for (int i = 0; i < 100; i++)
+            if (room_states[i])
+                delete room_states[i];
+    }
 
     // queste tre vengono eseguite in ordine e
     // fanno esattamente quello che c'è scritto
@@ -206,8 +203,10 @@ public:
                     UI_system->LOG_COLORS();
                     break;
                 case 'h':
+                {
                     game->push_state(help_state::instance());
                     break;
+                }
                 case 'l':
                     game->quit();
                     break;
@@ -273,4 +272,10 @@ private:
     vec2 offset;
 
     bool m_pause = false;
+
+    // WORLD GENERARATION
+    brown::dt::vector<int> floorplan;
+    mat<room_state *> room_states = mat<room_state *>(10, 10);
+
+    world_generator m_world_generator;
 };
