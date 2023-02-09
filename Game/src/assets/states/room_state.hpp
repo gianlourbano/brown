@@ -166,10 +166,18 @@ public:
         key_c.add_component<transform>({{1, 4}, 1});
         key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
 
+        auto key_c = create_entity("id");
+        key_c.add_component<transform>({{1, 4}, 1});
+        key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
+
         auto sb = create_entity("scorebar");
         sb.add_component<transform>({{1, 5}, 1});
         sb.add_component<ui>({""});
         sb.add_component<native_script>({}).bind<score_controller>();
+        
+        auto key_c = create_entity("id");
+        key_c.add_component<transform>({{1, 4}, 1});
+        key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
 
         auto h_text = create_entity("h_text");
         h_text.add_component<transform>({0, 1});
