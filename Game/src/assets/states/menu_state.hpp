@@ -9,7 +9,7 @@
 #include "assets/scripts/scriptable_enemy.hpp"
 #include "assets/scripts/ranged_enemy.hpp"
 #include "assets/scripts/logo_controller.hpp"
-#include "assets/scripts/score_coltroller.hpp"
+#include "assets/scripts/score_controller.hpp"
 #include <random>
 #include "assets/scripts/inventory_renderer.hpp"
 
@@ -166,40 +166,9 @@ public:
         // pot1.add_component<sprite>({{1, 1}, "bot2"});
         // pot1.add_component<native_script>({}).bind<potion>(4);
 
-<<<<<<< Updated upstream
         // auto h_text = create_entity("h_text");
         // h_text.add_component<transform>({0, 1});
         // h_text.add_component<ui>({"Press 'h' to open the help menu"});
-=======
-        auto inventory = create_entity("inventory_manager");
-        inventory.add_component<native_script>({}).bind<inventory_renderer>();
-
-        auto hb = create_entity("healtbar");
-        hb.add_component<transform>({{1, 2}, 1});
-        hb.add_component<ui>({""});
-        hb.add_component<native_script>({}).bind<healtbar_controller>();
-
-        auto sb = create_entity("scorebar");
-        sb.add_component<transform>({{1, 5}, 1});
-        sb.add_component<ui>({""});
-        sb.add_component<native_script>({}).bind<score_controller>();
-
-        auto pl_bar = create_entity("power_level_bar");
-        pl_bar.add_component<transform>({{1, 3}, 1});
-        pl_bar.add_component<ui>({"Power level: ★ ★ ★ ★ ★"});
-
-        auto key_c = create_entity("key_counter");
-        key_c.add_component<transform>({{1, 4}, 1});
-        key_c.add_component<ui>({"Keys: 🔑🗝"});
-
-        auto h_text = create_entity("h_text");
-        h_text.add_component<transform>({0, 1});
-        h_text.add_component<ui>({"Press 'h' to open the help menu"});
-
-        auto inv = create_entity("inv");
-        inv.add_component<transform>({{1,7}});
-        inv.add_component<ui>({"Inventory"});
->>>>>>> Stashed changes
     }
 
     void resume() { m_pause = false; }

@@ -8,6 +8,7 @@
 #include "assets/scripts/scriptable_enemy.hpp"
 #include "assets/scripts/ranged_enemy.hpp"
 #include "assets/scripts/inventory_renderer.hpp"
+#include "assets/scripts/score_controller.hpp"
 
 #include "assets/test/tile_system.hpp"
 #include "assets/items/items.hpp"
@@ -27,6 +28,7 @@ struct room_data
     // player data
     int player_health;
     int player_max_health;
+    int score;
     inventory *player_inventory;
     world_generator *world_gen;
 
@@ -34,11 +36,12 @@ struct room_data
     int direction;
 
     room_data() {}
-    room_data(int id, int player_health, int player_max_health, inventory *player_inventory, world_generator *world_gen, int direction)
+    room_data(int id, int player_health, int player_max_health,int score, inventory *player_inventory, world_generator *world_gen, int direction)
     {
         this->id = id;
         this->player_health = player_health;
         this->player_max_health = player_max_health;
+        this->score = score;
         this->player_inventory = player_inventory;
         this->world_gen = world_gen;
         this->direction = direction;
@@ -162,6 +165,11 @@ public:
         auto key_c = create_entity("id");
         key_c.add_component<transform>({{1, 4}, 1});
         key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
+
+        auto sb = create_entity("scorebar");
+        sb.add_component<transform>({{1, 5}, 1});
+        sb.add_component<ui>({""});
+        sb.add_component<native_script>({}).bind<score_controller>();
 
         auto h_text = create_entity("h_text");
         h_text.add_component<transform>({0, 1});
