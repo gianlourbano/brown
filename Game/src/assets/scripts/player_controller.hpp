@@ -229,6 +229,6 @@ protected:
     brown::Timer m_cooldown;
     brown::Timer attack_cooldown;
     brown::Timer m_damage_timer;
-
+public:
     inventory m_inventory;
 };

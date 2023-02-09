@@ -1,8 +1,8 @@
 #pragma once
 #include "../types.hpp"
 #include "../../debug/debugger.hpp"
-#include <array>
-#include <queue>
+#include "engine/std/array.hpp"
+#include "engine/std/queue.hpp"
 
 namespace brown
 {
@@ -42,8 +42,8 @@ namespace brown
         }
 
         private:
-            std::queue<entity_id> m_avaliable_entities{};
-            std::array<signature, MAX_ENTITIES> m_signatures{};
+            dt::queue<entity_id> m_avaliable_entities{};
+            dt::array<signature, MAX_ENTITIES> m_signatures{};
             entity_id m_entity_count;
     };
 }

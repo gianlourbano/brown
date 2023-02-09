@@ -69,6 +69,8 @@ namespace brown
 
         inline bool is_initialized() { return initialized; }
 
+         brown::engine *get_game_instance()  { return m_game; }
+
     protected:
         state(){};
         bool terminate = false;

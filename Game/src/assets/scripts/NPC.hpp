@@ -4,8 +4,11 @@
 #include <random>
 #include <time.h>
 #include "types.hpp"
+#include "engine/std/array.hpp"
 
-std::array<std::array<std::string, 3>, 2> dialogs = {
+using namespace brown;
+
+dt::array<dt::array<std::string, 3>, 2> dialogs = {
     {{"You too in this place?",
       "I don't know how I got here",
       "I'm so scared"},
@@ -99,7 +102,7 @@ private:
 
     unsigned int curr_dialog = 0;
 
-    std::array<std::string, 3> dialog;
+    dt::array<std::string, 3> dialog;
 
     ui *ui_;
     

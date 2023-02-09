@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <fstream>
-#include <vector>
+#include "engine/std/vector.hpp"
 
 template <typename T>
 class mat
@@ -12,10 +12,7 @@ public:
 
     mat(int x, int y): m_x(x), m_y(y)
     {
-        for (int i = 0; i < m_x * m_y; i++)
-        {
-            m_data.push_back(0);
-        }
+        m_data.resize(m_x*m_y);
     }
     mat(T *t, int x, int y): m_x(x), m_y(y)
     {
@@ -25,7 +22,7 @@ public:
         }
     }
 
-    void set_all(std::vector<T>& data)
+    void set_all(brown::dt::vector<T>& data)
     {
         for(int i = 0; i < m_x * m_y; i++)
         {
@@ -38,8 +35,12 @@ public:
         m_data[x * m_y + y] = t;
     }
 
-    T at(int x, int y) const
+    T& at(int x, int y)
     {
+        return m_data[x + y * m_x];
+    }
+
+    const T& at(int x, int y) const {
         return m_data[x + y * m_x];
     }
     
@@ -77,7 +78,12 @@ public:
         }
     }
 
-    T operator[] (size_t index)
+    T& operator[] (size_t index)
+    {
+        return m_data[index];
+    }
+
+    const T& operator[] (size_t index) const
     {
         return m_data[index];
     }
@@ -106,5 +112,5 @@ public:
 private:
     int m_x;
     int m_y;
-    std::vector<T> m_data;
+    brown::dt::vector<T> m_data;
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../types.hpp"
-#include <array>
+#include "engine/std/array.hpp"
 #include "debug/debugger.hpp"
 #include <unordered_map>
 
@@ -61,7 +61,7 @@ namespace brown
         }
 
     private:
-        std::array<T, MAX_ENTITIES> m_component_array{};
+        dt::array<T, MAX_ENTITIES> m_component_array{};
         std::unordered_map<entity_id, size_t> m_entity_to_index{};
         std::unordered_map<size_t, entity_id> m_index_to_entity{};
         size_t m_size;
