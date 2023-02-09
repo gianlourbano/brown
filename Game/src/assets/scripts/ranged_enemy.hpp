@@ -100,20 +100,19 @@ public:
         {
             t_move.start();
             int r = rand()%2 +1;
-            auto prev_pos = ts->position;
             if(r==1){
                 if (ts->position.x != pl.position.x)
                 {
                     if (ts->position.x > pl.position.x)
                     {
-                        ts->direction = 3;
-                        if (!check_collision(3))
+                        ts->direction = 4;
+                        if (!check_collision(4))
                             ts->position.x--;
                     }
                     else
                     {
-                        ts->direction = 1;
-                        if (!check_collision(1))
+                        ts->direction = 2;
+                        if (!check_collision(2))
                             ts->position.x++;
                     }
                 }
@@ -121,14 +120,14 @@ public:
                 {
                     if (ts->position.y > pl.position.y)
                     {
-                        ts->direction = 4;
-                        if (!check_collision(4))
+                        ts->direction = 1;
+                        if (!check_collision(1))
                             ts->position.y--;
                     }
                     else
                     {
-                        ts->direction = 2;
-                        if (!check_collision(2))
+                        ts->direction = 3;
+                        if (!check_collision(3))
                             ts->position.y++;
                     }
                 }
@@ -137,28 +136,28 @@ public:
                 {
                     if (ts->position.y > pl.position.y)
                     {
-                        ts->direction = 4;
-                        if (!check_collision(4))
+                        ts->direction = 1;
+                        if (!check_collision(1))
                             ts->position.y--;
                     }
                     else
                     {
-                        ts->direction = 2;
-                        if (!check_collision(2))
+                        ts->direction = 3;
+                        if (!check_collision(3))
                             ts->position.y++;
                     }
                 }else if (ts->position.x != pl.position.x)
                 {
                     if (ts->position.x > pl.position.x)
                     {
-                        ts->direction = 3;
-                        if (!check_collision(3))
+                        ts->direction =4;
+                        if (!check_collision(4))
                             ts->position.x--;
                     }
                     else
                     {
-                        ts->direction = 1;
-                        if (!check_collision(1))
+                        ts->direction = 2;
+                        if (!check_collision(2))
                             ts->position.x++;
                     }
                 }
@@ -166,6 +165,8 @@ public:
         }
         if (m_health <= 0)
         {
+            player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
+            pl_h->kill();
             delete_self();
         }
     }

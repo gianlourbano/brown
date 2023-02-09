@@ -57,6 +57,9 @@ public:
         }
     }
 
+    void kill(){
+        set_score(score + 50);
+    }
     player_controller(int health) : health(health) {}
 
     void on_create()
@@ -149,6 +152,12 @@ public:
         e.set_param(Events::Player::Health::HEALTH, health);
         m_state->send_event(e);
     }
+    void set_score(int k){
+        score = k;
+        brown::event e(Events::Player::SCORE);
+        e.set_param(Events::Player::Score::SCORE, score);
+        m_state->send_event(e);
+    }
 
     void shoot(int dir)
     {
@@ -223,6 +232,7 @@ protected:
     animation proj_anim;
     animation attack_anim;
     int health;
+    int score;
     bool can_shoot = true;
     bool melee=false;
     int m_proj_lifespan = 0;

@@ -6,6 +6,10 @@ namespace Events::Player {
     namespace Health {
         const param_id HEALTH = "Event::Player::Health::HEALTH"_hash;
     }
+    const event_id SCORE = "Event::Player::SCORE"_hash;
+    namespace Score {
+        const param_id SCORE = "Event::Player::Score::SCORE"_hash;
+    }
 }
 
 namespace Events::Entity::Interact {
