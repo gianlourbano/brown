@@ -59,7 +59,8 @@ void brown::UI_system::draw(WINDOW *win, brown::brain *br)
             }
 
             wattron(win, COLOR_PAIR(m_pairs[bg]) | A_BOLD);
-            m_step++;
+            if(m_step < 70)
+                m_step++;
         }
     }
 }

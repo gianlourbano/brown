@@ -64,7 +64,13 @@ public:
     void kill(){
         set_score(score + 50);
     }
-    player_controller(int health) : health(health) {}
+
+    player_controller(int health, int score = 0) {
+        this->health = health;
+        this->score = score;
+        //set_health(health);
+        //set_score(score);
+    }
 
     void on_create()
     {
@@ -85,6 +91,9 @@ public:
             5,
             false,
             true};
+
+        set_health(health);
+        set_score(score);
     }
 
     void on_update()
@@ -134,10 +143,10 @@ public:
             LOG_INVENTORY();
         }
         if (brown::KEY_PRESSED == '1') {
-            melee = true;
+            set_score(score + 5);
         }
         if (brown::KEY_PRESSED == '2') {
-            melee = false;
+            set_health(health - 1);
         }
         
 
@@ -201,6 +210,10 @@ public:
     int get_health()
     {
         return health;
+    }
+
+    int get_score() {
+        return score;
     }
 
     void add_item(item *i)

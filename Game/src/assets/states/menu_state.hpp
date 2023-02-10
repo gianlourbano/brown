@@ -130,7 +130,7 @@ public:
 
         // world generation
         m_world_generator.generate_new_world();
-        create_door(offset + vec2{8 * TILE_SIZE, 0},door_data( m_world_generator.get_room_for_current_world(45), 45, false, false) ,false, "1");
+        create_door(offset + vec2{8 * TILE_SIZE, 0},door_data( m_world_generator.get_room_for_current_world(45),nullptr, 45, false, false) ,false, "1");
         tm.set_tile(3, 0, 8);
 
         // room generation

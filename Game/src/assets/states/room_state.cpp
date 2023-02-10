@@ -49,7 +49,7 @@ void room_state::generate_doors(tilemap &tm)
         anim->add_anim("close", closed_horizontal);
         anim->add_anim("open", opened_horizontal);
 
-        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 10), data.id - 10, false, dir==1, 3));
+        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 10),this, data.id - 10, false, dir==1, 3));
 
         tm.set_tile(3, 0, 8);
     }
@@ -65,7 +65,7 @@ void room_state::generate_doors(tilemap &tm)
         anim->add_anim("close", closed_vertical);
         anim->add_anim("open", opened_vertical);
 
-        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 1), data.id + 1, true, dir==2, 4));
+        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 1),this, data.id + 1, true, dir==2, 4));
 
         tm.m_data.at(16, 2) = 12;
     }
@@ -81,7 +81,7 @@ void room_state::generate_doors(tilemap &tm)
         anim->add_anim("close", closed_horizontal);
         anim->add_anim("open", opened_horizontal);
 
-        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 10), data.id + 10, false, dir==3, 1));
+        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 10),this, data.id + 10, false, dir==3, 1));
 
         tm.m_data.at(8, 5) = 3;
     }
@@ -97,7 +97,7 @@ void room_state::generate_doors(tilemap &tm)
         anim->add_anim("close", closed_vertical);
         anim->add_anim("open", opened_vertical);
 
-        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 1), data.id - 1, true, dir==4, 2));
+        door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 1),this, data.id - 1, true, dir==4, 2));
 
         tm.m_data.at(0, 2) = 14;
     }

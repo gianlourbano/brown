@@ -23,19 +23,20 @@
 
 struct room_data
 {
-    int id;
+    int id = -1;
 
     // player data
-    int player_health;
-    int player_max_health;
-    int score;
-    inventory *player_inventory;
-    world_generator *world_gen;
+    int player_health = 10;
+    int player_max_health = 10;
+    int score = 0;
+    inventory *player_inventory = nullptr;
+    world_generator *world_gen = nullptr;
 
     // room data
-    int direction;
+    int direction = 0;
 
-    room_data() {}
+    room_data()  {}
+    room_data(room_data& other) = delete;
     room_data(int id, int player_health, int player_max_health,int score, inventory *player_inventory, world_generator *world_gen, int direction)
     {
         this->id = id;
@@ -52,13 +53,20 @@ class room_state : public brown::state
 {
 
 public:
-    room_state() {}
-    room_state(room_data data) : data(data) {}
-
-    void inject_data(int dir)
-    {
-        this->data.direction = dir;
+    room_state()  = delete;
+    room_state(room_data data) {
+        this->data = data;
     }
+
+    void health_changed(brown::event &e) {
+        data.player_health = e.get_param<int>(Events::Player::Health::HEALTH);
+    }
+
+    void score_changed(brown::event &e) {
+        data.score = e.get_param<int>(Events::Player::Score::SCORE);
+    }
+
+    room_data* get_data() { return &data; }
 
     void generate_doors(tilemap &tm);
 
@@ -71,6 +79,9 @@ public:
         game->set_current_screen(win);
 
         brain.init();
+
+        add_event_listener(METHOD_LISTENER(Events::Player::HEALTH, "room", room_state::health_changed));
+        add_event_listener(METHOD_LISTENER(Events::Player::SCORE, "room", room_state::score_changed));
 
         brain.register_component<tilemap>();
 
@@ -109,7 +120,7 @@ public:
         generate_doors(tm);
 
         // PLAYER INITIALIZATION
-        auto pl = create_entity("player");
+        pl = create_entity("player");
 
         vec2 pos = offset;
         switch (data.direction)
@@ -144,9 +155,9 @@ public:
         pl.add_component<transform>({pos, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({});
-        pl.add_component<native_script>({}).bind<player_controller>(data.player_health);
+        pl.add_component<native_script>({}).bind<player_controller>(data.player_health, data.score);
 
-        player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
+        
         // pl_controller->m_inventory = *data.player_inventory;
 
         // UI
@@ -166,18 +177,10 @@ public:
         key_c.add_component<transform>({{1, 4}, 1});
         key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
 
-        auto key_c = create_entity("id");
-        key_c.add_component<transform>({{1, 4}, 1});
-        key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
-
         auto sb = create_entity("scorebar");
         sb.add_component<transform>({{1, 5}, 1});
         sb.add_component<ui>({""});
         sb.add_component<native_script>({}).bind<score_controller>();
-        
-        auto key_c = create_entity("id");
-        key_c.add_component<transform>({{1, 4}, 1});
-        key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
 
         auto h_text = create_entity("h_text");
         h_text.add_component<transform>({0, 1});
@@ -192,43 +195,22 @@ public:
     }
 
     void cleanup() {}
-    void pause() { m_pause = true; }
+    void pause() { m_pause = true;
+        player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
+
+        pl_controller->set_health(data.player_health);
+        pl_controller->set_score(data.score);
+     }
     void resume()
     {
         LOG("RESUME");
         m_pause = false;
-        transform *ts = &find_entity("player").get_component<transform>();
-        vec2 pos = offset;
-        switch (data.direction)
-        {
-        case 3:
-        {
-            pos += vec2(8 * TILE_SIZE + 2, 4);
-            break;
-        }
-        case 4:
-        {
-            pos += vec2(16 * TILE_SIZE, 2 * TILE_SIZE + 3);
-            break;
-        }
-        case 1:
-        {
-            pos += vec2(8 * TILE_SIZE + 2, 5 * TILE_SIZE + 2);
-            break;
-        }
-        case 2:
-        {
-            pos += vec2(3, 2 * TILE_SIZE + 3);
-            break;
-        }
-        case 0:
-        {
-            pos = vec2(COLS / 2, LINES / 2);
-            break;
-        }
-        }
+        player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
+        
+        LOG(data.player_health);
 
-        ts->position = pos;
+        pl_controller->set_health(data.player_health);
+        pl_controller->set_score(data.score);
     }
     void handle_events(brown::engine *game)
     {
@@ -316,7 +298,7 @@ private:
 
     int frame_passed = 0;
 
-    
+    brown::entity pl;
 
     room_data data;
 };

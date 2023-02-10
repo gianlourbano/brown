@@ -6,6 +6,7 @@
 struct door_data
 {
     room_state *room = nullptr;
+    room_state *last_room = nullptr;
     int id = -1;
     bool vertical = false;
 
@@ -13,9 +14,10 @@ struct door_data
     int dir = 0;
 
     door_data() {}
-    door_data(room_state *room, int id, bool vertical, bool entrance, int dir = 0)
+    door_data(room_state *room,room_state *last_room, int id, bool vertical, bool entrance, int dir = 0)
     {
         this->room = room;
+        this->last_room = last_room;
         this->id = id;
         this->vertical = vertical;
         this->entrance = entrance;
@@ -54,30 +56,59 @@ public:
         }
 
         if (!data.vertical && pt.x >= ts->position.x && pt.x <= ts->position.x + 4 && pt.y >= ts->position.y && pt.y <= ts->position.y + 1)
-        {
+        {   
+            player_controller* pc = dynamic_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
+
             if (data.entrance)
             {
+                room_data* rd = data.room->get_data();
+                rd->player_health = pc->get_health();
+                rd->score = pc->get_score();
+
+                LOG(std::to_string(rd->player_health) + " FROM ROOM " + std::to_string(data.last_room->get_data()->id) + " TO ROOM " + std::to_string(data.room->get_data()->id));
+
                 m_state->get_game_instance()->pop_state();
-                return;
             }
             else
             {
+                room_data* rd = data.room->get_data();
+                rd->player_health = pc->get_health();
+                rd->score = pc->get_score();
                 m_state->get_game_instance()->push_state(data.room);
             }
+
+            transform *tsp = &m_state->find_entity("player").get_component<transform>();
+            if (data.dir == 1)
+                tsp->position.y -= 2;
+            if (data.dir == 3)
+                tsp->position.y += 2;
         }
 
         else if (data.vertical && pt.x >= ts->position.x && pt.x <= ts->position.x + 1 && pt.y >= ts->position.y && pt.y <= ts->position.y + 2)
         {
+            player_controller* pc = dynamic_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
+
             if (data.entrance)
             {
+                room_data* rd = data.last_room->get_data();
+                rd->player_health = pc->get_health();
+                rd->score = pc->get_score();
+
                 m_state->get_game_instance()->pop_state();
-                return;
             }
             else
             {
-                //last_entered = data.dir;
+                room_data* rd = data.room->get_data();
+                rd->player_health = pc->get_health();
+                rd->score = pc->get_score();
                 m_state->get_game_instance()->push_state(data.room);
             }
+
+            transform *tsp = &m_state->find_entity("player").get_component<transform>();
+            if (data.dir == 4)
+                tsp->position.x -= 2;
+            if (data.dir == 2)
+                tsp->position.x += 2;
         }
 
         if (anim->current_anim->has_finished)

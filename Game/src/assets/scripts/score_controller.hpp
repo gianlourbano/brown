@@ -14,6 +14,8 @@ public:
     {
         m_state->add_event_listener(METHOD_LISTENER(Events::Player::SCORE,"scorebar", score_controller::score_changed));
         m_scorebar = &get_component<ui>();
+        pl = static_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
+        m_score = pl->get_score();
     }
     void on_update()
     {
@@ -26,7 +28,7 @@ public:
     }
 
 private:
-    //player_controller *pl = nullptr;
+    player_controller *pl = nullptr;
     ui *m_scorebar = nullptr;
     int m_score = 0;
 };

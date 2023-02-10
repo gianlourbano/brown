@@ -27,7 +27,7 @@ struct native_script
     {
         /* instantiate_script = [&]()
         { return static_cast<brown::scriptable_entity*>(new T(args...)); }; */
-        instance = new T(std::forward<T>(args)...);
+        instance = new T(std::forward<Args>(args)...);
         destroy_script = [](native_script *nsc)
         { delete nsc->instance; nsc->instance = nullptr; };
     }

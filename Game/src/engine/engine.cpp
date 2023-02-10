@@ -66,6 +66,8 @@ namespace brown
         
         if(!state->is_initialized())
             states.back()->init(this);
+        else 
+            states.back()->resume();
     }
 
     void engine::pop_state()
@@ -73,6 +75,7 @@ namespace brown
         if (!states.empty())
         {
             //states.back()->cleanup();
+            states.back()->pause();
             states.pop_back();
         }
 
