@@ -1,10 +1,12 @@
 #include "level_generator.hpp"
 
-int level_generator::neighbour_count(int index) {
-    return this->m_floorplan[index-10] + this->m_floorplan[index-1] + this->m_floorplan[index+1] + this->m_floorplan[index+10];
+int level_generator::neighbour_count(int index)
+{
+    return this->m_floorplan[index - 10] + this->m_floorplan[index - 1] + this->m_floorplan[index + 1] + this->m_floorplan[index + 10];
 }
 
-bool level_generator::visit(int index ) {
+bool level_generator::visit(int index)
+{
     if (this->m_floorplan[index])
         return false;
 
@@ -16,7 +18,7 @@ bool level_generator::visit(int index ) {
     if (m_room_count >= max_rooms)
         return false;
 
-    if (this->rand(this->rng) < 0.5 && index != 45) 
+    if (this->rand(this->rng) < 0.5 && index != 45)
         return false;
 
     this->m_rooms.push(index);
@@ -26,8 +28,10 @@ bool level_generator::visit(int index ) {
     return true;
 }
 
-void level_generator::start() {
-    for(int i = 0; i < 100; i++) {
+void level_generator::start()
+{
+    for (int i = 0; i < 100; i++)
+    {
         this->m_floorplan[i] = 0;
     }
 
@@ -40,10 +44,12 @@ void level_generator::start() {
     this->visit(45);
 }
 
-void level_generator::generate() {
+void level_generator::generate()
+{
     start();
 
-    while(!this->m_rooms.empty()) {
+    while (!this->m_rooms.empty())
+    {
         int index = this->m_rooms.front();
         this->m_rooms.pop();
 
@@ -64,5 +70,15 @@ void level_generator::generate() {
     }
 
     if (this->m_room_count < min_rooms)
+    {
         generate();
+        return;
+    }
+
+    if (!placed_special)
+    {
+        int boss_room = this->m_endrooms.pop();
+        m_floorplan[boss_room] = 3;
+        placed_special = true;
+    }
 }

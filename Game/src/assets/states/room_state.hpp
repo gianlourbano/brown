@@ -37,7 +37,6 @@ struct room_data
     int direction = 0;
 
     room_data() {}
-    room_data(room_data &other) = delete;
     room_data(int id, int player_health, int player_max_health, int score, inventory *player_inventory, world_generator *world_gen, int direction)
     {
         this->id = id;
@@ -274,10 +273,13 @@ public:
             world_generator::floorplan floorplan = data.world_gen->get_current_floorplan();
             int y = 1, x = COLS - 15;
             for (int i = 0; i < 100; i++)
-            {
-                if (i == data.id)
+            {      
+                if (floorplan[i] >= 3) {
+                    brown::graphics::mvwaddchcolors(win, y, x, 15, 'x');
+                }
+                else if (i == data.id)
                     brown::graphics::mvwaddchcolors(win, y, x, 17, 'o');
-                else if (floorplan[i])
+                else if (floorplan[i] <= 2 && floorplan[i] >= 1)
                     brown::graphics::mvwaddchcolors(win, y, x, 16, 'x');
 
                 if (i % 10 == 0)

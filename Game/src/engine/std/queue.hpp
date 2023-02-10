@@ -39,9 +39,9 @@ namespace brown::dt
             m_data.push_back(data);
             ++m_back;
         }
-        void pop()
+        T& pop()
         {
-            ++m_front;
+            return m_data[m_front++];
         }
         T &front()
         {
