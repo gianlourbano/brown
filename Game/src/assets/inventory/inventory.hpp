@@ -56,7 +56,7 @@ public:
                 }
 
                 if (item.count == 0) {
-                    m_items.erase(item);
+                    //m_items.erase(item);
                 }
             }
         }

@@ -214,7 +214,7 @@ public:
                     m_pause = true;
                 }
             }
-        }  
+        }        
     }
     void update(brown::engine *game)
     {
