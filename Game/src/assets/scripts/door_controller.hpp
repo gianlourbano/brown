@@ -37,7 +37,6 @@ public:
         anim = &get_component<animator_controller>();
         ts = &get_component<transform>();
 
-        anim->set_anim("close");
     }
 
     // This function is called every frame
@@ -49,10 +48,6 @@ public:
         if (range <= 5.0 && !is_open)
         {
             anim->play("open");
-        }
-        if (range > 5.0 && is_open)
-        {
-            anim->play("close");
         }
 
         if (!data.vertical && pt.x >= ts->position.x && pt.x <= ts->position.x + 4 && pt.y >= ts->position.y && pt.y <= ts->position.y + 1)
@@ -116,7 +111,7 @@ public:
             is_open =  !is_open;
         }
     }
-
+    bool is_open = false;
 private:
     animator_controller *anim = nullptr;
     transform *ts;
@@ -124,5 +119,5 @@ private:
 
     door_data data;
 
-    bool is_open = false;
+    
 };

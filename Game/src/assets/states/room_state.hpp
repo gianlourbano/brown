@@ -29,6 +29,7 @@ struct room_data
     // player data
     int player_health = 10;
     int player_max_health = 10;
+    bool key = false;
     int score = 0;
     inventory *player_inventory = nullptr;
     world_generator *world_gen = nullptr;
@@ -37,11 +38,12 @@ struct room_data
     int direction = 0;
 
     room_data() {}
-    room_data(int id, int player_health, int player_max_health, int score, inventory *player_inventory, world_generator *world_gen, int direction)
+    room_data(int id, int player_health, int player_max_health, bool key,int score, inventory *player_inventory, world_generator *world_gen, int direction)
     {
         this->id = id;
         this->player_health = player_health;
         this->player_max_health = player_max_health;
+        this->key=key;
         this->score = score;
         this->player_inventory = player_inventory;
         this->world_gen = world_gen;
@@ -58,7 +60,9 @@ public:
     {
         this->data = data;
     }
-
+    void key_changed(){
+        data.key = true;
+    }
     void health_changed(brown::event &e)
     {
         data.player_health = e.get_param<int>(Events::Player::Health::HEALTH);
@@ -154,7 +158,6 @@ public:
             break;
         }
         }
-
         pl.add_component<transform>({pos, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({});

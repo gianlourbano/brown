@@ -14,24 +14,9 @@ void room_state::generate_doors(tilemap &tm)
         10,
         false,
         true};
-    animation closed_horizontal = {
-        "animated_horizontal_door_c",
-        {0, 0},
-        6,
-        10,
-        false,
-        true};
-
+        
     animation opened_vertical = {
         "animated_vertical_door",
-        {0, 0},
-        4,
-        20,
-        false,
-        true};
-
-    animation closed_vertical = {
-        "animated_vertical_door_c",
         {0, 0},
         4,
         20,
@@ -46,7 +31,6 @@ void room_state::generate_doors(tilemap &tm)
         door.add_component<animator_controller>({});
 
         animator_controller *anim = &door.get_component<animator_controller>();
-        anim->add_anim("close", closed_horizontal);
         anim->add_anim("open", opened_horizontal);
 
         door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 10),this, data.id - 10, false, dir==1, 3));
@@ -62,7 +46,6 @@ void room_state::generate_doors(tilemap &tm)
         door.add_component<animator_controller>({});
 
         animator_controller *anim = &door.get_component<animator_controller>();
-        anim->add_anim("close", closed_vertical);
         anim->add_anim("open", opened_vertical);
 
         door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 1),this, data.id + 1, true, dir==2, 4));
@@ -78,7 +61,6 @@ void room_state::generate_doors(tilemap &tm)
         door.add_component<animator_controller>({});
 
         animator_controller *anim = &door.get_component<animator_controller>();
-        anim->add_anim("close", closed_horizontal);
         anim->add_anim("open", opened_horizontal);
 
         door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 10),this, data.id + 10, false, dir==3, 1));
@@ -94,7 +76,6 @@ void room_state::generate_doors(tilemap &tm)
         door.add_component<animator_controller>({});
 
         animator_controller *anim = &door.get_component<animator_controller>();
-        anim->add_anim("close", closed_vertical);
         anim->add_anim("open", opened_vertical);
 
         door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 1),this, data.id - 1, true, dir==4, 2));
