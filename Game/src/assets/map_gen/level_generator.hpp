@@ -16,6 +16,8 @@ class level_generator{
         int min_rooms = 12;             // minimo stanze
         int max_rooms = 20;             // massimo stanze
 
+        int depth = 1;
+
         std::mt19937 rng;
         std::uniform_real_distribution<double> rand;
 
@@ -26,7 +28,7 @@ class level_generator{
         int neighbour_count(int);
 
     public:
-        level_generator()
+        level_generator(int depth): depth(depth + 1)
         {
             for (int i = 0; i < 100; i++)
             {
@@ -34,6 +36,8 @@ class level_generator{
             }
             rng = std::mt19937(time(NULL));
             rand = std::uniform_real_distribution<double>(0, 1);
+
+            min_rooms = (int)(1.8 * depth + 6);
         }
 
         bool visit(int);

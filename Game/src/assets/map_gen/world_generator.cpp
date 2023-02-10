@@ -4,7 +4,7 @@
 
 void world_generator::generate_new_world()
 {
-    m_generators.push_back(level_generator());
+    m_generators.push_back(level_generator(m_current_world));
     m_generators.back().generate();
 
     m_floorplans.push_back(m_generators.back().get_floorplan());

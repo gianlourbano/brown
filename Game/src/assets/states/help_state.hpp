@@ -28,7 +28,7 @@ public:
         line_1.add_component<transform>({vec2(0)});
         line_1.add_component<ui>({"Welcome,\nuse\n    W\n   A D to move\n    S\nF1/Ctrl+c to quit\nP to pause\nT to fire projectiles\n... "});
 
-        level_generator generator = level_generator();
+        level_generator generator = level_generator(1);
         generator.generate();
 
         auto floorplan = generator.get_floorplan();
