@@ -2,13 +2,7 @@
 #include "brown.hpp"
 #include "scriptable_AI.hpp"
 
-static vec2 forces[4] = {
-    {0, -1},
-    {1, 0},
-    {0, 1},
-    {-1, 0}};
-
-class projectile : public brown::scriptable_entity
+class projectile_boss : public brown::scriptable_entity
 {
 public:
     bool check_collision(int dir)
@@ -19,42 +13,28 @@ public:
             mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x + 1) & A_CHARTEXT,
             mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
 
-        return chars[dir - 1] == 'a'|| chars[dir - 1] == 'b' || chars[dir - 1] == '%' || chars[dir - 1] == '#' || chars[dir - 1] == 'x';
+        return chars[dir - 1] == 'a' || chars[dir - 1] == '%' || chars[dir - 1] == '#' || chars[dir - 1] == 'x';
     }
     void on_create()
     {
         ts = &get_component<transform>();
         anim = &get_component<animator_controller>();
-        lifetime = 10;
-
         force = forces[ts->direction - 1];
-
-        switch (ts->direction)
-        {
-        case 1:
-        case 3:
-            lifetime /= 2;
-            break;
-        }
-        tot = lifetime + anim->current_anim->clips * anim->current_anim->time_step;
+        t_end.start();
     }
 
     void on_update()
     {
-        tot--;
-        if (lifetime != 0 && !check_collision(ts->direction))
+        if (!check_collision(ts->direction))
         {
 
             if (check_collision(ts->direction))
             {
-                tot -= lifetime;
-                lifetime = 0;
                 has_finished = true;
             }
             else
             {
                 ts->position += force;
-                lifetime--;
             }
         }
         else
@@ -63,6 +43,10 @@ public:
             has_finished = true;
         }
 
+        if(has_finished&&!timer_started){
+            timer_started = true;
+            t_end.start();
+        }
         if (has_finished)
         {
             for (auto &e : m_state->get_entities())
@@ -83,15 +67,14 @@ public:
                     }
                 }
             }
-
             anim->play("explode", [this]()
                        {LOG("projectile deleted");this->delete_self(); });
+            if(t_end.elapsed()>=0.3){
+                this->delete_self();
+            }
         }
+        
 
-        if (tot == 0)
-        {
-            this->delete_self();
-        }
     }
 
     void on_destroy()
@@ -100,20 +83,16 @@ public:
         anim = nullptr;
     }
 
-    int get_lifetime()
-    {
-        return lifetime;
-    }
 
-    projectile(entity_id creator) : m_creator_id(creator) {}
+    projectile_boss(entity_id creator) : m_creator_id(creator) {}
 
 private:
-    int lifetime;
     bool has_finished = false;
     vec2 force;
-    int tot;
+    bool timer_started = false;
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
+    brown::Timer t_end;
 
     entity_id m_creator_id;
 };

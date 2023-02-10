@@ -64,7 +64,7 @@ public:
                     {
                         ts->direction = 2;
                         if (!check_collision(2)){
-                        LOG(mvwinch(m_state->get_win(),ts->position.x+1, ts->position.y)& A_CHARTEXT);
+                        LOG(mvwinch(m_state->get_win(), ts->position.y,ts->position.x+1)& A_CHARTEXT);
                             ts->position.x++;
                         }
                     }
@@ -112,7 +112,7 @@ public:
                     {
                         ts->direction = 2;
                         if (!check_collision(2))
-                        {LOG(mvwinch(m_state->get_win(),ts->position.x+1, ts->position.y)& A_CHARTEXT);
+                        {LOG(mvwinch(m_state->get_win(), ts->position.y,ts->position.x+1)& A_CHARTEXT);
                             ts->position.x++;}
                     }
                 }

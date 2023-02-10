@@ -9,6 +9,7 @@
 #include "assets/scripts/ranged_enemy.hpp"
 #include "assets/scripts/inventory_renderer.hpp"
 #include "assets/scripts/score_controller.hpp"
+#include "assets/scripts/boss.hpp"
 
 #include "assets/test/tile_system.hpp"
 #include "assets/items/items.hpp"
@@ -184,6 +185,19 @@ public:
         inv.add_component<transform>({{1, 5}});
         inv.add_component<ui>({"Inventory"});
 
+        auto bs = create_entity("bs");
+        bs.add_component<transform>({{COLS / 2, LINES / 2}, 1});
+        bs.add_component<ui>({""});
+        bs.add_component<sprite>({{0,0}, "sprite_boss"});
+        bs.add_component<native_script>({}).bind<boss_enemy>();
+/*
+        auto bot3 = create_entity();
+        bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
+        brown::add_sprite({"a"}, "bot3");
+        bot3.add_component<sprite>({{1, 1}, "bot3"});
+        bot3.add_component<native_script>({}).bind<ranged_enemy>();
+        bot3.add_component<ui>({"", 0, true, true});
+*/
         initialized = true;
         LOG("INIT");
     }

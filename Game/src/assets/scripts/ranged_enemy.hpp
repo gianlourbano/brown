@@ -20,7 +20,7 @@ public:
 
     void on_hit()
     {
-        if (damage_t.elapsed() >= 0.7)
+        if (damage_t.elapsed() >= 0.5)
         {
             m_health--;
             damage_t.start();

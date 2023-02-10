@@ -50,7 +50,7 @@ public:
 
     void on_hit()
     {
-        if (m_damage_timer.elapsed() >= 0.7)
+        if (m_damage_timer.elapsed() >= 1)
         {
             set_health(--health);
             m_damage_timer.start();
