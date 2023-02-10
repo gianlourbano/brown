@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Brown}
+\author{Gianlorenzo Urbano, Massimo Pignatti}
+\date{February 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduzione}
+
+\emph{Brown} è un gioco top-down sviluppato in c++ con la libreria ncurses. L'esecuzione avviene in un terminale, con la possibilità di visualizzare il gioco sia in modalità ascii che a colori.
+
+\section{Ripartizione del lavoro}
+Il lavoro è stato diviso come segue:
+\begin{itemize}
+    \item Motore di gioco, libreria DT: Gianlorenzo Urbano;
+    \item Logica di gioco: Massimo Pignatti.
+\end{itemize}
+All'interno di ogni file è comunque presente un'intestazione con il nominativo dello studente che ne è stato responsabile.
+
+\section{Motore di gioco}
+
+\subsection{ECS}
+Una delle componenti fondamentali di ogni game engine è sicuramente la gestione delle entità.
+La scelta è ricaduta su un ECS, ovvero un Entity Component System: più efficiente e versatile rispetto ad una semplice implementazione tramite lista di classi entità.
+A livello del game engine, un' entità non è nient'altro che un \verb|uint32_t|, ovvero un \verb|unsigned int|, mentre i componenti (e.g. la posizione, lo sprite, ecc) non sono attributi di una classe ma strutture indipendenti.
+
+Per accedere ai dati si utilizzano \verb|component_array| (uno per ogni categoria di componente): si utilizza l'id dell'entità come indice dell'array per scrivere e leggere informazioni riguardanti la singola entità; la classe \verb!component_manager! si occupa di gestire l'array.
+
+Un \emph{sistema} invece è una classe che si occupa di gestire solo ed esclusivamente entità con la stessa \verb|signature| del sistema stesso: questo permette, ad esempio, di costruire un sistema di rendering che stampa a schermo solo le entità che hanno un componente transform e una sprite.
+Infine, la classe \verb|brain| si occupa di gestire il tutto all'unisono, gestendo i vari sistemi.
+
+\subsubsection{Native script}
+
+Uno dei componenti implementati è il native script, che permette di implementare logica di gioco più complessa, rendendo disponibile anche la comunicazione tra entità attraverso eventi.
+
+\subsubsection{Altri componenti}
+
+Altri componenti implementati sono:
+\begin{itemize}
+    \item \verb|Transform|: indica la posizione e la direzione attuale di un'entità;
+    \item \verb|Sprite|: la collezione di caratteri associata ad un'entità, ovvero quello che viene stampato a schermo;
+    \item \verb|Animator|: permette di cambiare dinamicamente la sprite in modo tale da creare varie animazioni;
+    \item \verb|UI|: testo che viene stampato a schermo; utile per visualizzare informazioni relative alle entità singole come il player.
+\end{itemize}
+
+\subsection{Game stack}
+
+La classe virtuale \verb|state| è la base di ogni stato di gioco. Fornisce l'interfaccia delle funzioni e delle variabili che devono essere necessariamente implementate da qualsiasi stato di gioco. Questo è necessario perché la classe \verb|engine|, il motore di gioco in sè, ha uno stack di stati, dal quale ad ogni ciclo di gioco vengono eseguite alcune funzioni, come \verb|update()|, \verb|draw()| ed \verb|handle_events()|.
+
+\subsection{Eventi}
+
+Il motore di gioco offre anche la possibilità di utilizzare un sistema di eventi implementato tramite \verb|event listeners|, per evitare fenomeni come l'event polling. Dichiarato l'evento (che altro non è che un id, come per le entità), una classe può iscrivergli un suo metodo attraverso un \verb|brain|, presente in ogni stato.
+
+\section{Libreria DT}
+Nel namespace \verb|brown::dt| vengono implementate le strutture dati utili al resto del progetto, come le stringhe, i vettori, le liste ed altro. L'implementazione utilizza la libreria \verb|algorithm| in modo tale da poter utilizzare costrutti come il \verb|range-for| per facilitare lo sviluppo del progetto.
+
+\section{Game}
+
+\end{document}

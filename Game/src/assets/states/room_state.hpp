@@ -35,9 +35,9 @@ struct room_data
     // room data
     int direction = 0;
 
-    room_data()  {}
-    room_data(room_data& other) = delete;
-    room_data(int id, int player_health, int player_max_health,int score, inventory *player_inventory, world_generator *world_gen, int direction)
+    room_data() {}
+    room_data(room_data &other) = delete;
+    room_data(int id, int player_health, int player_max_health, int score, inventory *player_inventory, world_generator *world_gen, int direction)
     {
         this->id = id;
         this->player_health = player_health;
@@ -53,20 +53,23 @@ class room_state : public brown::state
 {
 
 public:
-    room_state()  = delete;
-    room_state(room_data data) {
+    room_state() = delete;
+    room_state(room_data data)
+    {
         this->data = data;
     }
 
-    void health_changed(brown::event &e) {
+    void health_changed(brown::event &e)
+    {
         data.player_health = e.get_param<int>(Events::Player::Health::HEALTH);
     }
 
-    void score_changed(brown::event &e) {
+    void score_changed(brown::event &e)
+    {
         data.score = e.get_param<int>(Events::Player::Score::SCORE);
     }
 
-    room_data* get_data() { return &data; }
+    room_data *get_data() { return &data; }
 
     void generate_doors(tilemap &tm);
 
@@ -157,7 +160,6 @@ public:
         pl.add_component<animator_controller>({});
         pl.add_component<native_script>({}).bind<player_controller>(data.player_health, data.score);
 
-        
         // pl_controller->m_inventory = *data.player_inventory;
 
         // UI
@@ -169,16 +171,8 @@ public:
         hb.add_component<ui>({""});
         hb.add_component<native_script>({}).bind<healtbar_controller>();
 
-        auto pl_bar = create_entity("power_level_bar");
-        pl_bar.add_component<transform>({{1, 3}, 1});
-        pl_bar.add_component<ui>({"Power level: ★ ★ ★ ★ ★"});
-
-        auto key_c = create_entity("id");
-        key_c.add_component<transform>({{1, 4}, 1});
-        key_c.add_component<ui>({"ROOM_ID: " + std::to_string(data.id)});
-
         auto sb = create_entity("scorebar");
-        sb.add_component<transform>({{1, 5}, 1});
+        sb.add_component<transform>({{1, 3}, 1});
         sb.add_component<ui>({""});
         sb.add_component<native_script>({}).bind<score_controller>();
 
@@ -187,7 +181,7 @@ public:
         h_text.add_component<ui>({"Press 'h' to open the help menu"});
 
         auto inv = create_entity("inv");
-        inv.add_component<transform>({{1, 7}});
+        inv.add_component<transform>({{1, 5}});
         inv.add_component<ui>({"Inventory"});
 
         initialized = true;
@@ -195,18 +189,20 @@ public:
     }
 
     void cleanup() {}
-    void pause() { m_pause = true;
+    void pause()
+    {
+        m_pause = true;
         player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
 
         pl_controller->set_health(data.player_health);
         pl_controller->set_score(data.score);
-     }
+    }
     void resume()
     {
         LOG("RESUME");
         m_pause = false;
         player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
-        
+
         LOG(data.player_health);
 
         pl_controller->set_health(data.player_health);

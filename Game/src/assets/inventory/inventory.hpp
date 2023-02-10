@@ -54,6 +54,10 @@ public:
                     item.count--;
                     return;
                 }
+
+                if (item.count == 0) {
+                    m_items.erase(item);
+                }
             }
         }
      }
