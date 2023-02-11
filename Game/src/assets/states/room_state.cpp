@@ -15,7 +15,7 @@ void room_state::generate_doors(tilemap &tm)
         10,
         false,
         true};
-        
+
     animation opened_vertical = {
         "animated_vertical_door",
         {0, 0},
@@ -94,5 +94,40 @@ void room_state::generate_doors(tilemap &tm)
             door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 1), this, data.id - 1, true, dir == 4, 2));
 
         tm.m_data.at(0, 2) = 14;
+    }
+}
+
+void room_state::draw_minimap(vec2 pos, WINDOW *win)
+{
+    world_generator::floorplan floorplan = data.world_gen->get_current_floorplan();
+    int y = pos.y, x = pos.x;
+
+    for (int i = 0; i < 100; i++)
+    {
+        if (floorplan[i] == 4)
+            brown::graphics::mvwprintwcolors(win, y, x, 15, "xx");
+        else if (i == data.id)
+            brown::graphics::mvwprintwcolors(win, y, x, 17, "oo");
+        else if (floorplan[i] == 2)
+            brown::graphics::mvwprintwcolors(win, y, x, 16, "xx");
+
+        if (i % 10 == 0)
+        {
+            y++;
+            x = pos.x;
+        }
+
+        x += 2;
+    }
+
+    y = pos.y;
+    x = pos.x;
+
+    for (int i = 0; i < 11; i++)
+    {
+        brown::graphics::mvwprintwcolors(win, y, x + 2 * i, 17, "--");
+        brown::graphics::mvwprintwcolors(win, y + 10, x + 2 * i, 17, "--");
+        brown::graphics::mvwprintwcolors(win, y + i, x, 17, "||");
+        brown::graphics::mvwprintwcolors(win, y + i, x + 20, 17, "||");
     }
 }

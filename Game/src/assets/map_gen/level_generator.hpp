@@ -40,6 +40,11 @@ class level_generator{
             min_rooms = (int)(1.8 * depth + 6);
         }
 
+        int room_count()
+        {
+            return this->m_room_count;
+        }
+
         bool visit(int);
 
         void start();

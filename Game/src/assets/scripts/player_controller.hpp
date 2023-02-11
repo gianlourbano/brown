@@ -6,6 +6,20 @@
 #include "assets/inventory/inventory.hpp"
 #include "assets/scripts/scriptable_AI.hpp"
 
+struct player_data {
+    int health;
+    int max_health;
+
+    int attack_damage;
+
+    int score;
+
+    inventory *player_inventory;
+
+
+
+};
+
 class player_controller : public scriptable_AI
 {
 public:

@@ -13,6 +13,11 @@ class inventory {
 public:
     inventory() {}
     ~inventory() {}
+    inventory(const inventory &other) {
+        for(auto &item : other.m_items) {
+            m_items.push_back({item.i, item.count});
+        }
+    }
 
     bool find_item(item *i) {
         for (auto &item : m_items) {
@@ -38,7 +43,7 @@ public:
     void add_item(item *i) { 
         if (find_item(i)) {
             for (auto &item : m_items) {
-                if (item.i == i) {
+                if (*(item.i) == *i) {
                     item.count++;
                 }
             }
@@ -61,6 +66,8 @@ public:
             }
         }
      }
+
+    int items() { return m_items.size(); }
 
     
 

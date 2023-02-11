@@ -23,6 +23,8 @@ public:
 
     room_state* get_room_for_current_world(int index) {return m_worlds[m_current_world][index];}
 
+    bool is_fully_explored();
+
 private:
     generators m_generators;
     floorplans m_floorplans;

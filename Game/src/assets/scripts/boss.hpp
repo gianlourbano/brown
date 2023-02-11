@@ -64,7 +64,8 @@ public:
         for (int i = 0; i < m_health; i++)
             hearts += "❤ ";
         m_healthbar->text = hearts;
-        
+        m_healthbar->centered = true;
+
         if (m_proj_lifespan == 0)
             can_shoot = true;
 

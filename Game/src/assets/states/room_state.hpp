@@ -163,11 +163,10 @@ public:
         pl.add_component<animator_controller>({});
         pl.add_component<native_script>({}).bind<player_controller>(data.player_health, data.score);
 
-        // pl_controller->m_inventory = *data.player_inventory;
 
         // UI
-        // auto inventory = create_entity("inventory_manager");
-        // inventory.add_component<native_script>({}).bind<inventory_renderer>();
+        auto inventory = create_entity("inventory_manager");
+        inventory.add_component<native_script>({}).bind<inventory_renderer>();
 
         auto hb = create_entity("healtbar");
         hb.add_component<transform>({{1, 2}, 1});
@@ -187,11 +186,25 @@ public:
         inv.add_component<transform>({{1, 5}});
         inv.add_component<ui>({"Inventory"});
 
-        auto bs = create_entity("bs");
-        bs.add_component<transform>({{COLS / 2, LINES / 2}, 1});
-        bs.add_component<ui>({""});
-        bs.add_component<sprite>({{0,0}, "sprite_boss"});
-        bs.add_component<native_script>({}).bind<boss_enemy>();
+        auto minimap = create_entity("minimap");
+        minimap.add_component<transform>({{COLS - 14 , 1}});
+        minimap.add_component<ui>({"Minimap", 0, true, true});
+
+        auto level = create_entity("inv");
+        level.add_component<transform>({{COLS / 2, 1}});
+        level.add_component<ui>({"World " + std::to_string(data.world_gen->get_current_world_index() + 1), 0, true, true});
+
+        brown::add_sprite({"a"}, "bot3");
+        brown::add_sprite({"a"}, "bot2");
+        auto pot = create_entity("potion1");
+        pot.add_component<transform>({{40, 16}});
+        pot.add_component<sprite>({{1, 1}, "bot2"});
+        pot.add_component<native_script>({}).bind<potion>(4);
+
+        auto pot1 = create_entity("potion2");
+        pot1.add_component<transform>({{50, 16}});
+        pot1.add_component<sprite>({{1, 1}, "bot2"});
+        pot1.add_component<native_script>({}).bind<potion>(4);
 /*
         auto bot3 = create_entity();
         bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
@@ -201,7 +214,6 @@ public:
         bot3.add_component<ui>({"", 0, true, true});
 */
         initialized = true;
-        LOG("INIT");
     }
 
     void cleanup() {}
@@ -209,17 +221,16 @@ public:
     {
         m_pause = true;
         player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
-
+    pl_controller->m_inventory = *data.player_inventory;
         pl_controller->set_health(data.player_health);
         pl_controller->set_score(data.score);
     }
     void resume()
     {
-        LOG("RESUME");
         m_pause = false;
         player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
 
-        LOG(data.player_health);
+        pl_controller->m_inventory = *data.player_inventory;
 
         pl_controller->set_health(data.player_health);
         pl_controller->set_score(data.score);
@@ -261,6 +272,9 @@ public:
             m_controller.empty_to_be_deleted();
         }
     }
+
+    void draw_minimap(vec2 pos, WINDOW* win);
+    
     void draw(brown::engine *game)
     {
         if (!m_pause)
@@ -273,32 +287,13 @@ public:
             render_system->draw(win, &brain);
             UI_system->draw(win, &brain);
 
-            world_generator::floorplan floorplan = data.world_gen->get_current_floorplan();
-            int y = 1, x = COLS - 15;
-            for (int i = 0; i < 100; i++)
-            {      
-                if (floorplan[i] >= 3) {
-                    brown::graphics::mvwaddchcolors(win, y, x, 15, 'x');
-                }
-                else if (i == data.id)
-                    brown::graphics::mvwaddchcolors(win, y, x, 17, 'o');
-                else if (floorplan[i] <= 2 && floorplan[i] >= 1)
-                    brown::graphics::mvwaddchcolors(win, y, x, 16, 'x');
-
-                if (i % 10 == 0)
-                {
-                    y++;
-                    x -= 10;
-                }
-
-                x++;
-            }
+            draw_minimap({COLS - 24, 3}, win);
         }
     }
 
     int last_entered = 0;
 
-private:
+protected:
     std::shared_ptr<brown::animation_system> animation_system;
     std::shared_ptr<brown::render_system> render_system;
     std::shared_ptr<brown::scripts_system> scripts_system;

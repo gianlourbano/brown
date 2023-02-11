@@ -14,7 +14,7 @@ struct door_data
     int dir = 0;
 
     door_data() {}
-    door_data(room_state *room,room_state *last_room, int id, bool vertical, bool entrance, int dir = 0)
+    door_data(room_state *room, room_state *last_room, int id, bool vertical, bool entrance, int dir = 0)
     {
         this->room = room;
         this->last_room = last_room;
@@ -36,7 +36,6 @@ public:
     {
         anim = &get_component<animator_controller>();
         ts = &get_component<transform>();
-
     }
 
     // This function is called every frame
@@ -51,24 +50,24 @@ public:
         }
 
         if (!data.vertical && pt.x >= ts->position.x && pt.x <= ts->position.x + 4 && pt.y >= ts->position.y && pt.y <= ts->position.y + 1)
-        {   
-            player_controller* pc = dynamic_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
+        {
+            player_controller *pc = dynamic_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
 
             if (data.entrance)
             {
-                room_data* rd = data.room->get_data();
+                room_data *rd = data.room->get_data();
                 rd->player_health = pc->get_health();
                 rd->score = pc->get_score();
-
-                LOG(std::to_string(rd->player_health) + " FROM ROOM " + std::to_string(data.last_room->get_data()->id) + " TO ROOM " + std::to_string(data.room->get_data()->id));
+                rd->player_inventory = pc->get_inventory();
 
                 m_state->get_game_instance()->pop_state();
             }
             else
             {
-                room_data* rd = data.room->get_data();
+                room_data *rd = data.room->get_data();
                 rd->player_health = pc->get_health();
                 rd->score = pc->get_score();
+                rd->player_inventory = pc->get_inventory();
                 m_state->get_game_instance()->push_state(data.room);
             }
 
@@ -81,21 +80,22 @@ public:
 
         else if (data.vertical && pt.x >= ts->position.x && pt.x <= ts->position.x + 1 && pt.y >= ts->position.y && pt.y <= ts->position.y + 2)
         {
-            player_controller* pc = dynamic_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
+            player_controller *pc = dynamic_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
 
             if (data.entrance)
             {
-                room_data* rd = data.last_room->get_data();
+                room_data *rd = data.room->get_data();
                 rd->player_health = pc->get_health();
                 rd->score = pc->get_score();
-
+                rd->player_inventory = pc->get_inventory();
                 m_state->get_game_instance()->pop_state();
             }
             else
             {
-                room_data* rd = data.room->get_data();
+                room_data *rd = data.room->get_data();
                 rd->player_health = pc->get_health();
                 rd->score = pc->get_score();
+                rd->player_inventory = pc->get_inventory();
                 m_state->get_game_instance()->push_state(data.room);
             }
 
@@ -108,16 +108,15 @@ public:
 
         if (anim->current_anim->has_finished)
         {
-            is_open =  !is_open;
+            is_open = !is_open;
         }
     }
     bool is_open = false;
+
 private:
     animator_controller *anim = nullptr;
     transform *ts;
     vec2 pt;
 
     door_data data;
-
-    
 };
