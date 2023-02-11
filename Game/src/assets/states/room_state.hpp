@@ -20,7 +20,7 @@
 #include "engine/std/vector.hpp"
 #include "assets/map_gen/world_generator.hpp"
 
-#define TILES 15
+#define TILES 30  
 
 struct room_data
 {

@@ -22,7 +22,7 @@
 
 #include "engine/std/vector.hpp"
 
-#define TILES 15
+#define TILES 30
 
 int frame_passed = 0;
 
