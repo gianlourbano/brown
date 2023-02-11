@@ -1,4 +1,0 @@
-[LOG] FILE: src/assets/states/room_state.hpp: INIT
-[LOG] FILE: src/assets/states/room_state.hpp: INIT
-[LOG] FILE: src/assets/states/room_state.hpp: INIT
-[LOG] FILE: src/assets/states/room_state.hpp: INIT

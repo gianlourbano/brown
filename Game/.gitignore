@@ -1,4 +1,6 @@
 build/
+*.o
+*.d
 game
 LOG.txt
 .vscode
