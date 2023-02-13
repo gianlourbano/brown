@@ -38,7 +38,7 @@ void brown::UI_system::draw(WINDOW *win, brown::brain *br)
         if (ui_.is_visible)
         {
             // brown::graphics::mvwprintwcolors(win, tr.position.y, tr.position.x, 18 , ui_.text.c_str());
-            int b = PAIR_NUMBER((mvwinch(win, tr.position.y, tr.position.x) & A_ATTRIBUTES));
+            int b = PAIR_NUMBER((mvwinch(win, tr.position.y - ui.offset.y, tr.position.x - ui.offset.x) & A_ATTRIBUTES));
             short bg, fg;
             pair_content(b, &fg, &bg);
 

@@ -6,14 +6,19 @@ public:
     boss_room_state() = delete;
     boss_room_state(room_data data) : room_state(data) {}
 
-    void on_world_cleared(brown::event &e) { world_cleared = true; }
+    void on_world_cleared(brown::event &e)
+    {
+        world_cleared = true;
+        ui *u = get_entity("hooray").get_component<ui>();
+        ui->is_visible = true;
+    }
 
     void init(brown::engine *game)
     {
         room_state::init(game);
 
         auto hooray = create_entity("hooray");
-        hooray.add_component<transform>({{COLS / 2,4}});
+        hooray.add_component<transform>({{COLS / 2, 4}});
         hooray.add_component<ui>({"You have cleared the dungeon! Press M to advance to the next world!", 0, false, true});
 
         add_event_listener(METHOD_LISTENER(Events::Room::World_cleared, "boss_room_state", boss_room_state::on_world_cleared));
