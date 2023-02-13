@@ -243,7 +243,12 @@ public:
             auto bot = create_entity("enemy" + std::to_string(i));
             bot.add_component<transform>({get_valid_position()});
             bot.add_component<sprite>({{1, 1}, "bot2"});
-            bot.add_component<native_script>({}).bind<ranged_enemy>(enemy_stats());
+            bot.add_component<native_script>({}).bind<ranged_enemy>(enemy_stats{
+                int(random_int(30, 40) + log(data.world_gen->get_current_world_index() + 15)),
+                int(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 10)),
+                int(random_int(5, 15) + log(data.world_gen->get_current_world_index() + 5)),
+                int(random_int(25, 65) + log(data.world_gen->get_current_world_index() + 20))
+        });
             bot.add_component<ui>({"", {0, 1}, true, false});
         }
 

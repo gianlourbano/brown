@@ -46,6 +46,7 @@ void NPC::on_update()
 
     if (t.elapsed() >= rand() % 500 + 1)
     {
+        t.start();
         move(rand() % 4 + 1);
     }
 }
