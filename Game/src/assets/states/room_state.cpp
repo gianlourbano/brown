@@ -1,6 +1,7 @@
 #include "room_state.hpp"
 #include "assets/scripts/door_controller.hpp"
 #include "assets/scripts/boss_door_controller.hpp"
+#include "game_over.hpp"
 
 void room_state::generate_doors(tilemap &tm)
 {
@@ -82,6 +83,11 @@ void room_state::generate_doors(tilemap &tm)
         }
     }
 }
+
+void room_state::QuitHandler(brown::event &e)
+    {
+        m_game->push_state(new game_over(data.m_player_data.score));
+    }
 
 void room_state::draw_minimap(vec2 pos, WINDOW *win)
 {

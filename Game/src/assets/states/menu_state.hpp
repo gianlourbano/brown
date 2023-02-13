@@ -149,15 +149,6 @@ public:
         npc2.add_component<sprite>({1, "sprite2"});
         npc2.add_component<ui>({"", {0, 1}, true, false});
         npc2.add_component<native_script>({}).bind<NPC>();
-
-        // int n_flames = rand() % 7 + 1;
-        // for (int i = 0; i < n_flames; i++)
-        // {
-        //     auto flame = create_entity("flame" + std::to_string(i));
-        //     flame.add_component<transform>({get_valid_position()});
-        //     flame.add_component<sprite>({1, "sprite2"});
-        //     flame.add_component<animator_controller>({}).add_anim("flame", animation{"flame", 0, 4, 30/4, true, false, false, true});
-        // }
     }
 
     void resume() { m_pause = false; }

@@ -46,6 +46,7 @@ struct room_data
     }
 };
 
+
 class room_state : public brown::state
 {
 
@@ -56,10 +57,7 @@ public:
         this->data = data;
     }
 
-    void QuitHandler(brown::event &e)
-    {
-        m_game->quit();
-    }
+    void QuitHandler(brown::event &e);
 
     void data_changed(brown::event &e)
     {
@@ -289,12 +287,6 @@ public:
                 {
                 case 'i':
                     game->push_state(new inventory_state(data.m_player_data.player_inventory)); // m_controller.LOG_ENTITIES();))
-                    break;
-                case 'c':
-                    game->pop_state();
-                    break;
-                case 'l':
-                    game->quit();
                     break;
                 case 'p':
                     m_pause = true;
