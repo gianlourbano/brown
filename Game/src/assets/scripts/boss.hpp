@@ -22,16 +22,6 @@ public:
         return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x';
     }
 
-    void on_hit()
-    {
-        if (damage_t.elapsed() >= 1.5)
-        {
-            m_health--;
-            damage_t.start();
-            int row, col;
-        }
-    }
-
     void on_create()
     {
         ts = &get_component<transform>();
