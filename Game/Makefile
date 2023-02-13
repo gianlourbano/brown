@@ -4,10 +4,6 @@ TEST_DIR = build/test
 TARGET   = game
 
 CXX = g++
-## -MMD creates dependency list, but ignores system includes ## -MF specifies where to create the dependency file name
-## -MP creates phony targets for headers (deals with deleted headers after
-##  obj file has been compiled)
-## -MT specifies the dependency target (path qualified obj file name)
 CXXFLAGS = -std=c++17 -Isrc/ -Isrc/engine/ -MT $@ -MMD -MP -MF $(@:.o=.d) 
 LDFLAGS = -lstdc++
 # conditional linker flags based on OS (Linux (tested on Ubuntu, Elementary and void), Darwin = MacOS)
@@ -39,22 +35,18 @@ endif
 ALL_FILES :=$(wildcard $(SRC_DIR)/**/**/**/**/*.cpp) $(wildcard $(SRC_DIR)/**/**/**/*.cpp) $(wildcard $(SRC_DIR)/**/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/*.cpp)
 ALL_HEADER_FILES :=$(wildcard $(SRC_DIR)/**/**/**/*.hpp) $(wildcard $(SRC_DIR)/**/**/**/*.cpp) $(wildcard $(SRC_DIR)/**/**/*.hpp) $(wildcard $(SRC_DIR)/**/*.hpp) $(wildcard $(SRC_DIR)/*.hpp)
 CPP_FILES := $(filter-out %.test.cpp, $(ALL_FILES))
-TEST_FILES := $(filter %.test.cpp, $(ALL_FILES))
 
 ALL_OBJ_FILES := $(ALL_FILES:$(SRC_DIR)/%.cpp=$(INT_DIR)/%.o)
 CPP_OBJ_FILES := $(CPP_FILES:$(SRC_DIR)/%.cpp=$(INT_DIR)/%.o)
-TEST_OBJ_FILES := $(TEST_FILES:$(SRC_DIR)/%.cpp=$(INT_DIR)/%.o)
 AUX_OBJ_FILES := $(filter-out build/main.o, $(CPP_OBJ_FILES))
 
 DEP_FILES := $(ALL_FILES:$(SRC_DIR)/%.cpp=$(INT_DIR)/%.d)
-TEST_TARGETS := $(TEST_OBJ_FILES:$(INT_DIR)/%.o=$(TEST_DIR)/%)
 
 SUB_FOLDERS := $(filter-out src, $(patsubst src/%,%, $(shell find src -type d)))
 OBJ_FOLDERS := $(addprefix build/, $(SUB_FOLDERS)) $(addprefix build/test/, $(SUB_FOLDERS))
-.PHONY: test debug info clean format run $(TEST_TARGETS) static-darwin
+.PHONY: test debug info clean format runstatic-darwin
 
 all: info $(TARGET)
-test: info $(TEST_TARGETS)
 debug: CXXFLAGS += -ggdb
 debug: clean all test
 static-linux: LDFLAGS += -static -static-libstdc++ -static-libgcc
@@ -93,13 +85,6 @@ format:
 run: all
 	@echo -e "RUN\t$(TARGET)"
 	@./$(TARGET)
-
-$(TEST_TARGETS): $(TEST_DIR)/%: $(INT_DIR)/%.o | $(ALL_OBJ_FILES)
-	@echo -e "LD\t$<"
-	@$(CXX) $^ $(AUX_OBJ_FILES) $(LDFLAGS) -o $@
-	@echo -e "RUN\t$@"
-	@$@
-	@echo -e "SUCCESS\t$@"
 
 $(ALL_OBJ_FILES): $(INT_DIR)/%.o: $(SRC_DIR)/%.cpp $(INT_DIR)/%.d | $(OBJ_FOLDERS)
 	@echo -e "CC\t$<"
