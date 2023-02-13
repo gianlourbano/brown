@@ -21,7 +21,7 @@ void boss_enemy::on_update()
         hearts += "❤ ";
     m_healthbar->text = hearts;
     m_healthbar->centered = false;
-    m_healthbar->offset = vec2{i, 0};
+    m_healthbar->offset = vec2{i, 2};
 
     if (m_proj_lifespan == 0)
         can_shoot = true;
