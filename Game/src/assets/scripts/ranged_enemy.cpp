@@ -69,7 +69,7 @@ void ranged_enemy::on_update()
         m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
     }
 
-    if (!is_player_in_range(10) && t_move.elapsed() >= 0.5 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
+    if (!is_player_in_range(10) && t_move.elapsed() >= 0.90 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
     {
         t_move.start();
         int r = rand() % 2 + 1;

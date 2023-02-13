@@ -1,4 +1,4 @@
-#include "assets/scripts/door_controller.hpp";
+#include "assets/scripts/door_controller.hpp"
 
 void door_controller::on_create()
 {
