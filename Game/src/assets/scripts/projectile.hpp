@@ -74,7 +74,7 @@ public:
                     if (dist <= 2 && dist > 0)
                     {
                         
-                        scriptable_enemy *script = dynamic_cast<scriptable_enemy *>(e.get_component<native_script>().instance);
+                        scriptable_AI *script = dynamic_cast<scriptable_AI *>(e.get_component<native_script>().instance);
                         
                         if (script != nullptr)
                         {

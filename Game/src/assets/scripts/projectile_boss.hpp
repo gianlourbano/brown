@@ -62,7 +62,7 @@ public:
                         
                         if (script != nullptr)
                         {
-                            script->on_hit();
+                            script->on_hit(1);
                         }
                     }
                 }

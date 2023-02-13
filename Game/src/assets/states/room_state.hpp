@@ -196,7 +196,7 @@ public:
         level.add_component<ui>({"World " + std::to_string(data.world_gen->get_current_world_index() + 1), 0, true, true});
 
         auto counter = create_entity("counter");
-        counter.add_component<transform>({{COLS - 2, 2}});
+        counter.add_component<transform>({{COLS / 2, 2}});
         counter.add_component<ui>({" ", 0, true, true});
 
         brown::add_sprite({"a"}, "bot3");
@@ -219,16 +219,16 @@ public:
             charm.add_component<native_script>({}).bind<vitality_charm>();
         }
 
-        // m_enemies_alive = random_int(2, 4) + log(data.world_gen->get_current_world_index() + 1);
-        // m_enemies = m_enemies_alive;
-        // for (int i = 0; i < m_enemies_alive; i++)
-        // {
-        //     auto bot = create_entity("enemy" + std::to_string(i));
-        //     bot.add_component<transform>({get_valid_position()});
-        //     bot.add_component<sprite>({{1, 1}, "bot2"});
-        //     bot.add_component<native_script>({}).bind<ranged_enemy>(enemy_stats());
-        //     bot.add_component<ui>({"", 0, true, true});
-        // }
+        m_enemies_alive = random_int(2, 4) + log(data.world_gen->get_current_world_index() + 1);
+        m_enemies = m_enemies_alive;
+        for (int i = 0; i < m_enemies_alive; i++)
+        {
+            auto bot = create_entity("enemy" + std::to_string(i));
+            bot.add_component<transform>({get_valid_position()});
+            bot.add_component<sprite>({{1, 1}, "bot2"});
+            bot.add_component<native_script>({}).bind<ranged_enemy>(enemy_stats());
+            bot.add_component<ui>({"", 0, true, true});
+        }
 
         if (data.world_gen->is_key_room(data.id))
         {

@@ -27,7 +27,7 @@ protected:
 public:
     scriptable_enemy(enemy_stats stats): m_stats(stats) {}
 
-    void on_hit(int);
+    void on_hit(int) override;
     void die();
 
 };

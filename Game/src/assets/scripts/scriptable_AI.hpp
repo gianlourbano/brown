@@ -9,7 +9,7 @@ class scriptable_AI : public brown::scriptable_entity
 public:
 
     virtual void on_interact(brown::event &e) {}
-    virtual void on_hit() {}
+    virtual void on_hit(int) {}
 
     bool check_collision(int dir);
     void move(int dir);

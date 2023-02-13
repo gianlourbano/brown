@@ -157,7 +157,13 @@ public:
     }
 
 private:
-    animation proj_anim;
+    animation proj_anim = {
+            "animated1",
+            2,
+            3,
+            5,
+            false,
+            true};;
 
     int m_proj_lifespan = 0;
     bool can_shoot = true;

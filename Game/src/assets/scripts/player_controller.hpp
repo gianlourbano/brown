@@ -1,6 +1,5 @@
 #pragma once
 #include "engine/brown.hpp"
-#include "assets/scripts/auto_attack.hpp"
 #include "types.hpp"
 #include "assets/inventory/inventory.hpp"
 #include "assets/scripts/scriptable_AI.hpp"
@@ -54,11 +53,11 @@ public:
         m_state->send_event(e);
     }
 
-    void on_hit()
+    void on_hit(int damage)
     {
         if (m_damage_timer.elapsed() >= 1)
         {
-            set_health(--m_data.health);
+            set_health(m_data.health - damage);
             m_damage_timer.start();
         }
     }
