@@ -8,15 +8,15 @@
 
 using namespace brown;
 
-dt::array<dt::array<std::string, 3>, 2> dialogs = {
+static int picked = 0;
+
+static dt::array<dt::array<std::string, 3>, 2> dialogs = {
     {{"You too in this place?",
       "I don't know how I got here",
       "I'm so scared"},
      {"Have you seen the other guy?",
       "He seems crazy...",
       "I'm scared too"}}};
-
-int picked = 0;
 
 class NPC : public scriptable_AI
 {

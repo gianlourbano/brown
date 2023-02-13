@@ -1,6 +1,5 @@
 #pragma once
 #include "brown.hpp"
-#include "scriptable_AI.hpp"
 
 class projectile_boss : public brown::scriptable_entity
 {

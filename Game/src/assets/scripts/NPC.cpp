@@ -2,8 +2,6 @@
 
 using namespace brown;
 
-int picked = 0;
-
     void NPC::on_interact(brown::event &e)
     {
         if (e.get_param<entity_id>(Events::Entity::Interact::ID) == m_entity.get_id() && is_player_in_range(6))

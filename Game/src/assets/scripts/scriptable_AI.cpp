@@ -1,4 +1,5 @@
 #include "scriptable_AI.hpp"
+#include "player_controller.hpp"
 
 
 void scriptable_AI::on_create() {

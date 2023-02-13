@@ -1,9 +1,6 @@
 #pragma once
-#include "engine/brown.hpp"
-#include "types.hpp"
 #include "assets/inventory/inventory.hpp"
 #include "assets/scripts/scriptable_AI.hpp"
-#include "assets/scripts/projectile.hpp"
 
 struct player_data
 {
@@ -27,42 +24,35 @@ struct player_data
 class player_controller : public scriptable_AI
 {
 public:
-    entity_id get_closest_entity();
-
-    void interact();
-
-    void on_hit(int);
-
     player_controller(player_data data);
 
-    void update_data(player_data data);
+    void interact();
+    void on_hit(int);
+
+    entity_id get_closest_entity();
 
     void on_create();
-
     void on_update();
 
+    void update_data(player_data data);
     void set_health(int h);
-
     void set_score(int k);
-
     void set_max_health(int h);
+    void set_defense(int);
+    void set_attack(int);
 
     int get_max_health();
+    int get_health();
+    int get_score();
+    int get_defense();
+    int get_attack();
 
     void shoot(int dir);
-
-    int get_health();
-
-    int get_score();
 
     player_data get_data();
 
     void add_item(item *i);
-
     void remove_item(std::string item_name);
-
-    void LOG_INVENTORY();
-
     inventory *get_inventory();
 
 protected:

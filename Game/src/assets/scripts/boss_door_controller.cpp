@@ -1,15 +1,16 @@
 #include "boss_door_controller.hpp"
 
-    void boss_door_controller::on_create() {
-        door_controller::on_create();
-       }
+void boss_door_controller::on_create()
+{
+    door_controller::on_create();
+}
 
-    void boss_door_controller::on_update()
-    {
-        pt = this->m_state->find_entity("player").get_component<transform>().position;
+void boss_door_controller::on_update()
+{
+     pt = this->m_state->find_entity("player").get_component<transform>().position;
         float range = distance(pt, ts->position);
 
-        if (range <= 5.0 && !is_open && !data.room->get_data()->world_gen->get_current_generator()->is_unlocked())
+        if (range <= 5.0 && !is_open && data.room->get_data()->world_gen->get_current_generator()->is_unlocked())
         {
             anim->play("open");
             is_open = true;
@@ -52,4 +53,4 @@
         {
             is_open = !is_open;
         }
-    }
+}

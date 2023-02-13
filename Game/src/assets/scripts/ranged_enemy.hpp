@@ -8,6 +8,7 @@ class ranged_enemy : public scriptable_enemy
 {
 public:
     ranged_enemy(enemy_stats stats) : scriptable_enemy(stats) {}
+    
     void on_create();
     void on_update();
     void on_destroy();

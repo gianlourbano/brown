@@ -18,7 +18,7 @@ class boss_room_state : public room_state
 
         void handle_events(brown::engine *game) {
             if (!m_pause) {
-                if(world_cleared ){//&& data.world_gen->is_fully_explored()) {
+                if(world_cleared && data.world_gen->is_fully_explored()) {
                     advance(game);
                 }
 
@@ -27,6 +27,9 @@ class boss_room_state : public room_state
                     switch (brown::KEY_PRESSED) {
                         case 'm':
                             world_cleared = true;
+                            break;
+                        case 'i':
+                            game->push_state(new inventory_state(data.m_player_data.player_inventory));
                             break;
                     }
                 }

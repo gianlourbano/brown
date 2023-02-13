@@ -1,7 +1,8 @@
 #pragma once
 #include "engine/brown.hpp"
-#include "player_controller.hpp"
 #include <ncurses.h>
+
+class player_controller;
 
 class scriptable_AI : public brown::scriptable_entity
 {

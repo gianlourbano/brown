@@ -1,6 +1,7 @@
 #pragma once
 #include "assets/inventory/item.hpp"
 #include "assets/scripts/player_controller.hpp"
+#include "types.hpp"
 
 struct potion : public consumable
 {

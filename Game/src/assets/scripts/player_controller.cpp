@@ -1,4 +1,7 @@
 #include "player_controller.hpp"
+#include "assets/scripts/projectile.hpp"
+#include "engine/brown.hpp"
+#include "types.hpp"
 
 entity_id player_controller::get_closest_entity()
 {
@@ -189,6 +192,25 @@ player_data player_controller::get_data()
     return m_data;
 }
 
+void player_controller::set_attack(int a)
+{
+    m_data.attack_damage = a;
+}
+void player_controller::set_defense(int d)
+{
+    m_data.defense = d;
+}
+
+int player_controller::get_attack()
+{
+    return m_data.attack_damage;
+}
+
+int player_controller::get_defense()
+{
+    return m_data.defense;
+}
+
 void player_controller::add_item(item *i)
 {
     artifact *a = dynamic_cast<artifact *>(i);
@@ -204,12 +226,6 @@ void player_controller::remove_item(std::string item_name)
     m_data.player_inventory->remove_item(item_name);
 
     m_state->send_event(Events::Player::Inventory::ADD);
-}
-
-void player_controller::LOG_INVENTORY()
-{
-    for (auto i : m_data.player_inventory->get_items())
-        LOG("Item: " + i->m_name + "x" + std::to_string(i->m_count));
 }
 
 inventory *player_controller::get_inventory()

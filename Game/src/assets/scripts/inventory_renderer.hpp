@@ -2,7 +2,7 @@
 #include "engine/brown.hpp"
 #include "player_controller.hpp"
 #include "assets/inventory/inventory.hpp"
-#include <vector>
+#include "engine/std/vector.hpp"
 
 class inventory_renderer : public brown::scriptable_entity
 {
@@ -15,7 +15,7 @@ public:
 private:
     int start_y = 7;
 
-    std::vector<entity_id> m_entries;
+    brown::dt::vector<entity_id> m_entries;
 
     player_controller *m_player = nullptr;
 };
