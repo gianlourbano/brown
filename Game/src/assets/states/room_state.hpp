@@ -1,5 +1,6 @@
 #pragma once
 #include "engine/brown.hpp"
+#include "game_over.hpp"
 
 #include "assets/test/tile_system.hpp"
 #include "assets/items/items.hpp"
@@ -46,7 +47,6 @@ struct room_data
     }
 };
 
-
 class room_state : public brown::state
 {
 
@@ -62,8 +62,8 @@ public:
     void data_changed(brown::event &e)
     {
         data.m_player_data = e.get_param<player_data>(Events::Player::Data::DATA);
-        ui* u = &find_entity("stats").get_component<ui>();
-        u->text = "ATK " + std::to_string(data.m_player_data.attack_damage)+ "/ DEF " + std::to_string(data.m_player_data.defense);
+        ui *u = &find_entity("stats").get_component<ui>();
+        u->text = "ATK " + std::to_string(data.m_player_data.attack_damage) + "/ DEF " + std::to_string(data.m_player_data.defense);
     }
     room_data *get_data() { return &data; }
 
@@ -211,13 +211,14 @@ public:
 
         brown::add_sprite({"a"}, "bot3");
         brown::add_sprite({"o"}, "bot2");
+        brown::add_sprite({"r"}, "bot4");
 
         int num_potions = random_int(1, 2) + log(data.world_gen->get_current_world_index() + 1);
         for (int i = 0; i < num_potions; i++)
         {
             auto pot = create_entity("potion" + std::to_string(i));
             pot.add_component<transform>({get_valid_position()});
-            pot.add_component<sprite>({{1, 1}, "bot2"});
+            pot.add_component<sprite>({{1, 1}, "bot4"});
             pot.add_component<native_script>({}).bind<potion>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
         }
 
@@ -226,23 +227,23 @@ public:
             auto charm = create_entity("charm");
             charm.add_component<transform>({get_valid_position()});
             charm.add_component<sprite>({{1, 1}, "bot3"});
-            
-            int num = rand() % 3;
-            switch(num) {
-                case 0:
-                    charm.add_component<native_script>({}).bind<defensive_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
-                    break;
-                case 1:
-                    charm.add_component<native_script>({}).bind<offensive_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
-                    break;
-                case 2:
-                    charm.add_component<native_script>({}).bind<vitality_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
-                    break;
 
+            int num = rand() % 3;
+            switch (num)
+            {
+            case 0:
+                charm.add_component<native_script>({}).bind<defensive_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
+                break;
+            case 1:
+                charm.add_component<native_script>({}).bind<offensive_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
+                break;
+            case 2:
+                charm.add_component<native_script>({}).bind<vitality_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
+                break;
             }
         }
 
-        m_enemies_alive = random_int(1,3) + log(data.world_gen->get_current_world_index() + 1);
+        m_enemies_alive = random_int(1, 3) + log(data.world_gen->get_current_world_index() + 1);
         m_enemies = m_enemies_alive;
         for (int i = 0; i < m_enemies_alive; i++)
         {
@@ -253,8 +254,7 @@ public:
                 int(random_int(30, 40) + log(data.world_gen->get_current_world_index() + 15)),
                 int(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 10)),
                 int(random_int(5, 15) + log(data.world_gen->get_current_world_index() + 5)),
-                int(random_int(25, 65) + log(data.world_gen->get_current_world_index() + 20))
-        });
+                int(random_int(25, 65) + log(data.world_gen->get_current_world_index() + 20))});
             bot.add_component<ui>({"", {0, 1}, true, false});
         }
 
@@ -296,6 +296,9 @@ public:
             {
                 switch (brown::KEY_PRESSED)
                 {
+                case KEY_F(1):
+                    game->push_state(new game_over(data.m_player_data.score));
+                    break;
                 case 'i':
                     game->push_state(new inventory_state(data.m_player_data.player_inventory)); // m_controller.LOG_ENTITIES();))
                     break;
