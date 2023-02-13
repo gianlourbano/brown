@@ -2,13 +2,16 @@
 
 void scriptable_enemy::on_hit(int damage)
 {
-    int damage_dealt = damage - m_stats.defense * 0.5;
-    if (damage_dealt >= 0)
-        m_stats.health -= damage_dealt;
-    else
-        m_stats.health -= 1;
-    if (m_stats.health <= 0)
-        die();
+    if(t.elapsed()>=0.5){
+        t.start();
+        int damage_dealt = damage - m_stats.defense * 0.5;
+        if (damage_dealt >= 0)
+            m_stats.health -= damage_dealt;
+        else
+            m_stats.health -= 1;
+        if (m_stats.health <= 0)
+            die();
+    }
 }
 
 void scriptable_enemy::die()
