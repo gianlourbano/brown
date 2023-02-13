@@ -20,12 +20,13 @@ void ranged_enemy::on_update()
     for (int i = 0; i < m_stats.health / 10; i++)
         hearts += "❤ ";
     m_healthbar->text = hearts;
+    //m_healthbar->offset = {hearts.size() / 4, 0};
 
-    if (m_proj_lifespan == 0)
+    if (t.elapsed() >= 2.0) {
         can_shoot = true;
+        t.start();
+    }
 
-    if (m_proj_lifespan != 0)
-        m_proj_lifespan--;
     int dir;
     if (ts->position.x == pl.position.x)
     {

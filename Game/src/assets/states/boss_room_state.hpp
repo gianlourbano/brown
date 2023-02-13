@@ -9,8 +9,8 @@ public:
     void on_world_cleared(brown::event &e)
     {
         world_cleared = true;
-        ui *u = get_entity("hooray").get_component<ui>();
-        ui->is_visible = true;
+        ui *u = &find_entity("hooray").get_component<ui>();
+        u->is_visible = true;
     }
 
     void init(brown::engine *game)
