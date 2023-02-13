@@ -14,11 +14,8 @@ class key : public consumable
 {
     public:
     virtual void on_iteract(){
-        room_data *rd = data.room->get_data();
-        rd->key = true;
     }
-
-
+    
     private:
         key_data data;
 };

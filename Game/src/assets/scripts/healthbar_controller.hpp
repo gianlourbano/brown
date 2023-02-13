@@ -6,30 +6,10 @@
 class healtbar_controller : public brown::scriptable_entity
 {
 public:
-    void health_changed(brown::event &e)
-    {
-        m_health = e.get_param<player_data>(Events::Player::Data::DATA).health;
-    }
-
-    void on_create()
-    {
-        m_state->add_event_listener(METHOD_LISTENER(Events::Player::DATA, "healthbar", healtbar_controller::health_changed));
-        m_healthbar = &get_component<ui>();
-        pl = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
-        m_health = pl->get_health();
-    }
-    void on_update()
-    {
-        std::string hearts;
-        for (int i = 0; i < m_health / 10; i++)
-            hearts += "❤ ";
-        m_healthbar->text = "Health (" + std::to_string(m_health) + "/" + std::to_string(pl->get_data().max_health) + "): " + hearts;
-    }
-
-    void set_health(int health)
-    {
-        m_health = health;
-    }
+    void health_changed(brown::event &e);
+    void on_create();
+    void on_update();
+    void set_health(int health);
 
 private:
     player_controller *pl = nullptr;

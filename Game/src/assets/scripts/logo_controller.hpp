@@ -4,22 +4,9 @@
 class logo_controller : public brown::scriptable_entity
 {
 public:
-    void on_create() {
-        ts = &get_component<transform>();
-    }
+    void on_create();
 
-    void on_update()
-    {
-        if (m_counter < 10)
-        {
-            if(m_timer.elapsed() >= 0.05)
-            {
-                m_counter++;
-                m_timer.start();
-                ts->position.y++;
-            }
-        }
-    }
+    void on_update();
 
 private:
     transform *ts;
