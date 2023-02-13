@@ -5,6 +5,8 @@ void ranged_enemy::on_create()
     scriptable_AI::on_create();
     m_healthbar = &get_component<ui>();
 
+    m_healthbar->offset = {0, 2};
+
     t.start();
     damage_t.start();
     t_move.start();

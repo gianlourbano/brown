@@ -54,7 +54,7 @@ namespace brown::graphics
                     if (color)
                         id = char_map[c];
                     
-                    mvwaddchcolors(win, i + 1 + y, j + 1 + x, id, c != '.' ? c : ' ');
+                    mvwaddchcolors(win, i + y, j + x, id, c != '.' ? c : ' ');
                 }
                 j++;
             }

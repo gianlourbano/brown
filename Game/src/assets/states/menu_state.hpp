@@ -1,7 +1,5 @@
 #pragma once
 #include "engine/brown.hpp"
-#include "game_state.hpp"
-#include "help_state.hpp"
 #include "assets/scripts/player_controller.hpp"
 #include "assets/scripts/door_controller.hpp"
 #include "assets/scripts/healthbar_controller.hpp"
@@ -25,9 +23,6 @@
 #define TILES 30
 
 int frame_passed = 0;
-
-game_state game_state::m_game_state;
-help_state help_state::m_help_state;
 
 class menu_state : public brown::state
 {
@@ -130,45 +125,39 @@ public:
 
         // world generation
         m_world_generator.generate_new_world(player_data(&m_inventory));
-        create_door(offset + vec2{8 * TILE_SIZE, 0}, door_data(m_world_generator.get_room_for_current_world(45), nullptr, 45, false, false), false, "1");
+        create_door(offset + vec2{8 * TILE_SIZE + 1, 1}, door_data(m_world_generator.get_room_for_current_world(45), nullptr, 45, false, false), false, "1");
         tm.set_tile(3, 0, 8);
 
-        // room generation
-        // auto bot1 = create_entity();
-        // bot1.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
+        // UI
 
-        // brown::add_sprite({"4"}, "bot1");
-        // bot1.add_component<sprite>({{1, 1}, "bot1"});
-        // bot1.add_component<native_script>({}).bind<NPC>();
-        // bot1.add_component<ui>({""});
+        auto help_text = create_entity("help_text");
+        help_text.add_component<transform>({vec2(2, LINES - 5)});
+        help_text.add_component<ui>({"Press I to open inventory mode!\n  Press T to shoot a bullet!\n  Press E to interact with the world!\n  Move around with WASD!"});
 
-        // auto bot2 = create_entity();
-        // bot2.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
-        // brown::add_sprite({"a"}, "bot2");
-        // bot2.add_component<sprite>({{1, 1}, "bot2"});
-        // bot2.add_component<native_script>({}).bind<scriptable_enemy>();
-        // bot2.add_component<ui>({"", 0, true, true});
+        auto arrow = create_entity("arrow");
+        arrow.add_component<transform>({offset + vec2{10 * TILE_SIZE, 2}});
+        arrow.add_component<ui>({"Play"});
 
-        // auto bot3 = create_entity();
-        // bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
-        // brown::add_sprite({"a"}, "bot3");
-        // bot3.add_component<sprite>({{1, 1}, "bot3"});
-        // bot3.add_component<native_script>({}).bind<ranged_enemy>();
-        // bot3.add_component<ui>({"", 0, true, true});
+        auto npc1 = create_entity("npc1");
+        npc1.add_component<transform>({get_valid_position()});
+        npc1.add_component<sprite>({1, "sprite2"});
+        npc1.add_component<ui>({"", {0, 1}, true, false});
+        npc1.add_component<native_script>({}).bind<NPC>();
 
-        // auto pot = create_entity("potion1");
-        // pot.add_component<transform>({{40, 16}});
-        // pot.add_component<sprite>({{1, 1}, "bot2"});
-        // pot.add_component<native_script>({}).bind<potion>(4);
+        auto npc2 = create_entity("npc2");
+        npc2.add_component<transform>({get_valid_position()});
+        npc2.add_component<sprite>({1, "sprite2"});
+        npc2.add_component<ui>({"", {0, 1}, true, false});
+        npc2.add_component<native_script>({}).bind<NPC>();
 
-        // auto pot1 = create_entity("potion2");
-        // pot1.add_component<transform>({{50, 16}});
-        // pot1.add_component<sprite>({{1, 1}, "bot2"});
-        // pot1.add_component<native_script>({}).bind<potion>(4);
-
-        // auto h_text = create_entity("h_text");
-        // h_text.add_component<transform>({0, 1});
-        // h_text.add_component<ui>({"Press 'h' to open the help menu"});
+        // int n_flames = rand() % 7 + 1;
+        // for (int i = 0; i < n_flames; i++)
+        // {
+        //     auto flame = create_entity("flame" + std::to_string(i));
+        //     flame.add_component<transform>({get_valid_position()});
+        //     flame.add_component<sprite>({1, "sprite2"});
+        //     flame.add_component<animator_controller>({}).add_anim("flame", animation{"flame", 0, 4, 30/4, true, false, false, true});
+        // }
     }
 
     void resume() { m_pause = false; }
@@ -176,10 +165,6 @@ public:
     void cleanup()
     {
         delete ts;
-
-        for (int i = 0; i < 100; i++)
-            if (room_states[i])
-                delete room_states[i];
     }
 
     // queste tre vengono eseguite in ordine e
@@ -196,17 +181,6 @@ public:
             {
                 switch (brown::KEY_PRESSED)
                 {
-                case 'm':
-                    m_controller.LOG_ENTITIES();
-                    break;
-                case 'c':
-                    UI_system->LOG_COLORS();
-                    break;
-                case 'h':
-                {
-                    game->push_state(help_state::instance());
-                    break;
-                }
                 case 'l':
                     game->quit();
                     break;
@@ -247,6 +221,20 @@ public:
         return &m_menu_state;
     }
 
+    vec2 get_valid_position()
+    {
+        vec2 pos = offset;
+
+        chtype ch;
+        do
+        {
+            ch = mvwinch(win, pos.y, pos.x) & A_CHARTEXT;
+            pos = offset + vec2{2 + rand() % ((map_size.x - 2) * TILE_SIZE), 2 + rand() % ((map_size.y - 2) * TILE_SIZE)};
+        } while (ch != ' ');
+
+        return pos;
+    }
+
 protected:
     menu_state() {}
 
@@ -261,14 +249,12 @@ private:
 
     tileset *ts = nullptr;
 
-    vec2 offset;
+    vec2 offset = 0;
+    vec2 map_size = {17, 6};
 
     bool m_pause = false;
 
     // WORLD GENERARATION
-    brown::dt::vector<int> floorplan;
-    mat<room_state *> room_states = mat<room_state *>(10, 10);
-
     world_generator m_world_generator;
 
     inventory m_inventory;

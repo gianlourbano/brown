@@ -32,5 +32,4 @@ namespace brown
     {
         return m_controller.find(s).m_entity_id;
     }
-
 }

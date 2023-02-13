@@ -211,14 +211,18 @@ int player_controller::get_defense()
     return m_data.defense;
 }
 
-void player_controller::add_item(item *i)
+bool player_controller::add_item(item *i)
 {
-    artifact *a = dynamic_cast<artifact *>(i);
-    if (a != nullptr)
-        a->on_pickup(this);
-    m_data.player_inventory->add_item(i);
+    bool added = m_data.player_inventory->add_item(i);
+    if (added)
+    {
+        artifact *a = dynamic_cast<artifact *>(i);
+        if (a != nullptr)
+            a->on_pickup(this);
 
-    m_state->send_event(Events::Player::Inventory::ADD);
+        m_state->send_event(Events::Player::Inventory::ADD);
+    }
+    return added;
 }
 
 void player_controller::remove_item(std::string item_name)

@@ -51,7 +51,7 @@ public:
 
     player_data get_data();
 
-    void add_item(item *i);
+    bool add_item(item *i);
     void remove_item(std::string item_name);
     inventory *get_inventory();
 

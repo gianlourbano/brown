@@ -77,7 +77,7 @@ public:
         m_enemies_alive--;
 
         ui *score = &find_entity("counter").get_component<ui>();
-        score->text = std::to_string(m_enemies_alive) + "/" + std::to_string(m_enemies);
+        score->text = std::to_string(m_enemies - m_enemies_alive) + "/" + std::to_string(m_enemies);
     }
 
     void generate_doors(tilemap &tm);
@@ -246,7 +246,7 @@ public:
             bot.add_component<transform>({get_valid_position()});
             bot.add_component<sprite>({{1, 1}, "bot2"});
             bot.add_component<native_script>({}).bind<ranged_enemy>(enemy_stats());
-            bot.add_component<ui>({"", 0, true, true});
+            bot.add_component<ui>({"", {0, 1}, true, false});
         }
 
         if (data.world_gen->is_key_room(data.id))
@@ -256,6 +256,9 @@ public:
             key.add_component<sprite>({{1, 1}, "bot3"});
             key.add_component<native_script>({}).bind<boss_key>();
         }
+
+        ui *score = &find_entity("counter").get_component<ui>();
+        score->text = std::to_string(m_enemies - m_enemies_alive) + "/" + std::to_string(m_enemies);
 
         initialized = true;
     }

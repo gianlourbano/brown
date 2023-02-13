@@ -26,8 +26,8 @@ public:
     {
         if (e.get_param<entity_id>(Events::Entity::Interact::ID) == m_entity.get_id() && is_player_in_range(2))
         {
-            m_player->add_item(new potion(*this));
-            delete_self();
+            if(m_player->add_item(new potion(*this)))
+                delete_self();
         }
     };
 

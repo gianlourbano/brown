@@ -9,7 +9,7 @@ public:
     void on_update();
     void on_destroy();
 
-    projectile_boss(entity_id creator) : m_creator_id(creator) {}
+    projectile_boss(entity_id creator, int damage) : m_creator_id(creator), m_damage(damage) {}
 
 private:
     bool has_finished = false;
@@ -20,4 +20,5 @@ private:
     brown::Timer t_end;
 
     entity_id m_creator_id;
+    int m_damage = 0;
 };

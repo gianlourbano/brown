@@ -2,12 +2,12 @@
 
 bool projectile::check_collision(int dir)
 {
-    chtype chars[4] = {
-        mvwinch(m_state->get_win(), ts->position.y, ts->position.x + 1) & A_CHARTEXT,
-        mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x + 2) & A_CHARTEXT,
-        mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x + 1) & A_CHARTEXT,
-        mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
 
+    chtype chars[4] = {
+        mvwinch(m_state->get_win(), ts->position.y - 1, ts->position.x) & A_CHARTEXT,
+        mvwinch(m_state->get_win(), ts->position.y, ts->position.x + 1) & A_CHARTEXT,
+        mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT,
+        mvwinch(m_state->get_win(), ts->position.y, ts->position.x - 1) & A_CHARTEXT};
     return chars[dir - 1] == 'a' || chars[dir - 1] == 'b' || chars[dir - 1] == '%' || chars[dir - 1] == '#' || chars[dir - 1] == 'x';
 }
 void projectile::on_create()
