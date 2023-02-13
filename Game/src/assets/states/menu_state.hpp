@@ -37,7 +37,7 @@ public:
         m_game->quit();
     }
 
-    void create_door(vec2 pos,door_data data, bool vertical = true, std::string name = "1")
+    void create_door(vec2 pos, door_data data, bool vertical = true, std::string name = "1")
     {
         animation opened = {
             vertical ? "animated_vertical_door" : "animated_horizontal_door",
@@ -130,7 +130,7 @@ public:
 
         // world generation
         m_world_generator.generate_new_world(player_data(&m_inventory));
-        create_door(offset + vec2{8 * TILE_SIZE, 0},door_data( m_world_generator.get_room_for_current_world(45),nullptr, 45, false, false) ,false, "1");
+        create_door(offset + vec2{8 * TILE_SIZE, 0}, door_data(m_world_generator.get_room_for_current_world(45), nullptr, 45, false, false), false, "1");
         tm.set_tile(3, 0, 8);
 
         // room generation
@@ -214,7 +214,7 @@ public:
                     m_pause = true;
                 }
             }
-        }        
+        }
     }
     void update(brown::engine *game)
     {

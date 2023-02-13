@@ -24,7 +24,7 @@
 
 #include "inventory_state.hpp"
 
-#define TILES 30  
+#define TILES 30
 
 struct room_data
 {
@@ -62,6 +62,19 @@ public:
     }
     room_data *get_data() { return &data; }
 
+    void key_picked_up(brown::event &e)
+    {
+        data.world_gen->get_current_generator()->key_picked_up();
+    }
+
+    void enemy_killed(brown::event &e)
+    {
+        m_enemies_alive--;
+
+        ui *score = &find_entity("counter").get_component<ui>();
+        score->text = std::to_string(m_enemies_alive) + "/" + std::to_string(m_enemies);
+    }
+
     void generate_doors(tilemap &tm);
     vec2 get_valid_position();
 
@@ -76,6 +89,8 @@ public:
         brain.init();
 
         add_event_listener(METHOD_LISTENER(Events::Player::DATA, "room", room_state::data_changed));
+        add_event_listener(METHOD_LISTENER(Events::Room::Key_picked_up, "room", room_state::key_picked_up));
+        add_event_listener(METHOD_LISTENER(Events::Room::Enemy_killed, "room", room_state::enemy_killed));
 
         brain.register_component<tilemap>();
 
@@ -149,7 +164,6 @@ public:
         pl.add_component<animator_controller>({});
         pl.add_component<native_script>({}).bind<player_controller>(data.m_player_data);
 
-
         // UI
         auto inventory = create_entity("inventory_manager");
         inventory.add_component<native_script>({}).bind<inventory_renderer>();
@@ -174,37 +188,56 @@ public:
         inv.add_component<ui>({"Inventory"});
 
         auto minimap = create_entity("minimap");
-        minimap.add_component<transform>({{COLS - 14 , 1}});
+        minimap.add_component<transform>({{COLS - 14, 1}});
         minimap.add_component<ui>({"Minimap", 0, true, true});
 
         auto level = create_entity("world");
         level.add_component<transform>({{COLS / 2, 1}});
         level.add_component<ui>({"World " + std::to_string(data.world_gen->get_current_world_index() + 1), 0, true, true});
 
-        brown::add_sprite({"a"}, "bot3");
-        brown::add_sprite({"t"}, "bot2");
-        auto pot = create_entity("potion1");
-        pot.add_component<transform>({get_valid_position()});
-        pot.add_component<sprite>({{1, 1}, "bot2"});
-        pot.add_component<native_script>({}).bind<potion>(10);
+        auto counter = create_entity("counter");
+        counter.add_component<transform>({{COLS - 2, 2}});
+        counter.add_component<ui>({" ", 0, true, true});
 
-        auto pot1 = create_entity("potion2");
-        pot1.add_component<transform>({get_valid_position()});
-        pot1.add_component<sprite>({{1, 1}, "bot2"});
-        pot1.add_component<native_script>({}).bind<potion>(20);
-
-        auto charm = create_entity("charm");
-        charm.add_component<transform>({get_valid_position()});
-        charm.add_component<sprite>({{1, 1}, "bot3"});
-        charm.add_component<native_script>({}).bind<vitality_charm>();
-/*
-        auto bot3 = create_entity();
-        bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
         brown::add_sprite({"a"}, "bot3");
-        bot3.add_component<sprite>({{1, 1}, "bot3"});
-        bot3.add_component<native_script>({}).bind<ranged_enemy>();
-        bot3.add_component<ui>({"", 0, true, true});
-*/
+        brown::add_sprite({"o"}, "bot2");
+
+        int num_potions = random_int(1, 2) + log(data.world_gen->get_current_world_index() + 1);
+        for (int i = 0; i < num_potions; i++)
+        {
+            auto pot = create_entity("potion" + std::to_string(i));
+            pot.add_component<transform>({get_valid_position()});
+            pot.add_component<sprite>({{1, 1}, "bot2"});
+            pot.add_component<native_script>({}).bind<potion>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
+        }
+
+        if (rand() % 10 == 0)
+        {
+            auto charm = create_entity("charm");
+            charm.add_component<transform>({get_valid_position()});
+            charm.add_component<sprite>({{1, 1}, "bot3"});
+            charm.add_component<native_script>({}).bind<vitality_charm>();
+        }
+
+        // m_enemies_alive = random_int(2, 4) + log(data.world_gen->get_current_world_index() + 1);
+        // m_enemies = m_enemies_alive;
+        // for (int i = 0; i < m_enemies_alive; i++)
+        // {
+        //     auto bot = create_entity("enemy" + std::to_string(i));
+        //     bot.add_component<transform>({get_valid_position()});
+        //     bot.add_component<sprite>({{1, 1}, "bot2"});
+        //     bot.add_component<native_script>({}).bind<ranged_enemy>(enemy_stats());
+        //     bot.add_component<ui>({"", 0, true, true});
+        // }
+
+        if (data.world_gen->is_key_room(data.id))
+        {
+            auto key = create_entity("key");
+            key.add_component<transform>({get_valid_position()});
+            key.add_component<sprite>({{1, 1}, "bot3"});
+            key.add_component<native_script>({}).bind<boss_key>();
+        }
+
         initialized = true;
     }
 
@@ -233,7 +266,7 @@ public:
                 switch (brown::KEY_PRESSED)
                 {
                 case 'i':
-                    game->push_state(new inventory_state(data.m_player_data.player_inventory));// m_controller.LOG_ENTITIES();))
+                    game->push_state(new inventory_state(data.m_player_data.player_inventory)); // m_controller.LOG_ENTITIES();))
                     break;
                 case 'c':
                     game->pop_state();
@@ -262,8 +295,8 @@ public:
         }
     }
 
-    void draw_minimap(vec2 pos, WINDOW* win);
-    
+    void draw_minimap(vec2 pos, WINDOW *win);
+
     void draw(brown::engine *game)
     {
         if (!m_pause)
@@ -280,7 +313,7 @@ public:
         }
     }
 
-    int last_entered = 0;
+    bool is_room_cleared() { return m_enemies_alive == 0; }
 
 protected:
     std::shared_ptr<brown::animation_system> animation_system;
@@ -299,6 +332,9 @@ protected:
     int frame_passed = 0;
 
     brown::entity pl;
+
+    int m_enemies_alive = 0;
+    int m_enemies = 0;
 
     room_data data;
 };

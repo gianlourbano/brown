@@ -43,8 +43,13 @@ public:
     {
         pt = this->m_state->find_entity("player").get_component<transform>().position;
         float range = distance(pt, ts->position);
+        
+        if (range <= 5.0 && !is_open && data.last_room == nullptr)
+        {
+            anim->play("open");
+        }
 
-        if (range <= 5.0 && !is_open)
+        else if (range <= 5.0 && !is_open && data.last_room->is_room_cleared())
         {
             anim->play("open");
         }
@@ -53,20 +58,13 @@ public:
         {
             player_controller *pc = dynamic_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
 
+            room_data *rd = data.room->get_data();
+            rd->m_player_data = pc->get_data();
+
             if (data.entrance)
-            {
-                room_data *rd = data.room->get_data();
-
-                rd->m_player_data = pc->get_data();
-
                 m_state->get_game_instance()->pop_state();
-            }
             else
-            {
-                room_data *rd = data.room->get_data();
-                rd->m_player_data = pc->get_data();
                 m_state->get_game_instance()->push_state(data.room);
-            }
 
             transform *tsp = &m_state->find_entity("player").get_component<transform>();
             if (data.dir == 1)
@@ -79,18 +77,13 @@ public:
         {
             player_controller *pc = dynamic_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
 
+            room_data *rd = data.room->get_data();
+            rd->m_player_data = pc->get_data();
+
             if (data.entrance)
-            {
-                room_data *rd = data.room->get_data();
-                rd->m_player_data = pc->get_data();
                 m_state->get_game_instance()->pop_state();
-            }
             else
-            {
-                room_data *rd = data.room->get_data();
-                rd->m_player_data = pc->get_data();
                 m_state->get_game_instance()->push_state(data.room);
-            }
 
             transform *tsp = &m_state->find_entity("player").get_component<transform>();
             if (data.dir == 4)
@@ -106,7 +99,7 @@ public:
     }
     bool is_open = false;
 
-private:
+protected:
     animator_controller *anim = nullptr;
     transform *ts;
     vec2 pt;

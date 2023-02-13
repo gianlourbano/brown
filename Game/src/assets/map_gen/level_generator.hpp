@@ -31,13 +31,20 @@ class level_generator{
         std::mt19937 rng;
         std::uniform_real_distribution<double> rand;
 
+        bool is_key_picked_up = false;
+
     private:
+        
+
         int pop_endroom();
         void pick_secretroom();
 
         int neighbour_count(int);
 
     public:
+        void key_picked_up() { is_key_picked_up = true;}
+        bool is_unlocked() { return is_key_picked_up; }
+
         level_generator(int depth): depth(depth + 1)
         {
             for (int i = 0; i < 100; i++)

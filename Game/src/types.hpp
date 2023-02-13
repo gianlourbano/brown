@@ -25,3 +25,8 @@ namespace Events::Player::Inventory {
         const param_id ITEM = "Event::Player::Inventory::Remove::ITEM"_hash;
     }
 }
+
+namespace Events::Room {
+    const event_id Key_picked_up = "Events::Room::Key_picked_up"_hash;
+    const event_id Enemy_killed = "Events::Room::Enemy_killed"_hash;
+}

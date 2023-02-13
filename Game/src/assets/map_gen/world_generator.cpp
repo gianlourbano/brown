@@ -22,7 +22,7 @@ void world_generator::generate_neighbouring_rooms(int index)
 {
     floorplan fp = m_floorplans[m_current_world];
 
-    if (fp[index - 1] == 1)
+    if (fp[index - 1] == 1 || fp[index - 1] == 5)
     {
         m_worlds[m_current_world][index - 1] = new room_state(room_data(index - 1, player_data(), this, 2));
         m_floorplans[m_current_world][index - 1] += 1;
@@ -32,7 +32,7 @@ void world_generator::generate_neighbouring_rooms(int index)
         m_worlds[m_current_world][index - 1] = new boss_room_state(room_data(index - 1, player_data(), this, 2));
         m_floorplans[m_current_world][index - 1] += 1;
     }
-    if (fp[index + 1] == 1)
+    if (fp[index + 1] == 1 || fp[index + 1] == 5)
     {
         m_worlds[m_current_world][index + 1] = new room_state(room_data(index + 1, player_data(), this, 4));
         m_floorplans[m_current_world][index + 1] += 1;
@@ -42,7 +42,7 @@ void world_generator::generate_neighbouring_rooms(int index)
         m_worlds[m_current_world][index + 1] = new boss_room_state(room_data(index + 1, player_data(), this, 4));
         m_floorplans[m_current_world][index + 1] += 1;
     }
-    if (fp[index - 10] == 1)
+    if (fp[index - 10] == 1 || fp[index - 10] == 5)
     {
         m_worlds[m_current_world][index - 10] = new room_state(room_data(index - 10, player_data(), this, 3));
         m_floorplans[m_current_world][index - 10] += 1;
@@ -52,7 +52,7 @@ void world_generator::generate_neighbouring_rooms(int index)
         m_worlds[m_current_world][index - 10] = new boss_room_state(room_data(index - 10, player_data(), this, 3));
         m_floorplans[m_current_world][index - 10] += 1;
     }
-    if (fp[index + 10] == 1)
+    if (fp[index + 10] == 1 || fp[index + 10] == 5)
     {
         m_worlds[m_current_world][index + 10] = new room_state(room_data(index + 10, player_data(), this, 1));
         m_floorplans[m_current_world][index + 10] += 1;

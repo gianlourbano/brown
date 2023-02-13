@@ -4,54 +4,29 @@
 #include "assets/scripts/projectile.hpp"
 #include "assets/scripts/player_controller.hpp"
 
-class ranged_enemy : public scriptable_AI
+class ranged_enemy : public scriptable_enemy
 {
 public:
-    bool check_collision(int dir)
-    {
-        chtype chars[4] = {
-            mvwinch(m_state->get_win(), ts->position.y - 1, ts->position.x) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y, ts->position.x + 1) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y, ts->position.x - 1) & A_CHARTEXT};
-
-        return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x';
-    }
-
-    void on_hit()
-    {
-        if (damage_t.elapsed() >= 0.5)
-        {
-            m_health--;
-            damage_t.start();
-        }
-    }
+    ranged_enemy(enemy_stats stats) : scriptable_enemy(stats) {}
 
     void on_create()
     {
-        ts = &get_component<transform>();
+        scriptable_AI::on_create();
         m_healthbar = &get_component<ui>();
 
         t.start();
         damage_t.start();
         t_move.start();
-        m_health = 3;
 
-        m_player = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
-        proj_anim = {
-            "animated1",
-            2,
-            5,
-            5,
-            false,
-            true};
-    };
+
+    }
+
     void on_update()
     {
         auto pl = m_state->find_entity("player").get_component<transform>();
-        player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
+        
         std::string hearts = "";
-        for (int i = 0; i < m_health; i++)
+        for (int i = 0; i < m_stats.health / 10; i++)
             hearts += "❤ ";
         m_healthbar->text = hearts;
 
@@ -89,7 +64,7 @@ public:
             proj.add_component<transform>({ts->position, dir});
             proj.add_component<sprite>({{2, 2}, "sprite2"});
             proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-            proj.add_component<native_script>({}).bind<projectile>(m_entity.get_id());
+            proj.add_component<native_script>({}).bind<projectile>(m_entity.get_id(), m_stats.damage);
 
             can_shoot = false;
 
@@ -105,7 +80,7 @@ public:
             m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
         }
 
-        if (is_player_in_range(10) && t_move.elapsed() >= 0.5 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
+        if (!is_player_in_range(10) && t_move.elapsed() >= 0.5 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
         {
             t_move.start();
             int r = rand() % 2 + 1;
@@ -176,27 +151,14 @@ public:
                 }
             }
         }
-
-        if (m_health <= 0)
-        {
-            m_player->set_score(pl_h->get_score() + exp);
-            delete_self();
-        }
     }
     void on_destroy()
     {
     }
 
 private:
-    int m_health;
-    ui *m_healthbar;
     animation proj_anim;
-    brown::Timer t;
-    brown::Timer damage_t;
-    brown::Timer t_move;
-    player_controller *m_player;
+
     int m_proj_lifespan = 0;
     bool can_shoot = true;
-
-    int exp = 50;
 };

@@ -1,6 +1,5 @@
 #pragma once
 #include "engine/brown.hpp"
-#include "assets/scripts/projectile.hpp"
 #include "assets/scripts/auto_attack.hpp"
 #include "types.hpp"
 #include "assets/inventory/inventory.hpp"
@@ -28,18 +27,6 @@ struct player_data
 class player_controller : public scriptable_AI
 {
 public:
-    bool check_collision(int dir)
-    {
-        chtype chars[4] = {
-            mvwinch(m_state->get_win(), ts->position.y, ts->position.x + 1) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x + 2) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y + 2, ts->position.x + 1) & A_CHARTEXT,
-            mvwinch(m_state->get_win(), ts->position.y + 1, ts->position.x) & A_CHARTEXT};
-
-        // return !(chars[dir - 1] == ' ' || (chars[dir - 1] <= 'z' && chars[dir - 1] >= 'a'));
-        return chars[dir - 1] == '#' || chars[dir - 1] == '%' || chars[dir - 1] == 'x' || chars[dir - 1] == 'a';
-    }
-
     entity_id get_closest_entity()
     {
         entity_id closest = 0;
@@ -169,17 +156,11 @@ public:
             shoot(ts->direction);
         }
 
-        if (brown::KEY_PRESSED == 'i')
-        {
-            LOG_INVENTORY();
-        }
-
         if (m_proj_lifespan == 0)
             can_shoot = true;
 
         if (m_proj_lifespan != 0)
             m_proj_lifespan--;
-        force = forces[ts->direction - 1];
     }
 
     void set_health(int h)
@@ -203,7 +184,8 @@ public:
         m_state->send_event(e);
     }
 
-    void set_max_health(int h) {
+    void set_max_health(int h)
+    {
         if (h < m_data.health)
             set_health(h);
 
@@ -213,44 +195,12 @@ public:
         m_state->send_event(e);
     }
 
-    int get_max_health() {
+    int get_max_health()
+    {
         return m_data.max_health;
     }
 
-    void shoot(int dir)
-    {
-
-        if (can_shoot && !melee)
-        {
-            brown::entity proj = m_state->create_entity();
-            proj.add_component<transform>({ts->position, dir});
-            proj.add_component<sprite>({{2, 2}, "sprite2"});
-            proj.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-            proj.add_component<native_script>({}).bind<projectile>(m_entity.get_id());
-
-            can_shoot = false;
-
-            int lifetime = 10;
-
-            switch (dir)
-            {
-            case 1:
-            case 3:
-                lifetime /= 2;
-                break;
-            }
-            m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
-        }
-        else if (can_shoot && melee && attack_cooldown.elapsed() >= 0.75)
-        {
-            brown::entity attack = m_state->create_entity();
-            attack.add_component<transform>({ts->position});
-            attack.add_component<sprite>({{0, 0}, "sprite2"});
-            attack.add_component<animator_controller>({}).add_anim("attack", attack_anim);
-            attack.add_component<native_script>({}).bind<auto_attack>();
-            attack_cooldown.start();
-        }
-    }
+    void shoot(int dir);
 
     int get_health()
     {
@@ -296,10 +246,8 @@ public:
     }
 
 protected:
-    transform *ts = nullptr;
     animator_controller *anim = nullptr;
 
-    vec2 force;
     animation proj_anim;
     animation attack_anim;
 

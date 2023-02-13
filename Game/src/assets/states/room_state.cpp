@@ -24,6 +24,49 @@ void room_state::generate_doors(tilemap &tm)
         false,
         true};
 
+    vec2 positions[4] = {
+        {8 * TILE_SIZE, 0 },
+        {0, 4 * TILE_SIZE},
+        {8 * TILE_SIZE, 4 * TILE_SIZE},
+        {4 * TILE_SIZE, 0}};
+
+    int fps[4] = {
+        fp[data.id - 10],
+        fp[data.id - 1],
+        fp[data.id + 1],
+        fp[data.id + 10]
+        };
+        
+    vec2 tiles[4] = {
+        {3, 0},
+        {16, 2},
+        {8, 5},
+        {0, 2}
+    };
+
+    int tiles_ids[4] = {
+        8, 12, 3, 13
+    };
+    
+    // for(int i = 0; i < 4; i++) {
+    //     if(fps[i]) {
+    //         auto door = create_entity("door_" + std::to_string(i));
+    //         door.add_component<transform>({offset + positions[i]});
+    //         door.add_component<sprite>({{3, 2}, "door1"});
+    //         door.add_component<animator_controller>({});
+
+    //         animator_controller *anim = &door.get_component<animator_controller>();
+    //         anim->add_anim("open", opened_vertical);
+
+    //         if (fps[i] == ROOM_TYPE::BOSS || fps[i] == ROOM_TYPE::BOSS_UNDISCOVERED)
+    //             door.add_component<native_script>({}).bind<boss_door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 1), this, data.id + 1, i % 2 == 1, dir == i+1, (i+1)%4 + 2) % 4));
+    //         else
+    //             door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 1), this, data.id + 1, i % 2 == 1, dir == i+1, (i+1)%4 + 2) % 4);
+
+    //         tm.m_data.at(tiles[i].x, tiles[i].y) = tiles_ids[i];
+    //     }
+    // }
+
     if (fp[data.id - 10])
     {
         auto door = create_entity("door_1");
@@ -34,7 +77,7 @@ void room_state::generate_doors(tilemap &tm)
         animator_controller *anim = &door.get_component<animator_controller>();
         anim->add_anim("open", opened_horizontal);
 
-        if (fp[data.id - 10] >= 3)
+        if (fp[data.id - 10] == ROOM_TYPE::BOSS || fp[data.id - 10] == ROOM_TYPE::BOSS_UNDISCOVERED)
             door.add_component<native_script>({}).bind<boss_door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 10), this, data.id - 10, false, dir == 1, 3));
         else
             door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 10), this, data.id - 10, false, dir == 1, 3));
@@ -52,7 +95,7 @@ void room_state::generate_doors(tilemap &tm)
         animator_controller *anim = &door.get_component<animator_controller>();
         anim->add_anim("open", opened_vertical);
 
-        if (fp[data.id - 10] >= 3)
+        if (fp[data.id + 1] == ROOM_TYPE::BOSS || fp[data.id + 1] == ROOM_TYPE::BOSS_UNDISCOVERED)
             door.add_component<native_script>({}).bind<boss_door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 1), this, data.id + 1, true, dir == 2, 4));
         else
             door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 1), this, data.id + 1, true, dir == 2, 4));
@@ -70,7 +113,7 @@ void room_state::generate_doors(tilemap &tm)
         animator_controller *anim = &door.get_component<animator_controller>();
         anim->add_anim("open", opened_horizontal);
 
-        if (fp[data.id - 10] >= 3)
+        if (fp[data.id + 10] == ROOM_TYPE::BOSS || fp[data.id + 10] == ROOM_TYPE::BOSS_UNDISCOVERED)
             door.add_component<native_script>({}).bind<boss_door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 10), this, data.id + 10, false, dir == 3, 1));
         else
             door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id + 10), this, data.id + 10, false, dir == 3, 1));
@@ -88,7 +131,7 @@ void room_state::generate_doors(tilemap &tm)
         animator_controller *anim = &door.get_component<animator_controller>();
         anim->add_anim("open", opened_vertical);
 
-        if (fp[data.id - 10] >= 3)
+        if (fp[data.id - 1] == ROOM_TYPE::BOSS || fp[data.id - 1] == ROOM_TYPE::BOSS_UNDISCOVERED)
             door.add_component<native_script>({}).bind<boss_door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 1), this, data.id - 1, true, dir == 4, 2));
         else
             door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 1), this, data.id - 1, true, dir == 4, 2));
@@ -139,7 +182,7 @@ vec2 room_state::get_valid_position()
     chtype ch;
     do
     {
-        ch = mvwinch(win, pos.y - 1, pos.x - 1) & A_CHARTEXT;
+        ch = mvwinch(win, pos.y +1,  pos.x + 1) & A_CHARTEXT;
         pos = offset + vec2{rand() % (map_size.x - 1) * TILE_SIZE, rand() % (map_size.y - 1) * TILE_SIZE};
     } while (ch != ' ');
 

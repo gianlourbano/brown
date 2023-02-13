@@ -1,6 +1,6 @@
 #pragma once
 #include "brown.hpp"
-#include "scriptable_AI.hpp"
+#include "scriptable_enemy.hpp"
 
 static vec2 forces[4] = {
     {0, -1},
@@ -74,11 +74,11 @@ public:
                     if (dist <= 2 && dist > 0)
                     {
                         
-                        scriptable_AI *script = dynamic_cast<scriptable_AI *>(e.get_component<native_script>().instance);
+                        scriptable_enemy *script = dynamic_cast<scriptable_enemy *>(e.get_component<native_script>().instance);
                         
                         if (script != nullptr)
                         {
-                            script->on_hit();
+                            script->on_hit(damage);
                         }
                     }
                 }
@@ -105,7 +105,7 @@ public:
         return lifetime;
     }
 
-    projectile(entity_id creator) : m_creator_id(creator) {}
+    projectile(entity_id creator, int damage = 0) : m_creator_id(creator), damage(damage) {}
 
 private:
     int lifetime;
@@ -115,5 +115,6 @@ private:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
 
+    int damage = 0;
     entity_id m_creator_id;
 };

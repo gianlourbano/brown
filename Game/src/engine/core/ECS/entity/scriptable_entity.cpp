@@ -1,6 +1,5 @@
 #include "scriptable_entity.hpp"
 #include "state.hpp"
-#include <vector>
 
 namespace brown
 {

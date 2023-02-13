@@ -23,12 +23,13 @@ struct item : public brown::scriptable_entity
         return m_name == other.m_name;
     }
 
-    void update_ptr(player_controller* pl) {
+    void update_ptr(player_controller *pl)
+    {
         m_player = pl;
     }
 
 protected:
-    player_controller* m_player;
+    player_controller *m_player;
 };
 
 class consumable : public item
@@ -46,6 +47,6 @@ struct key_item : public item
 struct artifact : public item
 {
     virtual void on_interact(brown::event &e) = 0;
-    virtual void on_pickup(player_controller*) = 0;
+    virtual void on_pickup(player_controller *) = 0;
     virtual void on_remove() = 0;
 };

@@ -31,3 +31,6 @@
 #include "core/ECS/systems/UI_system.hpp"
 ///
 #include "math/mat.hpp"
+#include "math/math.hpp"
+
+#include <string>

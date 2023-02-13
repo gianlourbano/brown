@@ -9,6 +9,8 @@
 class boss_enemy : public scriptable_enemy
 {
 public:
+    boss_enemy(enemy_stats stats) : scriptable_enemy(stats) {}
+
     bool check_collision(int dir)
     {
         chtype chars[4] = {
@@ -67,102 +69,117 @@ public:
         if (m_proj_lifespan != 0)
             m_proj_lifespan--;
         int dir;
-        if(ts->position.x==pl.position.x){
-            if(ts->position.y>pl.position.y){
+        if (ts->position.x == pl.position.x)
+        {
+            if (ts->position.y > pl.position.y)
+            {
                 dir = 1;
-            }else{
+            }
+            else
+            {
                 dir = 3;
             }
         }
-        if(ts->position.y==pl.position.y){
-            if(ts->position.x>pl.position.x){
+        if (ts->position.y == pl.position.y)
+        {
+            if (ts->position.x > pl.position.x)
+            {
                 dir = 4;
-            }else{
+            }
+            else
+            {
                 dir = 2;
             }
         }
         int r = rand() % 4;
-        if(t_attack.elapsed()>=9){
-            if (can_shoot && r==0)
+        if (t_attack.elapsed() >= 9)
+        {
+            if (can_shoot && r == 0)
             {
                 brown::entity proj1 = m_state->create_entity();
-                proj1.add_component<transform>({{pl.position.x,ts->position.y-11}, 3});
-                proj1.add_component<sprite>({{0,0}, "sprite2"});
+                proj1.add_component<transform>({{pl.position.x, ts->position.y - 11}, 3});
+                proj1.add_component<sprite>({{0, 0}, "sprite2"});
                 proj1.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj1.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
 
                 brown::entity proj2 = m_state->create_entity();
-                proj2.add_component<transform>({{pl.position.x+3,ts->position.y-11}, 3});
-                proj2.add_component<sprite>({{0,0}, "sprite2"});
+                proj2.add_component<transform>({{pl.position.x + 3, ts->position.y - 11}, 3});
+                proj2.add_component<sprite>({{0, 0}, "sprite2"});
                 proj2.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj2.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
 
                 brown::entity proj3 = m_state->create_entity();
-                proj3.add_component<transform>({{pl.position.x-3,ts->position.y-11}, 3});
-                proj3.add_component<sprite>({{0,0}, "sprite2"});
+                proj3.add_component<transform>({{pl.position.x - 3, ts->position.y - 11}, 3});
+                proj3.add_component<sprite>({{0, 0}, "sprite2"});
                 proj3.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj3.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
-            
-               t_attack.start();
-            }else if (can_shoot && r==1){
-                brown::entity proj1 = m_state->create_entity();
-                proj1.add_component<transform>({{ts->position.x-35,pl.position.y}, 2});
-                proj1.add_component<sprite>({{0,0}, "sprite2"});
-                proj1.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-                proj1.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
 
-                brown::entity proj2 = m_state->create_entity();
-                proj2.add_component<transform>({{ts->position.x-35,pl.position.y+2}, 2});
-                proj2.add_component<sprite>({{0,0}, "sprite2"});
-                proj2.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-                proj2.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
-
-                brown::entity proj3 = m_state->create_entity();
-                proj3.add_component<transform>({{ts->position.x-35,pl.position.y-2}, 2});
-                proj3.add_component<sprite>({{0,0}, "sprite2"});
-                proj3.add_component<animator_controller>({}).add_anim("explode", proj_anim);
-                proj3.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
-            
                 t_attack.start();
-            }else if (can_shoot && r==2){
+            }
+            else if (can_shoot && r == 1)
+            {
                 brown::entity proj1 = m_state->create_entity();
-                proj1.add_component<transform>({{pl.position.x,ts->position.y+11}, 1});
-                proj1.add_component<sprite>({{0,0}, "sprite2"});
+                proj1.add_component<transform>({{ts->position.x - 35, pl.position.y}, 2});
+                proj1.add_component<sprite>({{0, 0}, "sprite2"});
                 proj1.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj1.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
 
                 brown::entity proj2 = m_state->create_entity();
-                proj2.add_component<transform>({{pl.position.x+3,ts->position.y+11}, 1});
-                proj2.add_component<sprite>({{0,0}, "sprite2"});
+                proj2.add_component<transform>({{ts->position.x - 35, pl.position.y + 2}, 2});
+                proj2.add_component<sprite>({{0, 0}, "sprite2"});
                 proj2.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj2.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
 
                 brown::entity proj3 = m_state->create_entity();
-                proj3.add_component<transform>({{pl.position.x-3,ts->position.y+11}, 1});
-                proj3.add_component<sprite>({{0,0}, "sprite2"});
+                proj3.add_component<transform>({{ts->position.x - 35, pl.position.y - 2}, 2});
+                proj3.add_component<sprite>({{0, 0}, "sprite2"});
                 proj3.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj3.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
-            
+
                 t_attack.start();
-            }else{
+            }
+            else if (can_shoot && r == 2)
+            {
                 brown::entity proj1 = m_state->create_entity();
-                proj1.add_component<transform>({{ts->position.x+35,pl.position.y}, 4});
-                proj1.add_component<sprite>({{0,0}, "sprite2"});
+                proj1.add_component<transform>({{pl.position.x, ts->position.y + 11}, 1});
+                proj1.add_component<sprite>({{0, 0}, "sprite2"});
                 proj1.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj1.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
 
                 brown::entity proj2 = m_state->create_entity();
-                proj2.add_component<transform>({{ts->position.x+35,pl.position.y+2}, 4});
-                proj2.add_component<sprite>({{0,0}, "sprite2"});
+                proj2.add_component<transform>({{pl.position.x + 3, ts->position.y + 11}, 1});
+                proj2.add_component<sprite>({{0, 0}, "sprite2"});
                 proj2.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj2.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
 
                 brown::entity proj3 = m_state->create_entity();
-                proj3.add_component<transform>({{ts->position.x+35,pl.position.y-2}, 4});
-                proj3.add_component<sprite>({{0,0}, "sprite2"});
+                proj3.add_component<transform>({{pl.position.x - 3, ts->position.y + 11}, 1});
+                proj3.add_component<sprite>({{0, 0}, "sprite2"});
                 proj3.add_component<animator_controller>({}).add_anim("explode", proj_anim);
                 proj3.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
-            
+
+                t_attack.start();
+            }
+            else
+            {
+                brown::entity proj1 = m_state->create_entity();
+                proj1.add_component<transform>({{ts->position.x + 35, pl.position.y}, 4});
+                proj1.add_component<sprite>({{0, 0}, "sprite2"});
+                proj1.add_component<animator_controller>({}).add_anim("explode", proj_anim);
+                proj1.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
+
+                brown::entity proj2 = m_state->create_entity();
+                proj2.add_component<transform>({{ts->position.x + 35, pl.position.y + 2}, 4});
+                proj2.add_component<sprite>({{0, 0}, "sprite2"});
+                proj2.add_component<animator_controller>({}).add_anim("explode", proj_anim);
+                proj2.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
+
+                brown::entity proj3 = m_state->create_entity();
+                proj3.add_component<transform>({{ts->position.x + 35, pl.position.y - 2}, 4});
+                proj3.add_component<sprite>({{0, 0}, "sprite2"});
+                proj3.add_component<animator_controller>({}).add_anim("explode", proj_anim);
+                proj3.add_component<native_script>({}).bind<projectile_boss>(m_entity.get_id());
+
                 t_attack.start();
             }
             can_shoot = false;
@@ -172,7 +189,7 @@ public:
             m_player->set_score(m_player->get_score() + exp);
             delete_self();
         }
-    }   
+    }
     void on_destroy()
     {
     }

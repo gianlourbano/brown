@@ -22,9 +22,12 @@ public:
     floorplan get_current_floorplan() {return m_floorplans[m_current_world];}
     rooms get_current_world() {return m_worlds[m_current_world];}
 
+    level_generator* get_current_generator() {return &m_generators[m_current_world];}
+
     room_state* get_room_for_current_world(int index) {return m_worlds[m_current_world][index];}
 
     bool is_fully_explored();
+    bool is_key_room(int index) {return m_floorplans[m_current_world][index] == 5 || m_floorplans[m_current_world][index] == 6;}
 
 private:
     generators m_generators;

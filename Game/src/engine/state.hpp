@@ -69,7 +69,9 @@ namespace brown
 
         inline bool is_initialized() { return initialized; }
 
-         brown::engine *get_game_instance()  { return m_game; }
+        brown::engine *get_game_instance()  { return m_game; }
+
+        char get_char(int x, int y) { return mvwinch(win, y, x) & A_CHARTEXT; }
 
     protected:
         state(){};

@@ -2,6 +2,7 @@
 #include "assets/states/menu_state.hpp"
 
 int FPS = 60;
+#define COLOR
 
 menu_state menu_state::m_menu_state;
 
@@ -11,9 +12,12 @@ public:
     void init(int width, int height)
     {
         engine::init(width, height);
+
+        #ifdef COLOR
         brown::colors::start_colors();
         brown::colors::init_palette_from_file("palette");
         brown::colors::init_color_map_from_file("color");
+        #endif
     }
 };
 

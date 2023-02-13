@@ -13,7 +13,7 @@ class boss_room_state : public room_state
             bs.add_component<transform>({{COLS / 2, LINES / 2}, 1});
             bs.add_component<ui>({""});
             bs.add_component<sprite>({{0,0}, "sprite_boss"});
-            bs.add_component<native_script>({}).bind<boss_enemy>();
+            bs.add_component<native_script>({}).bind<boss_enemy>(enemy_stats());
         }
 
         void handle_events(brown::engine *game) {
@@ -34,6 +34,7 @@ class boss_room_state : public room_state
         }
 
         void advance(brown::engine *game) {
+            data.m_player_data.player_inventory->remove_item("Boss room key");
             data.world_gen->generate_new_world(data.m_player_data);
             game->push_state(data.world_gen->get_current_world()[45]);
         }
