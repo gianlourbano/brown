@@ -238,7 +238,7 @@ public:
             }
         }
 
-        m_enemies_alive = random_int(2, 4) + log(data.world_gen->get_current_world_index() + 1);
+        m_enemies_alive = random_int(1,3) + log(data.world_gen->get_current_world_index() + 1);
         m_enemies = m_enemies_alive;
         for (int i = 0; i < m_enemies_alive; i++)
         {
