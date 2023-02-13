@@ -17,5 +17,5 @@ public:
 
 private:
     std::shared_ptr<brown::UI_system> m_ui_system;
-    int m_final_score;
+    int m_final_score = 0;
 };

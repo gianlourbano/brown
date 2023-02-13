@@ -75,9 +75,9 @@ void room_state::generate_doors(tilemap &tm)
             }
 
             if (fps[i] == ROOM_TYPE::BOSS || fps[i] == ROOM_TYPE::BOSS_UNDISCOVERED)
-                door.add_component<native_script>({}).bind<boss_door_controller>(door_data(data.world_gen->get_room_for_current_world(ids[i]), this, ids[i], i % 2 == 1, dir == i + 1, (i+2)%4 + 1));
+                door.add_component<native_script>({}).bind<boss_door_controller>(door_data(data.world_gen->get_room_for_current_world(ids[i]), this, ids[i], i % 2 == 1, dir == i + 1, (i + 2) % 4 + 1));
             else
-                door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(ids[i]), this, ids[i], i % 2 == 1, dir == i + 1, (i+2)%4 + 1));
+                door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(ids[i]), this, ids[i], i % 2 == 1, dir == i + 1, (i + 2) % 4 + 1));
 
             tm.m_data.at(tiles[i].x, tiles[i].y) = tiles_ids[i];
         }
@@ -85,9 +85,9 @@ void room_state::generate_doors(tilemap &tm)
 }
 
 void room_state::QuitHandler(brown::event &e)
-    {
-        m_game->push_state(new game_over(data.m_player_data.score));
-    }
+{
+    m_game->push_state(new game_over(data.m_player_data.score));
+}
 
 void room_state::draw_minimap(vec2 pos, WINDOW *win)
 {

@@ -65,7 +65,7 @@ namespace brown
         inline void send_event(event_id id) { brain.send_event(id); }
         inline void send_event(event e) { brain.send_event(e); }
 
-        inline void game_over() { terminate = true; }
+        //inline void game_over() { terminate = true; }
 
         inline bool is_initialized() { return initialized; }
 
