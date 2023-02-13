@@ -3,6 +3,16 @@
 #include "engine/std/queue.hpp"
 #include "engine/std/vector.hpp"
 
+enum ROOM_TYPE {
+    EMPTY = 0,
+    NORMAL_UNDISCOVERED = 1,
+    NORMAL = 2,
+    BOSS_UNDISCOVERED = 3,
+    BOSS = 4,
+    KEY_ROOM_UNDISCOVERED = 5,
+    KEY_ROOM = 6,
+};
+
 class level_generator{
     private:
         brown::dt::queue<int> m_endrooms;     // Stack con l'ultima stanza visitata
@@ -22,7 +32,7 @@ class level_generator{
         std::uniform_real_distribution<double> rand;
 
     private:
-        void pop_endroom();
+        int pop_endroom();
         void pick_secretroom();
 
         int neighbour_count(int);

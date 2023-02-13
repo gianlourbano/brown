@@ -69,6 +69,13 @@ namespace brown::dt
             return m_front == m_back;
         }
 
+        T& operator[](size_t index)
+        {
+            return m_data[m_front + index];
+        }
+
+        vector<T> get_data() { return m_data; }
+
     private:
         vector<T> m_data;
         size_t m_front;

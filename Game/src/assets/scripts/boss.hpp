@@ -6,7 +6,7 @@
 #include "assets/scripts/projectile_boss.hpp"
 #include "assets/scripts/ranged_enemy.hpp"
 
-class boss_enemy : public scriptable_AI
+class boss_enemy : public scriptable_enemy
 {
 public:
     bool check_collision(int dir)
@@ -27,13 +27,6 @@ public:
             m_health--;
             damage_t.start();
             int row, col;
-            /*
-            auto bot = m_state->create_entity("bot");
-            bot.add_component<transform>({ts->position.x+5,ts->position.y+3});
-            brown::add_sprite({"a"}, "bot");
-            bot.add_component<native_script>({}).bind<ranged_enemy>();
-            bot.add_component<ui>({"", 0, true, true});
-            */
         }
     }
 
@@ -60,11 +53,13 @@ public:
     {
         auto pl = m_state->find_entity("player").get_component<transform>();
         player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
-        std::string hearts = "";
-        for (int i = 0; i < m_health; i++)
+        std::string hearts = " ";
+        int i = 0;
+        for (i = 0; i < m_health / 10; i++)
             hearts += "❤ ";
         m_healthbar->text = hearts;
-        m_healthbar->centered = true;
+        m_healthbar->offset = vec2{-i / 2, 0};
+        m_healthbar->centered = false;
 
         if (m_proj_lifespan == 0)
             can_shoot = true;
@@ -174,10 +169,7 @@ public:
         }
         if (m_health <= 0)
         {
-            player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
-            pl_h->kill();
-            pl_h->kill();
-            pl_h->kill();
+            m_player->set_score(m_player->get_score() + exp);
             delete_self();
         }
     }   
@@ -195,4 +187,6 @@ private:
     player_controller *m_player;
     int m_proj_lifespan = 0;
     bool can_shoot = true;
+
+    int exp = 150;
 };

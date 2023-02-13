@@ -6,18 +6,23 @@
 #include "assets/inventory/inventory.hpp"
 #include "assets/scripts/scriptable_AI.hpp"
 
-struct player_data {
-    int health;
-    int max_health;
+struct player_data
+{
+    int health = 100;
+    int max_health = 100;
 
-    int attack_damage;
+    int attack_damage = 10;
+    int defense = 4;
 
-    int score;
+    int score = 0;
 
-    inventory *player_inventory;
+    inventory *player_inventory = nullptr;
 
-
-
+    player_data() {}
+    player_data(inventory *inv)
+    {
+        player_inventory = inv;
+    }
 };
 
 class player_controller : public scriptable_AI
@@ -66,24 +71,36 @@ public:
     {
         if (m_damage_timer.elapsed() >= 1)
         {
-            set_health(--health);
+            set_health(--m_data.health);
             m_damage_timer.start();
         }
     }
-     void add1_health()
+
+    player_controller(player_data data)
     {
-        health++;
+        m_data = data;
+
+        if (m_data.player_inventory == nullptr)
+        {
+            m_data.player_inventory = new inventory();
+        }
+
+        for (auto item : m_data.player_inventory->get_items())
+        {
+            item->update_ptr(this);
+        }
     }
 
-    void kill(){
-        set_score(score + 50);
-    }
+    void update_data(player_data data)
+    {
+        m_data = data;
+        set_health(m_data.health);
+        set_score(m_data.score);
 
-    player_controller(int health, int score = 0) {
-        this->health = health;
-        this->score = score;
-        //set_health(health);
-        //set_score(score);
+        for (auto item : m_data.player_inventory->get_items())
+        {
+            item->update_ptr(this);
+        }
     }
 
     void on_create()
@@ -106,13 +123,13 @@ public:
             false,
             true};
 
-        set_health(health);
-        set_score(score);
+        set_health(m_data.health);
+        set_score(m_data.score);
     }
 
     void on_update()
     {
-        if (health <= 0)
+        if (m_data.health <= 0)
         {
             m_state->send_event(Events::Window::QUIT);
             return;
@@ -156,13 +173,6 @@ public:
         {
             LOG_INVENTORY();
         }
-        if (brown::KEY_PRESSED == '1') {
-            set_score(score + 5);
-        }
-        if (brown::KEY_PRESSED == '2') {
-            set_health(health - 1);
-        }
-        
 
         if (m_proj_lifespan == 0)
             can_shoot = true;
@@ -174,22 +184,43 @@ public:
 
     void set_health(int h)
     {
-        health = h;
-        brown::event e(Events::Player::HEALTH);
-        e.set_param(Events::Player::Health::HEALTH, health);
+        if (h >= m_data.max_health)
+            m_data.health = m_data.max_health;
+        else
+        {
+            m_data.health = h;
+        }
+        brown::event e(Events::Player::DATA);
+        e.set_param(Events::Player::Data::DATA, m_data);
         m_state->send_event(e);
     }
-    void set_score(int k){
-        score = k;
-        brown::event e(Events::Player::SCORE);
-        e.set_param(Events::Player::Score::SCORE, score);
+
+    void set_score(int k)
+    {
+        m_data.score = k;
+        brown::event e(Events::Player::DATA);
+        e.set_param(Events::Player::Data::DATA, m_data);
         m_state->send_event(e);
+    }
+
+    void set_max_health(int h) {
+        if (h < m_data.health)
+            set_health(h);
+
+        m_data.max_health = h;
+        brown::event e(Events::Player::DATA);
+        e.set_param(Events::Player::Data::DATA, m_data);
+        m_state->send_event(e);
+    }
+
+    int get_max_health() {
+        return m_data.max_health;
     }
 
     void shoot(int dir)
     {
 
-        if (can_shoot&& !melee)
+        if (can_shoot && !melee)
         {
             brown::entity proj = m_state->create_entity();
             proj.add_component<transform>({ts->position, dir});
@@ -210,11 +241,11 @@ public:
             }
             m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
         }
-        else if (can_shoot && melee && attack_cooldown.elapsed()>= 0.75)
+        else if (can_shoot && melee && attack_cooldown.elapsed() >= 0.75)
         {
             brown::entity attack = m_state->create_entity();
             attack.add_component<transform>({ts->position});
-            attack.add_component<sprite>({{0,0}, "sprite2"});
+            attack.add_component<sprite>({{0, 0}, "sprite2"});
             attack.add_component<animator_controller>({}).add_anim("attack", attack_anim);
             attack.add_component<native_script>({}).bind<auto_attack>();
             attack_cooldown.start();
@@ -223,52 +254,62 @@ public:
 
     int get_health()
     {
-        return health;
+        return m_data.health;
     }
 
-    int get_score() {
-        return score;
+    int get_score()
+    {
+        return m_data.score;
+    }
+
+    player_data get_data()
+    {
+        return m_data;
     }
 
     void add_item(item *i)
     {
-        this->m_inventory.add_item(i);
+        artifact *a = dynamic_cast<artifact *>(i);
+        if (a != nullptr)
+            a->on_pickup(this);
+        m_data.player_inventory->add_item(i);
 
-        int count = this->m_inventory.get_item_count(i);
+        m_state->send_event(Events::Player::Inventory::ADD);
+    }
 
-        brown::event e(Events::Player::Inventory::ADD);
-        e.set_param<inventory_item>(Events::Player::Inventory::ADD, {i, count});
-        m_state->send_event(e);
-        
+    void remove_item(std::string item_name)
+    {
+        m_data.player_inventory->remove_item(item_name);
+
+        m_state->send_event(Events::Player::Inventory::ADD);
     }
 
     void LOG_INVENTORY()
     {
-        for (auto &i : this->m_inventory.get_items())
-        {
-            LOG("ITEM: " + i.i->name + "," + std::to_string(i.count));
-        }
+        for (auto i : m_data.player_inventory->get_items())
+            LOG("Item: " + i->m_name + "x" + std::to_string(i->m_count));
     }
 
-    inventory* get_inventory()
+    inventory *get_inventory()
     {
-        return &m_inventory;
+        return m_data.player_inventory;
     }
 
 protected:
     transform *ts = nullptr;
     animator_controller *anim = nullptr;
+
     vec2 force;
     animation proj_anim;
     animation attack_anim;
-    int health;
-    int score;
+
     bool can_shoot = true;
-    bool melee=false;
+    bool melee = false;
     int m_proj_lifespan = 0;
+
     brown::Timer m_cooldown;
     brown::Timer attack_cooldown;
     brown::Timer m_damage_timer;
-public:
-    inventory m_inventory;
+
+    player_data m_data;
 };

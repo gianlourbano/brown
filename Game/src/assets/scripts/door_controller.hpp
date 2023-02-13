@@ -56,18 +56,15 @@ public:
             if (data.entrance)
             {
                 room_data *rd = data.room->get_data();
-                rd->player_health = pc->get_health();
-                rd->score = pc->get_score();
-                rd->player_inventory = pc->get_inventory();
+
+                rd->m_player_data = pc->get_data();
 
                 m_state->get_game_instance()->pop_state();
             }
             else
             {
                 room_data *rd = data.room->get_data();
-                rd->player_health = pc->get_health();
-                rd->score = pc->get_score();
-                rd->player_inventory = pc->get_inventory();
+                rd->m_player_data = pc->get_data();
                 m_state->get_game_instance()->push_state(data.room);
             }
 
@@ -85,17 +82,13 @@ public:
             if (data.entrance)
             {
                 room_data *rd = data.room->get_data();
-                rd->player_health = pc->get_health();
-                rd->score = pc->get_score();
-                rd->player_inventory = pc->get_inventory();
+                rd->m_player_data = pc->get_data();
                 m_state->get_game_instance()->pop_state();
             }
             else
             {
                 room_data *rd = data.room->get_data();
-                rd->player_health = pc->get_health();
-                rd->score = pc->get_score();
-                rd->player_inventory = pc->get_inventory();
+                rd->m_player_data = pc->get_data();
                 m_state->get_game_instance()->push_state(data.room);
             }
 

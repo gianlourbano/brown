@@ -11,12 +11,17 @@ public:
     {
         int i = 0;
         inventory *inv = m_player->get_inventory();
+        if(inv == nullptr)
+            return;
         auto items = inv->get_items();
         for (auto &item : items)
         {
-            m_state->find_entity("entry_" + std::to_string(i)).get_component<ui>().text = "[" + item.i->name + "] x" + std::to_string(item.count);
+            m_state->find_entity("entry_" + std::to_string(i)).get_component<ui>().text = "[" + item->m_name + "] x" + std::to_string(item->m_count);
             i++;
         }
+
+        for(; i < 10; i++)
+            m_state->find_entity("entry_" + std::to_string(i)).get_component<ui>().text = " ";
     }
 
     void on_create()
@@ -32,10 +37,24 @@ public:
             entry.add_component<ui>({});
             m_entries.push_back(entry.get_id());
         }
+
+        m_state->send_event(Events::Player::Inventory::ADD);
+
     }
 
     void on_update()
     {
+        // int i = 0;
+        // inventory *inv = m_player->get_inventory();
+        // auto items = inv->get_items();
+        // for (auto &item : items)
+        // {
+        //     m_state->find_entity("entry_" + std::to_string(i)).get_component<ui>().text = "[" + item->m_name + "] x" + std::to_string(item->m_count);
+        //     i++;
+        // }
+
+        // for(; i < 10; i++)
+        //     m_state->find_entity("entry_" + std::to_string(i)).get_component<ui>().text = " ";
     }
 
     void on_destroy()

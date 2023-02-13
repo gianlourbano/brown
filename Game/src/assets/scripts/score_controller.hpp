@@ -8,11 +8,11 @@ class score_controller : public brown::scriptable_entity
 public:
     void score_changed(brown::event& e)
     {
-        m_score = e.get_param<int>(Events::Player::Score::SCORE);
+        m_score = e.get_param<player_data>(Events::Player::Data::DATA).score;
     }
     void on_create()
     {
-        m_state->add_event_listener(METHOD_LISTENER(Events::Player::SCORE,"scorebar", score_controller::score_changed));
+        m_state->add_event_listener(METHOD_LISTENER(Events::Player::DATA,"scorebar", score_controller::score_changed));
         m_scorebar = &get_component<ui>();
         pl = static_cast<player_controller*>(m_state->find_entity("player").get_component<native_script>().instance);
         m_score = pl->get_score();

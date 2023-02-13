@@ -2,13 +2,9 @@
 #include "engine/brown.hpp"
 
 namespace Events::Player {
-    const event_id HEALTH = "Event::Player::HEALTH"_hash;
-    namespace Health {
-        const param_id HEALTH = "Event::Player::Health::HEALTH"_hash;
-    }
-    const event_id SCORE = "Event::Player::SCORE"_hash;
-    namespace Score {
-        const param_id SCORE = "Event::Player::Score::SCORE"_hash;
+    const event_id DATA = "Event::Player::DATA"_hash;
+    namespace Data {
+        const param_id DATA = "Event::Player::Data::DATA"_hash;
     }
 }
 

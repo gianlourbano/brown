@@ -20,32 +20,27 @@
 #include "engine/std/vector.hpp"
 #include "assets/map_gen/world_generator.hpp"
 
+#include "assets/scripts/player_controller.hpp"
+
+#include "inventory_state.hpp"
+
 #define TILES 30  
 
 struct room_data
 {
     int id = -1;
 
-    // player data
-    int player_health = 10;
-    int player_max_health = 10;
-    bool key = false;
-    int score = 0;
-    inventory *player_inventory = nullptr;
+    player_data m_player_data;
     world_generator *world_gen = nullptr;
 
     // room data
     int direction = 0;
 
     room_data() {}
-    room_data(int id, int player_health, int player_max_health, bool key,int score, inventory *player_inventory, world_generator *world_gen, int direction)
+    room_data(int id, player_data data, world_generator *world_gen, int direction)
     {
         this->id = id;
-        this->player_health = player_health;
-        this->player_max_health = player_max_health;
-        this->key=key;
-        this->score = score;
-        this->player_inventory = player_inventory;
+        this->m_player_data = data;
         this->world_gen = world_gen;
         this->direction = direction;
     }
@@ -60,22 +55,15 @@ public:
     {
         this->data = data;
     }
-    void key_changed(){
-        data.key = true;
-    }
-    void health_changed(brown::event &e)
-    {
-        data.player_health = e.get_param<int>(Events::Player::Health::HEALTH);
-    }
 
-    void score_changed(brown::event &e)
+    void data_changed(brown::event &e)
     {
-        data.score = e.get_param<int>(Events::Player::Score::SCORE);
+        data.m_player_data = e.get_param<player_data>(Events::Player::Data::DATA);
     }
-
     room_data *get_data() { return &data; }
 
     void generate_doors(tilemap &tm);
+    vec2 get_valid_position();
 
     void init(brown::engine *game)
     {
@@ -87,8 +75,7 @@ public:
 
         brain.init();
 
-        add_event_listener(METHOD_LISTENER(Events::Player::HEALTH, "room", room_state::health_changed));
-        add_event_listener(METHOD_LISTENER(Events::Player::SCORE, "room", room_state::score_changed));
+        add_event_listener(METHOD_LISTENER(Events::Player::DATA, "room", room_state::data_changed));
 
         brain.register_component<tilemap>();
 
@@ -111,7 +98,6 @@ public:
         ts = new tileset(TILES, tilenames);
 
         auto map = create_entity("map");
-        vec2 map_size = {17, 6};
         int row, col;
         getmaxyx(win, row, col);
 
@@ -121,7 +107,7 @@ public:
             offset.y = 7;
         map.add_component<transform>({offset, 0});
         tilemap &tm = map.add_component<tilemap>({ts, map_size.x, map_size.y});
-        tm.load_from_file("tilemap_1");
+        tm.load_from_file("tilemap_" + std::to_string(rand() % 13 + 1));
 
         data.world_gen->generate_neighbouring_rooms(data.id);
         generate_doors(tm);
@@ -161,12 +147,13 @@ public:
         pl.add_component<transform>({pos, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({});
-        pl.add_component<native_script>({}).bind<player_controller>(data.player_health, data.score);
+        pl.add_component<native_script>({}).bind<player_controller>(data.m_player_data);
 
 
         // UI
         auto inventory = create_entity("inventory_manager");
         inventory.add_component<native_script>({}).bind<inventory_renderer>();
+        send_event(Events::Player::Inventory::ADD);
 
         auto hb = create_entity("healtbar");
         hb.add_component<transform>({{1, 2}, 1});
@@ -190,21 +177,26 @@ public:
         minimap.add_component<transform>({{COLS - 14 , 1}});
         minimap.add_component<ui>({"Minimap", 0, true, true});
 
-        auto level = create_entity("inv");
+        auto level = create_entity("world");
         level.add_component<transform>({{COLS / 2, 1}});
         level.add_component<ui>({"World " + std::to_string(data.world_gen->get_current_world_index() + 1), 0, true, true});
 
         brown::add_sprite({"a"}, "bot3");
-        brown::add_sprite({"a"}, "bot2");
+        brown::add_sprite({"t"}, "bot2");
         auto pot = create_entity("potion1");
-        pot.add_component<transform>({{40, 16}});
+        pot.add_component<transform>({get_valid_position()});
         pot.add_component<sprite>({{1, 1}, "bot2"});
-        pot.add_component<native_script>({}).bind<potion>(4);
+        pot.add_component<native_script>({}).bind<potion>(10);
 
         auto pot1 = create_entity("potion2");
-        pot1.add_component<transform>({{50, 16}});
+        pot1.add_component<transform>({get_valid_position()});
         pot1.add_component<sprite>({{1, 1}, "bot2"});
-        pot1.add_component<native_script>({}).bind<potion>(4);
+        pot1.add_component<native_script>({}).bind<potion>(20);
+
+        auto charm = create_entity("charm");
+        charm.add_component<transform>({get_valid_position()});
+        charm.add_component<sprite>({{1, 1}, "bot3"});
+        charm.add_component<native_script>({}).bind<vitality_charm>();
 /*
         auto bot3 = create_entity();
         bot3.add_component<transform>({offset + vec2{rand() % (map_size.x * TILE_SIZE), rand() % (map_size.y * TILE_SIZE)}, 1});
@@ -221,19 +213,15 @@ public:
     {
         m_pause = true;
         player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
-    pl_controller->m_inventory = *data.player_inventory;
-        pl_controller->set_health(data.player_health);
-        pl_controller->set_score(data.score);
+        pl_controller->update_data(data.m_player_data);
     }
     void resume()
     {
         m_pause = false;
         player_controller *pl_controller = dynamic_cast<player_controller *>(pl.get_component<native_script>().instance);
 
-        pl_controller->m_inventory = *data.player_inventory;
-
-        pl_controller->set_health(data.player_health);
-        pl_controller->set_score(data.score);
+        pl_controller->update_data(data.m_player_data);
+        send_event(Events::Player::Inventory::ADD);
     }
     void handle_events(brown::engine *game)
     {
@@ -244,8 +232,8 @@ public:
             {
                 switch (brown::KEY_PRESSED)
                 {
-                case 'm':
-                    // m_controller.LOG_ENTITIES();
+                case 'i':
+                    game->push_state(new inventory_state(data.m_player_data.player_inventory));// m_controller.LOG_ENTITIES();))
                     break;
                 case 'c':
                     game->pop_state();
@@ -255,6 +243,7 @@ public:
                     break;
                 case 'p':
                     m_pause = true;
+                    break;
                 }
             }
         }
@@ -302,6 +291,7 @@ protected:
     std::shared_ptr<tile_system> tiles_system;
 
     vec2 offset = 0;
+    vec2 map_size = {17, 6};
     bool m_pause = false;
 
     tileset *ts = nullptr;

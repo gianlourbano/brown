@@ -93,7 +93,7 @@ void room_state::generate_doors(tilemap &tm)
         else
             door.add_component<native_script>({}).bind<door_controller>(door_data(data.world_gen->get_room_for_current_world(data.id - 1), this, data.id - 1, true, dir == 4, 2));
 
-        tm.m_data.at(0, 2) = 14;
+        tm.m_data.at(0, 2) = 13;
     }
 }
 
@@ -130,4 +130,18 @@ void room_state::draw_minimap(vec2 pos, WINDOW *win)
         brown::graphics::mvwprintwcolors(win, y + i, x, 17, "||");
         brown::graphics::mvwprintwcolors(win, y + i, x + 20, 17, "||");
     }
+}
+
+vec2 room_state::get_valid_position()
+{
+    vec2 pos = offset;
+
+    chtype ch;
+    do
+    {
+        ch = mvwinch(win, pos.y - 1, pos.x - 1) & A_CHARTEXT;
+        pos = offset + vec2{rand() % (map_size.x - 1) * TILE_SIZE, rand() % (map_size.y - 1) * TILE_SIZE};
+    } while (ch != ' ');
+
+    return pos;
 }

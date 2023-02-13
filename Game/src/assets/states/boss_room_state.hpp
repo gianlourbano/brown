@@ -18,7 +18,7 @@ class boss_room_state : public room_state
 
         void handle_events(brown::engine *game) {
             if (!m_pause) {
-                if(world_cleared && data.world_gen->is_fully_explored()) {
+                if(world_cleared ){//&& data.world_gen->is_fully_explored()) {
                     advance(game);
                 }
 
@@ -34,7 +34,7 @@ class boss_room_state : public room_state
         }
 
         void advance(brown::engine *game) {
-            data.world_gen->generate_new_world();
+            data.world_gen->generate_new_world(data.m_player_data);
             game->push_state(data.world_gen->get_current_world()[45]);
         }
 

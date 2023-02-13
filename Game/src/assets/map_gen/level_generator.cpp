@@ -1,9 +1,17 @@
 #include "level_generator.hpp"
+#include <cmath>
 
 int level_generator::neighbour_count(int index)
 {
     return this->m_floorplan[index - 10] + this->m_floorplan[index - 1] + this->m_floorplan[index + 1] + this->m_floorplan[index + 10];
 }
+
+int level_generator::pop_endroom() {
+    int index = floor(this->rand(this->rng) * this->m_endrooms.size());
+    int i = this->m_endrooms[index];
+    return i;
+}
+
 
 bool level_generator::visit(int index)
 {
@@ -80,5 +88,8 @@ void level_generator::generate()
         int boss_room = this->m_endrooms.pop();
         m_floorplan[boss_room] = 3;
         placed_special = true;
+
+        int key_room = this->pop_endroom();
+        m_floorplan[key_room] = 5;
     }
 }

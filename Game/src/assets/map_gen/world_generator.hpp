@@ -1,6 +1,7 @@
 #pragma once
 #include "level_generator.hpp"
 #include "math/mat.hpp"
+#include "assets/scripts/player_controller.hpp"
 
 class room_state;
 
@@ -13,7 +14,7 @@ public:
     using rooms = mat<room_state*>;
     using worlds = brown::dt::vector<rooms>;
 
-    void generate_new_world();
+    void generate_new_world(player_data data);
     void generate_neighbouring_rooms(int index);
 
     int get_current_world_index() { return m_current_world; }

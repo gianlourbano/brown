@@ -2,6 +2,16 @@
 #include "scriptable_AI.hpp"
 #include "types.hpp"
 #include "assets/scripts/player_controller.hpp"
+
+struct enemy_stats
+{
+    int health;
+    int damage;
+    int defense;
+
+    int exp;
+};
+
 class scriptable_enemy : public scriptable_AI
 {
 public:
@@ -42,10 +52,11 @@ public:
     {
         auto pl = m_state->find_entity("player").get_component<transform>();
         player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
-        std::string hearts = "";
+        std::string hearts = " ";
         for (int i = 0; i < m_health; i++)
             hearts += "❤ ";
         m_healthbar->text = hearts;
+        m_healthbar->offset = vec2{hearts.length() / 2, 0};
         if (is_player_in_range(10) && t_move.elapsed() >= 0.5 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
         {
             t_move.start();
@@ -134,8 +145,6 @@ public:
 
         if (m_health <= 0)
         {
-            player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
-            pl_h->kill();
             delete_self();
         }
     }

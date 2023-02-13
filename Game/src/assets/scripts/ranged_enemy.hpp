@@ -54,27 +54,36 @@ public:
         for (int i = 0; i < m_health; i++)
             hearts += "❤ ";
         m_healthbar->text = hearts;
-        
+
         if (m_proj_lifespan == 0)
             can_shoot = true;
 
         if (m_proj_lifespan != 0)
             m_proj_lifespan--;
         int dir;
-        if(ts->position.x==pl.position.x){
-            if(ts->position.y>pl.position.y){
+        if (ts->position.x == pl.position.x)
+        {
+            if (ts->position.y > pl.position.y)
+            {
                 dir = 1;
-            }else{
+            }
+            else
+            {
                 dir = 3;
             }
-        }if(ts->position.y==pl.position.y){
-            if(ts->position.x>pl.position.x){
+        }
+        if (ts->position.y == pl.position.y)
+        {
+            if (ts->position.x > pl.position.x)
+            {
                 dir = 4;
-            }else{
+            }
+            else
+            {
                 dir = 2;
             }
-            }
-        if (can_shoot &&(ts->position.x==pl.position.x||ts->position.y==pl.position.y) && is_player_in_range(8))
+        }
+        if (can_shoot && (ts->position.x == pl.position.x || ts->position.y == pl.position.y) && is_player_in_range(8))
         {
             brown::entity proj = m_state->create_entity();
             proj.add_component<transform>({ts->position, dir});
@@ -95,12 +104,13 @@ public:
             }
             m_proj_lifespan = lifetime + proj_anim.clips * proj_anim.time_step;
         }
-        
+
         if (is_player_in_range(10) && t_move.elapsed() >= 0.5 && !((pl.position.x + 1 == ts->position.x || pl.position.x - 1 == ts->position.x) && pl.position.y == ts->position.y || pl.position.x == ts->position.x && (pl.position.y + 1 == ts->position.y || pl.position.y - 1 == ts->position.y)))
         {
             t_move.start();
-            int r = rand()%2 +1;
-            if(r==1){
+            int r = rand() % 2 + 1;
+            if (r == 1)
+            {
                 if (ts->position.x != pl.position.x)
                 {
                     if (ts->position.x > pl.position.x)
@@ -131,7 +141,9 @@ public:
                             ts->position.y++;
                     }
                 }
-            }else{
+            }
+            else
+            {
                 if (ts->position.y != pl.position.y)
                 {
                     if (ts->position.y > pl.position.y)
@@ -146,11 +158,12 @@ public:
                         if (!check_collision(3))
                             ts->position.y++;
                     }
-                }else if (ts->position.x != pl.position.x)
+                }
+                else if (ts->position.x != pl.position.x)
                 {
                     if (ts->position.x > pl.position.x)
                     {
-                        ts->direction =4;
+                        ts->direction = 4;
                         if (!check_collision(4))
                             ts->position.x--;
                     }
@@ -163,10 +176,10 @@ public:
                 }
             }
         }
+
         if (m_health <= 0)
         {
-            player_controller *pl_h = static_cast<player_controller *>(m_state->find_entity("player").get_component<native_script>().instance);
-            pl_h->kill();
+            m_player->set_score(pl_h->get_score() + exp);
             delete_self();
         }
     }
@@ -184,4 +197,6 @@ private:
     player_controller *m_player;
     int m_proj_lifespan = 0;
     bool can_shoot = true;
+
+    int exp = 50;
 };

@@ -126,10 +126,10 @@ public:
         pl.add_component<transform>({{offset.x + 35, offset.y + 7}, 1});
         pl.add_component<sprite>({{2, 2}, "sprite2"});
         pl.add_component<animator_controller>({});
-        pl.add_component<native_script>({}).bind<player_controller>(10);
+        pl.add_component<native_script>({}).bind<player_controller>(player_data(&m_inventory));
 
         // world generation
-        m_world_generator.generate_new_world();
+        m_world_generator.generate_new_world(player_data(&m_inventory));
         create_door(offset + vec2{8 * TILE_SIZE, 0},door_data( m_world_generator.get_room_for_current_world(45),nullptr, 45, false, false) ,false, "1");
         tm.set_tile(3, 0, 8);
 
@@ -270,4 +270,6 @@ private:
     mat<room_state *> room_states = mat<room_state *>(10, 10);
 
     world_generator m_world_generator;
+
+    inventory m_inventory;
 };
