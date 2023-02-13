@@ -56,6 +56,11 @@ public:
         this->data = data;
     }
 
+    void QuitHandler(brown::event &e)
+    {
+        m_game->quit();
+    }
+
     void data_changed(brown::event &e)
     {
         data.m_player_data = e.get_param<player_data>(Events::Player::Data::DATA);
@@ -91,6 +96,7 @@ public:
         add_event_listener(METHOD_LISTENER(Events::Player::DATA, "room", room_state::data_changed));
         add_event_listener(METHOD_LISTENER(Events::Room::Key_picked_up, "room", room_state::key_picked_up));
         add_event_listener(METHOD_LISTENER(Events::Room::Enemy_killed, "room", room_state::enemy_killed));
+        add_event_listener(METHOD_LISTENER(Events::Window::QUIT, "Quit", room_state::QuitHandler));
 
         brain.register_component<tilemap>();
 
@@ -216,7 +222,20 @@ public:
             auto charm = create_entity("charm");
             charm.add_component<transform>({get_valid_position()});
             charm.add_component<sprite>({{1, 1}, "bot3"});
-            charm.add_component<native_script>({}).bind<vitality_charm>();
+            
+            int num = rand() % 3;
+            switch(num) {
+                case 0:
+                    charm.add_component<native_script>({}).bind<defensive_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
+                    break;
+                case 1:
+                    charm.add_component<native_script>({}).bind<offensive_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
+                    break;
+                case 2:
+                    charm.add_component<native_script>({}).bind<vitality_charm>(random_int(5, 10) + log(data.world_gen->get_current_world_index() + 1));
+                    break;
+
+            }
         }
 
         m_enemies_alive = random_int(2, 4) + log(data.world_gen->get_current_world_index() + 1);
