@@ -27,18 +27,21 @@ public:
         bs.add_component<transform>({{COLS / 2, LINES / 2}, 1});
         bs.add_component<ui>({""});
         bs.add_component<sprite>({{0, 0}, "sprite_boss"});
-        bs.add_component<native_script>({}).bind<boss_enemy>(enemy_stats());
+        int h = int(random_int(125, 150) + log(data.world_gen->get_current_world_index() + 1) * 10);
+        bs.add_component<native_script>({}).bind<boss_enemy>(enemy_stats{
+            h,
+            int(random_int(15, 20) + log(data.world_gen->get_current_world_index() + 1) * 10),
+            int(random_int(5, 8) + log(data.world_gen->get_current_world_index() + 1)),
+            2 * h});
+
+        m_enemies += 1;
+        m_enemies_alive += 1;
     }
 
     void handle_events(brown::engine *game)
     {
         if (!m_pause)
         {
-            if (world_cleared && data.world_gen->is_fully_explored())
-            {
-                advance(game);
-            }
-
             brown::get_keyboard_input(win);
             if (brown::KEY_PRESSED != ERR)
             {

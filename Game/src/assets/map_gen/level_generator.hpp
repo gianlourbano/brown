@@ -2,6 +2,7 @@
 #include <random>
 #include "engine/std/queue.hpp"
 #include "engine/std/vector.hpp"
+#include "engine/math/math.hpp"
 
 enum ROOM_TYPE {
     EMPTY = 0,
@@ -23,8 +24,8 @@ class level_generator{
         int m_room_count = 0;           
 
         bool placed_special = false;    
-        int min_rooms = 12;             // minimo stanze
         int max_rooms = 20;             // massimo stanze
+        int min_rooms = int((random_int(1, 3)) + 5 + depth * 2.6);             // minimo stanze
 
         int depth = 1;
 

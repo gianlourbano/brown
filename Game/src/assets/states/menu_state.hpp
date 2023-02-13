@@ -219,8 +219,8 @@ public:
         chtype ch;
         do
         {
+            pos = offset + vec2{3 + rand() % ((map_size.x - 2) * TILE_SIZE), 3 + rand() % ((map_size.y - 2) * TILE_SIZE)};
             ch = mvwinch(win, pos.y, pos.x) & A_CHARTEXT;
-            pos = offset + vec2{2 + rand() % ((map_size.x - 2) * TILE_SIZE), 2 + rand() % ((map_size.y - 2) * TILE_SIZE)};
         } while (ch != ' ');
 
         return pos;

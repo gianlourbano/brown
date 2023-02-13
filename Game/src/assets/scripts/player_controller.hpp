@@ -7,8 +7,8 @@ struct player_data
     int health = 100;
     int max_health = 100;
 
-    int attack_damage = 10;
-    int defense = 4;
+    int attack_damage = 20;
+    int defense = 5;
 
     int score = 0;
 

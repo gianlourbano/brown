@@ -62,6 +62,8 @@ public:
     void data_changed(brown::event &e)
     {
         data.m_player_data = e.get_param<player_data>(Events::Player::Data::DATA);
+        ui* u = &find_entity("stats").get_component<ui>();
+        u->text = "ATK " + std::to_string(data.m_player_data.attack_damage)+ "/ DEF " + std::to_string(data.m_player_data.defense);
     }
     room_data *get_data() { return &data; }
 
@@ -182,6 +184,10 @@ public:
         sb.add_component<transform>({{1, 3}, 1});
         sb.add_component<ui>({""});
         sb.add_component<native_script>({}).bind<score_controller>();
+
+        auto stats = create_entity("stats");
+        stats.add_component<transform>({{1, 4}});
+        stats.add_component<ui>({" ", 0, true, false});
 
         auto h_text = create_entity("h_text");
         h_text.add_component<transform>({0, 1});
